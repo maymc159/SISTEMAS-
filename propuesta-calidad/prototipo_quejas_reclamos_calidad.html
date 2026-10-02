@@ -1,170 +1,373 @@
 <title>Propuesta Quejas y Reclamos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-
-/* Herramienta interna: barra superior con rol y navegación, contenido en una columna de hasta 1120px; tickets como filas, detalle con panel de acción lateral */
+/* App interna: menú lateral fijo + área de trabajo; tarjetas por rol; azul corporativo ETIMET como acento */
 :root {
-  --bg: #f3f6f7; --surface: #ffffff; --surface-2: #eaf0f2; --fg: #15222a; --muted: #586973; --line: #d6e0e5;
-  --accent: #0a6a86; --accent-ink: #ffffff; --accent-soft: #dcedf3;
-  --st-rec-bg: #e4eaf8; --st-rec-fg: #2f4c8f;
-  --st-dev-bg: #fbedd2; --st-dev-fg: #7d5200;
-  --st-ana-bg: #ece5f8; --st-ana-fg: #553a99;
-  --st-cer-bg: #dcf0e4; --st-cer-fg: #1f6943;
-  --st-rej-bg: #f8e0de; --st-rej-fg: #9a2f2a;
-  --danger: #b3261e;
+  --bg: #f3f6fa; --surface: #ffffff; --surface-2: #eef3f8; --surface-3: #e3eaf3;
+  --fg: #13233a; --muted: #5a6a7e; --line: #dbe3ee; --line-2: #c7d3e2;
+  --brand: #2a6bae; --brand-ink: #ffffff; --brand-soft: #e3eef9; --brand-deep: #1d4f86;
+  --side: #10284a; --side-fg: #d7e4f4; --side-muted: #8ea6c4; --side-hover: #1a3a63;
+  --st-rec-bg: #e2ebfa; --st-rec-fg: #2b4f96;
+  --st-dev-bg: #fdf0d5; --st-dev-fg: #7d5200;
+  --st-ana-bg: #ece6fa; --st-ana-fg: #553a99;
+  --st-cer-bg: #dcf2e5; --st-cer-fg: #1d6a42;
+  --st-rej-bg: #fbe3e1; --st-rej-fg: #9c2d27;
+  --ok: #1d7a4a; --warn: #a06400; --bad: #c0352c;
+  --new-bg: #fff0c2; --new-fg: #6b4a00;
+  --shadow: 0 1px 2px rgba(16, 40, 74, .06), 0 4px 14px rgba(16, 40, 74, .06);
   --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0e161b; --surface: #152129; --surface-2: #1c2b33; --fg: #e2eaee; --muted: #93a6b0; --line: #2a3c46;
-  --accent: #52b8d6; --accent-ink: #062330; --accent-soft: #15384a;
-  --st-rec-bg: #1e2a47; --st-rec-fg: #a9bdf0; --st-dev-bg: #3a2c0f; --st-dev-fg: #f0c97a;
-  --st-ana-bg: #2c2347; --st-ana-fg: #c8b6f2; --st-cer-bg: #143424; --st-cer-fg: #93d8b0;
-  --st-rej-bg: #3d1d1b; --st-rej-fg: #f1a8a2; --danger: #f08a82; color-scheme: dark; } }
+  --bg: #0c1522; --surface: #132033; --surface-2: #1a2a40; --surface-3: #22354f;
+  --fg: #e3ecf6; --muted: #98abc2; --line: #263a55; --line-2: #33496a;
+  --brand: #6aa8e8; --brand-ink: #071a30; --brand-soft: #18334f; --brand-deep: #9cc6f2;
+  --side: #08111d; --side-fg: #d7e4f4; --side-muted: #7f95b1; --side-hover: #152a45;
+  --st-rec-bg: #1d2c4a; --st-rec-fg: #a9c1f2; --st-dev-bg: #3a2c0f; --st-dev-fg: #f0c97a;
+  --st-ana-bg: #2b2348; --st-ana-fg: #c9b8f3; --st-cer-bg: #133524; --st-cer-fg: #92d9b0;
+  --st-rej-bg: #3e1d1b; --st-rej-fg: #f2a9a3; --ok: #7fd3a3; --warn: #f0c46c; --bad: #f29189;
+  --new-bg: #3d3110; --new-fg: #f3d27a; --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0e161b; --surface: #152129; --surface-2: #1c2b33; --fg: #e2eaee; --muted: #93a6b0; --line: #2a3c46;
-  --accent: #52b8d6; --accent-ink: #062330; --accent-soft: #15384a;
-  --st-rec-bg: #1e2a47; --st-rec-fg: #a9bdf0; --st-dev-bg: #3a2c0f; --st-dev-fg: #f0c97a;
-  --st-ana-bg: #2c2347; --st-ana-fg: #c8b6f2; --st-cer-bg: #143424; --st-cer-fg: #93d8b0;
-  --st-rej-bg: #3d1d1b; --st-rej-fg: #f1a8a2; --danger: #f08a82; color-scheme: dark; }
+  --bg: #0c1522; --surface: #132033; --surface-2: #1a2a40; --surface-3: #22354f;
+  --fg: #e3ecf6; --muted: #98abc2; --line: #263a55; --line-2: #33496a;
+  --brand: #6aa8e8; --brand-ink: #071a30; --brand-soft: #18334f; --brand-deep: #9cc6f2;
+  --side: #08111d; --side-fg: #d7e4f4; --side-muted: #7f95b1; --side-hover: #152a45;
+  --st-rec-bg: #1d2c4a; --st-rec-fg: #a9c1f2; --st-dev-bg: #3a2c0f; --st-dev-fg: #f0c97a;
+  --st-ana-bg: #2b2348; --st-ana-fg: #c9b8f3; --st-cer-bg: #133524; --st-cer-fg: #92d9b0;
+  --st-rej-bg: #3e1d1b; --st-rej-fg: #f2a9a3; --ok: #7fd3a3; --warn: #f0c46c; --bad: #f29189;
+  --new-bg: #3d3110; --new-fg: #f3d27a; --shadow: 0 1px 2px rgba(0,0,0,.3); color-scheme: dark; }
+
 * { box-sizing: border-box; }
+html, body { height: 100%; }
 body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
 h1, h2, h3 { font-family: var(--f-display); font-weight: 650; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
-h1 { font-size: 1.6rem; } h2 { font-size: 1.15rem; } h3 { font-size: 1rem; }
-.mono { font-family: var(--f-mono); font-size: 0.86em; }
+h1 { font-size: 1.55rem; } h2 { font-size: 1.08rem; } h3 { font-size: .95rem; }
+p { margin: 0; }
+.mono { font-family: var(--f-mono); font-size: .85em; }
 .muted { color: var(--muted); }
-.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; }
-header.top { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
-.top-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-block: 12px; }
-.brand { display: flex; flex-direction: column; margin-right: auto; }
-.brand b { font-family: var(--f-display); font-size: 1.05rem; font-weight: 650; }
-.brand span { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-.seg { display: inline-flex; background: var(--surface-2); border-radius: 8px; padding: 3px; gap: 2px; }
-.seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
-nav.tabs { display: flex; gap: 4px; overflow-x: auto; }
-nav.tabs button { border: 0; background: none; font: inherit; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
-nav.tabs button.on { color: var(--fg); border-color: var(--accent); font-weight: 600; }
-.bell { position: relative; }
-.badge { background: var(--danger); color: #fff; font-size: 0.7rem; border-radius: 9px; padding: 0 6px; margin-left: 6px; font-weight: 600; }
-.proto { background: var(--accent-soft); color: var(--fg); font-size: 0.82rem; padding-block: 8px; }
-main { padding-block: 24px 64px; display: grid; gap: 20px; }
-.btn { border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; font-weight: 500; padding: 8px 14px; border-radius: 8px; cursor: pointer; }
+.small { font-size: .85rem; }
+svg.i { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- estructura ---------- */
+.app { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100%; }
+.side { background: var(--side); color: var(--side-fg); padding: 18px 14px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.logo { display: flex; gap: 10px; align-items: center; padding: 2px 6px; }
+.logo .mark { width: 34px; height: 34px; border-radius: 9px; background: var(--brand); color: #fff; display: grid; place-items: center; font-family: var(--f-display); font-weight: 650; }
+.logo b { display: block; font-family: var(--f-display); font-size: 1rem; line-height: 1.2; }
+.logo span { font-size: .72rem; color: var(--side-muted); text-transform: uppercase; letter-spacing: .07em; }
+.nav { display: grid; gap: 2px; }
+.nav button { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: none; color: var(--side-fg); font: inherit; font-size: .93rem; padding: 9px 10px; border-radius: 8px; cursor: pointer; text-align: left; }
+.nav button:hover { background: var(--side-hover); }
+.nav button.on { background: var(--brand); color: #fff; font-weight: 600; }
+.nav .count { margin-left: auto; background: rgba(255,255,255,.16); border-radius: 999px; font-size: .74rem; padding: 0 8px; font-weight: 600; }
+.nav .count.hot { background: #f0b429; color: #3a2700; }
+.side h4 { margin: 0 8px 6px; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--side-muted); font-weight: 600; }
+.roles { display: grid; gap: 4px; }
+.roles button { display: flex; gap: 10px; align-items: center; border: 1px solid transparent; background: none; color: var(--side-fg); font: inherit; font-size: .88rem; padding: 7px 8px; border-radius: 8px; cursor: pointer; text-align: left; }
+.roles button:hover { background: var(--side-hover); }
+.roles button[aria-pressed="true"] { border-color: var(--brand); background: var(--side-hover); }
+.av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; flex: none; color: #fff; }
+.av.asesor { background: #2f7d6b; } .av.calidad { background: #2a6bae; } .av.area { background: #8a5a1f; }
+.roles small { display: block; color: var(--side-muted); font-size: .74rem; line-height: 1.2; }
+.side-foot { margin-top: auto; display: grid; gap: 10px; font-size: .84rem; }
+.switch { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px 8px; border-radius: 8px; }
+.switch:hover { background: var(--side-hover); }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch .tg { width: 34px; height: 20px; border-radius: 999px; background: var(--side-hover); border: 1px solid var(--side-muted); position: relative; flex: none; transition: background .15s; }
+.switch .tg::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--side-fg); transition: transform .15s; }
+.switch input:checked + .tg { background: #f0b429; border-color: #f0b429; }
+.switch input:checked + .tg::after { transform: translateX(14px); background: #3a2700; }
+.switch input:focus-visible + .tg { outline: 2px solid #f0b429; outline-offset: 2px; }
+.linkbtn { border: 0; background: none; color: var(--side-muted); font: inherit; font-size: .84rem; cursor: pointer; text-align: left; padding: 4px 8px; display: flex; gap: 8px; align-items: center; }
+.linkbtn:hover { color: var(--side-fg); }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.topbar .in { display: flex; align-items: center; gap: 12px; padding: 12px 28px; }
+.crumbs { display: flex; align-items: center; gap: 6px; font-size: .88rem; color: var(--muted); min-width: 0; flex-wrap: wrap; }
+.crumbs button { border: 0; background: none; font: inherit; color: var(--muted); cursor: pointer; padding: 0; }
+.crumbs button:hover { color: var(--fg); text-decoration: underline; }
+.crumbs b { color: var(--fg); font-weight: 600; }
+.who { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.who .name { font-size: .85rem; line-height: 1.2; text-align: right; }
+.who .name small { display: block; color: var(--muted); }
+.page { padding: 26px 28px 80px; display: grid; gap: 20px; max-width: 1240px; width: 100%; }
+.mobile-nav { display: none; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .mobile-nav { display: grid; gap: 8px; background: var(--side); color: var(--side-fg); padding: 10px 16px; }
+  .mobile-nav .row1 { display: flex; gap: 10px; align-items: center; }
+  .mobile-nav select { background: var(--side-hover); color: var(--side-fg); border-color: var(--side-hover); }
+  .mobile-nav .tabs { display: flex; gap: 4px; overflow-x: auto; }
+  .mobile-nav .tabs button { border: 0; background: none; color: var(--side-fg); font: inherit; font-size: .88rem; padding: 6px 10px; border-radius: 7px; white-space: nowrap; cursor: pointer; }
+  .mobile-nav .tabs button.on { background: var(--brand); color: #fff; }
+  .topbar .in, .page { padding-inline: 16px; }
+  .who .name { display: none; }
+}
+
+/* ---------- piezas comunes ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line-2); background: var(--surface); color: var(--fg); font: inherit; font-weight: 600; font-size: .9rem; padding: 9px 16px; border-radius: 9px; cursor: pointer; text-decoration: none; }
 .btn:hover { border-color: var(--muted); }
-.btn.pri { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.btn.pri:hover { filter: brightness(1.08); }
-.btn.dan { color: var(--danger); }
-.btn.sm { padding: 4px 10px; font-size: 0.85rem; }
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
-.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; }
-.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.btn.pri { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+.btn.pri:hover { background: var(--brand-deep); border-color: var(--brand-deep); color: var(--brand-ink); }
+.btn.dan { background: var(--bad); color: #fff; border-color: var(--bad); }
+.btn.ghost { border-color: transparent; background: none; }
+.btn.ghost:hover { background: var(--surface-2); }
+.btn.sm { padding: 5px 11px; font-size: .84rem; }
+.btn.lg { padding: 12px 20px; font-size: .98rem; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.block { width: 100%; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .rcard:focus-within { outline: 2px solid var(--brand); outline-offset: 2px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 14px; min-width: 0; box-shadow: var(--shadow); }
+.card.flat { box-shadow: none; }
+.card-h { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.card-h .r { margin-left: auto; }
+.head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
+.head p { color: var(--muted); margin-top: 4px; max-width: 70ch; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.grow { flex: 1; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; white-space: nowrap; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.plain { background: var(--surface-2); color: var(--fg); } .pill.plain::before { display: none; }
 .st-Recibido { background: var(--st-rec-bg); color: var(--st-rec-fg); }
 .st-Devuelto { background: var(--st-dev-bg); color: var(--st-dev-fg); }
 .st-En-análisis { background: var(--st-ana-bg); color: var(--st-ana-fg); }
 .st-Cerrado { background: var(--st-cer-bg); color: var(--st-cer-fg); }
 .st-Rechazado { background: var(--st-rej-bg); color: var(--st-rej-fg); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; font-size: 0.85rem; padding: 4px 12px; border-radius: 999px; cursor: pointer; }
+.chip { border: 1px solid var(--line-2); background: var(--surface); color: var(--fg); font: inherit; font-size: .86rem; padding: 5px 12px; border-radius: 999px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip:hover { border-color: var(--muted); }
 .chip.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.tbl-wrap { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
-th { text-align: left; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-tr.click { cursor: pointer; } tr.click:hover td { background: var(--surface-2); }
-td.num, th.num { text-align: right; }
-.need { box-shadow: inset 3px 0 0 var(--st-dev-fg); }
-label.f { display: grid; gap: 4px; font-size: 0.85rem; font-weight: 500; }
-input[type=text], input[type=number], select, textarea { font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; width: 100%; }
-input[readonly] { background: var(--surface-2); color: var(--muted); }
-textarea { min-height: 70px; resize: vertical; }
-.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
-.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px 20px; }
-.kv div > span:first-child { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-.auto { font-size: 0.72rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-.err { color: var(--danger); font-size: 0.85rem; }
-.errbox { border: 1px solid var(--danger); border-radius: 8px; padding: 10px 14px; color: var(--danger); font-size: 0.88rem; }
-.errbox ul { margin: 4px 0 0; padding-left: 18px; }
-.areas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.area { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 8px; }
-.area.on { border-color: var(--accent); background: var(--accent-soft); }
-.files { display: grid; gap: 6px; }
-.file { display: flex; gap: 10px; align-items: center; font-size: 0.88rem; background: var(--surface-2); border-radius: 6px; padding: 6px 10px; }
-.file .mono { margin-left: auto; color: var(--muted); }
-.detail { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
-@media (max-width: 860px) { .detail { grid-template-columns: 1fr; } }
-.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 0.82rem; }
-.flow .s { padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); }
-.flow .s.done { color: var(--fg); border-color: var(--muted); }
-.flow .s.cur { background: var(--fg); color: var(--bg); border-color: var(--fg); font-weight: 600; }
-.flow .arr { color: var(--muted); }
-.tl { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.tl li { display: grid; grid-template-columns: 12px 1fr; gap: 10px; }
-.tl li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); margin-top: 6px; }
-.tl small { color: var(--muted); display: block; }
-.note { background: var(--surface-2); border-radius: 8px; padding: 10px 12px; font-size: 0.9rem; }
-.q { font-family: var(--f-display); font-weight: 650; font-size: 1.05rem; }
-.radio { display: flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
-.radio.on { border-color: var(--accent); background: var(--accent-soft); }
-.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
-.tile b { font-family: var(--f-display); font-size: 1.8rem; font-variant-numeric: tabular-nums; line-height: 1; }
-.bars { display: grid; gap: 10px; }
-.bar { display: grid; grid-template-columns: minmax(0, 1fr) 54px; gap: 4px 10px; font-size: 0.88rem; }
-.bar .track { grid-column: 1 / -1; height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
-.bar .fill { height: 100%; background: var(--accent); border-radius: 4px; }
-.bar .v { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
-.two { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.notifs { position: absolute; right: 0; top: calc(100% + 6px); width: min(340px, 90vw); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.15); padding: 8px; display: grid; gap: 4px; z-index: 10; }
-.notifs button { text-align: left; border: 0; background: none; font: inherit; color: var(--fg); padding: 8px; border-radius: 6px; cursor: pointer; }
-.notifs button:hover { background: var(--surface-2); }
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; z-index: 20; max-width: 90vw; }
-.empty { text-align: center; color: var(--muted); padding: 30px 10px; }
-@media (prefers-reduced-motion: no-preference) { .toast { animation: up .2s ease-out; } @keyframes up { from { opacity: 0; transform: translate(-50%, 8px); } } }
-
-/* Agregados de la propuesta de Calidad: marcas de cambio, semáforo de plazos, pasos de análisis */
-:root { --new-bg: #fff1c9; --new-fg: #6b4a00; --ok: #1f6943; --warn: #8a5a00; --bad: #b3261e; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --new-bg: #3d3110; --new-fg: #f3d27a; --ok: #93d8b0; --warn: #f0c97a; --bad: #f08a82; } }
-:root[data-theme="dark"] { --new-bg: #3d3110; --new-fg: #f3d27a; --ok: #93d8b0; --warn: #f0c97a; --bad: #f08a82; }
-.nw { display: inline-block; font-family: var(--f-mono); font-style: normal; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.02em; background: var(--new-bg); color: var(--new-fg); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: middle; text-transform: none; cursor: pointer; border: 0; line-height: 1.6; }
+.chip .n { opacity: .65; font-variant-numeric: tabular-nums; }
+.nw { display: inline-flex; align-items: center; font-family: var(--f-mono); font-style: normal; font-size: .66rem; font-weight: 600; background: var(--new-bg); color: var(--new-fg); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: middle; cursor: pointer; border: 0; line-height: 1.65; letter-spacing: 0; text-transform: none; }
 body.no-marks .nw { display: none; }
-.proto-switch { display: inline-flex; gap: 6px; align-items: center; font-size: 0.82rem; }
-.sem { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.sem::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
-.sem.ok::before { background: var(--ok); } .sem.warn::before { background: var(--warn); } .sem.bad::before { background: var(--bad); }
-.sem.bad { color: var(--bad); font-weight: 600; }
-.warnbox { border: 1px solid var(--warn); color: var(--warn); border-radius: 8px; padding: 10px 14px; font-size: 0.88rem; }
-.okbox { border: 1px solid var(--ok); color: var(--ok); border-radius: 8px; padding: 10px 14px; font-size: 0.88rem; }
-.mrow { display: grid; gap: 8px; grid-template-columns: minmax(150px, 1fr) minmax(180px, 1.4fr) auto; align-items: start; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
-.mrow textarea { grid-column: 1 / -1; min-height: 56px; }
-@media (max-width: 560px) { .mrow { grid-template-columns: 1fr; } }
-.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.88rem; }
-.steps li { display: flex; gap: 8px; align-items: center; }
-.steps li::before { content: "○"; color: var(--muted); width: 14px; }
-.steps li.done::before { content: "●"; color: var(--ok); }
-.acc { display: grid; gap: 8px; grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) 140px auto; align-items: center; }
-@media (max-width: 640px) { .acc { grid-template-columns: 1fr; } }
-.chg { display: grid; gap: 6px; grid-template-columns: 54px minmax(0, 1fr) auto; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.chg:last-child { border-bottom: 0; }
-.chg p { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
-.prio { font-size: 0.72rem; font-weight: 600; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
-.prio.Alta { background: var(--st-rej-bg); color: var(--st-rej-fg); } .prio.Media { background: var(--st-dev-bg); color: var(--st-dev-fg); } .prio.Baja { background: var(--surface-2); color: var(--muted); }
-.subtabs { display: flex; flex-wrap: wrap; gap: 6px; }
-.def { font-size: 0.8rem; color: var(--muted); margin: 2px 0 0 26px; }
-.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 28px; display: grid; gap: 16px; max-width: 820px; }
-.doc h2 { color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
-.doc .hd { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 600; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; }
+label.f { display: grid; gap: 6px; font-size: .86rem; font-weight: 600; align-content: start; }
+label.f .hint { font-weight: 400; color: var(--muted); font-size: .8rem; }
 label.f > .nw { justify-self: start; margin: 0; }
-.detail td:first-child { min-width: 200px; }
-.inline-f { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+input[type=text], input[type=number], input[type=date], input[type=search], select, textarea { font: inherit; font-weight: 400; color: var(--fg); background: var(--surface); border: 1px solid var(--line-2); border-radius: 9px; padding: 9px 12px; width: 100%; min-height: 42px; }
+input:hover, select:hover, textarea:hover { border-color: var(--muted); }
+input[readonly] { background: var(--surface-2); color: var(--muted); }
+textarea { min-height: 84px; resize: vertical; }
+.fields { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px 20px; }
+.kv > div > span:first-child { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 2px; }
+.auto { font-size: .68rem; color: var(--brand); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: var(--brand-soft); border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+.msg { display: flex; gap: 10px; align-items: flex-start; border-radius: 10px; padding: 11px 14px; font-size: .9rem; }
+.msg svg { margin-top: 2px; }
+.msg.err { background: var(--st-rej-bg); color: var(--st-rej-fg); }
+.msg.warn { background: var(--st-dev-bg); color: var(--st-dev-fg); }
+.msg.ok { background: var(--st-cer-bg); color: var(--st-cer-fg); }
+.msg.info { background: var(--brand-soft); color: var(--fg); }
+.msg ul { margin: 4px 0 0; padding-left: 18px; }
+.empty { text-align: center; color: var(--muted); padding: 36px 12px; display: grid; gap: 8px; justify-items: center; }
+
+/* ---------- inicio ---------- */
+.hero { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%); color: #fff; border-radius: 16px; padding: 26px 28px; display: grid; gap: 10px; }
+.hero h1 { font-size: 1.8rem; color: #fff; }
+.hero p { color: rgba(255,255,255,.88); max-width: 68ch; }
+.hero .row .btn { background: #fff; color: #10284a; border-color: #fff; }
+.hero .row .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+.tours { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tour { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; box-shadow: var(--shadow); }
+.tour ol { margin: 0; padding-left: 18px; color: var(--muted); font-size: .88rem; display: grid; gap: 3px; }
+.tour .btn { justify-self: start; margin-top: 4px; }
+.flowmap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.flowmap .node { padding: 7px 12px; border-radius: 9px; font-weight: 600; font-size: .86rem; }
+.flowmap .arr { color: var(--muted); }
+.flowmap .side-n { display: grid; gap: 6px; }
+
+/* ---------- bandeja ---------- */
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.kpi { text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; cursor: pointer; box-shadow: var(--shadow); }
+.kpi:hover { border-color: var(--line-2); }
+.kpi.on { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-soft); }
+.kpi span { font-size: .82rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.kpi b { font-family: var(--f-display); font-size: 1.9rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpi.alert b { color: var(--bad); }
+.filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search { position: relative; flex: 1 1 260px; }
+.search svg { position: absolute; left: 12px; top: 12px; color: var(--muted); }
+.search input { padding-left: 38px; }
+.list tr.click { cursor: pointer; }
+.list tr.click:hover td { background: var(--surface-2); }
+.list tr.need td:first-child { box-shadow: inset 4px 0 0 var(--brand); }
+.turn { display: inline-block; font-size: .7rem; font-weight: 700; color: var(--brand); background: var(--brand-soft); border-radius: 4px; padding: 0 6px; margin-top: 4px; text-transform: uppercase; letter-spacing: .04em; }
+.days { display: grid; gap: 4px; min-width: 74px; font-variant-numeric: tabular-nums; font-size: .86rem; }
+.days .bar { height: 5px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+.days .bar i { display: block; height: 100%; border-radius: 3px; background: var(--ok); }
+.days.warn .bar i { background: var(--warn); } .days.bad .bar i { background: var(--bad); } .days.bad { color: var(--bad); font-weight: 600; }
+.days.done .bar i { background: var(--muted); }
+@media (max-width: 760px) {
+  .list thead { display: none; }
+  .list tr { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 14px; border-bottom: 1px solid var(--line); }
+  .list td { border: 0; padding: 0; }
+  .list td[data-l]::before { content: attr(data-l); display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .list td.hide-m { display: none; }
+  .list tr.need { box-shadow: inset 4px 0 0 var(--brand); }
+  .list tr.need td:first-child { box-shadow: none; }
+}
+
+/* ---------- asistente de ingreso ---------- */
+.stepper { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.stepper button { flex: 1 0 auto; display: flex; align-items: center; gap: 8px; border: 0; background: none; font: inherit; font-size: .86rem; color: var(--muted); padding: 8px 10px 10px; border-bottom: 3px solid var(--line); cursor: pointer; white-space: nowrap; }
+.stepper button:disabled { cursor: default; }
+.stepper .dot { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .78rem; font-weight: 700; background: var(--surface-3); color: var(--muted); }
+.stepper button.done { color: var(--fg); border-color: var(--ok); }
+.stepper button.done .dot { background: var(--ok); color: #fff; }
+.stepper button.cur { color: var(--fg); font-weight: 600; border-color: var(--brand); }
+.stepper button.cur .dot { background: var(--brand); color: #fff; }
+.wiz-foot { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 16px; }
+.lookup { display: flex; gap: 10px; flex-wrap: wrap; }
+.lookup input { flex: 1 1 260px; font-size: 1.05rem; min-height: 48px; }
+.found { display: flex; gap: 14px; align-items: center; background: var(--st-cer-bg); color: var(--st-cer-fg); border-radius: 10px; padding: 12px 16px; }
+.found b { color: var(--fg); }
+.items { display: grid; gap: 10px; }
+.itm { border: 1px solid var(--line-2); border-radius: 12px; padding: 14px 16px; display: grid; gap: 12px; grid-template-columns: auto minmax(0, 1fr) 170px; align-items: start; cursor: pointer; }
+.itm.on { border-color: var(--brand); background: var(--brand-soft); }
+.itm input[type=checkbox] { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--brand); }
+.itm .meta { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .82rem; color: var(--muted); margin-top: 4px; }
+.itm .qty label { font-size: .78rem; font-weight: 600; display: grid; gap: 4px; }
+@media (max-width: 640px) { .itm { grid-template-columns: auto minmax(0, 1fr); } .itm .qty { grid-column: 2; } }
+.opts { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.rcard { position: relative; border: 1px solid var(--line-2); border-radius: 10px; padding: 11px 14px; cursor: pointer; display: grid; gap: 2px; font-size: .9rem; background: var(--surface); }
+.rcard:hover { border-color: var(--muted); }
+.rcard input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rcard.on { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.rcard b { font-weight: 600; }
+.rcard small { color: var(--muted); font-size: .8rem; line-height: 1.35; }
+.mot { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 12px; background: var(--surface-2); }
+.drop { border: 2px dashed var(--line-2); border-radius: 12px; padding: 22px; text-align: center; display: grid; gap: 8px; justify-items: center; color: var(--muted); }
+.drop.over { border-color: var(--brand); background: var(--brand-soft); }
+.files { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.file { display: flex; gap: 10px; align-items: center; font-size: .88rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 9px; padding: 8px 10px; min-width: 0; }
+.file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file .ft { width: 32px; height: 32px; border-radius: 7px; display: grid; place-items: center; font-size: .62rem; font-weight: 700; color: #fff; flex: none; }
+.ft.img { background: #2f7d6b; } .ft.vid { background: #7a4bb3; } .ft.pdf { background: #c0352c; } .ft.doc { background: #5a6a7e; }
+.file .x { margin-left: auto; border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 2px 6px; border-radius: 6px; }
+.file .x:hover { background: var(--surface-3); color: var(--fg); }
+.sum { display: grid; gap: 0; }
+.sum > div { display: grid; grid-template-columns: 180px minmax(0, 1fr) auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.sum > div:last-child { border-bottom: 0; }
+.sum dt { color: var(--muted); font-size: .86rem; }
+@media (max-width: 640px) { .sum > div { grid-template-columns: 1fr auto; } .sum dt { grid-column: 1 / -1; } }
+
+/* ---------- detalle ---------- */
+.tk-head { display: grid; gap: 16px; }
+.tk-title { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; }
+.tk-title .r { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.track { display: flex; align-items: center; gap: 0; }
+.track .st { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted); white-space: nowrap; }
+.track .st i { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-3); color: var(--muted); font-style: normal; font-weight: 700; font-size: .78rem; }
+.track .st.done { color: var(--fg); } .track .st.done i { background: var(--ok); color: #fff; }
+.track .st.cur { color: var(--fg); font-weight: 700; } .track .st.cur i { background: var(--brand); color: #fff; box-shadow: 0 0 0 4px var(--brand-soft); }
+.track .st.stop i { background: var(--bad); color: #fff; box-shadow: 0 0 0 4px var(--st-rej-bg); }
+.track .st.back i { background: var(--warn); color: #fff; box-shadow: 0 0 0 4px var(--st-dev-bg); }
+.track .ln { flex: 1; height: 2px; background: var(--line-2); margin: 0 10px; min-width: 18px; }
+.track .ln.done { background: var(--ok); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.facts > div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; align-content: start; }
+.facts > div > span:first-child { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.facts b { font-size: .98rem; font-weight: 600; }
+.detail { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; align-items: start; }
+.detail > .col { display: grid; gap: 16px; min-width: 0; }
+.detail > .col.side-col { position: sticky; top: 76px; }
+@media (max-width: 1060px) { .detail { grid-template-columns: 1fr; } .detail > .col.side-col { position: static; order: -1; } }
+details.card { padding: 0; gap: 0; }
+details.card > summary { list-style: none; cursor: pointer; padding: 16px 22px; display: flex; align-items: center; gap: 10px; }
+details.card > summary::-webkit-details-marker { display: none; }
+details.card > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); margin-left: auto; transition: transform .15s; }
+details.card[open] > summary::after { transform: rotate(-135deg); }
+details.card > .body { padding: 0 22px 20px; display: grid; gap: 14px; }
+.next { border: 2px solid var(--brand); }
+.next .tag { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--brand); }
+.decide { display: grid; gap: 8px; }
+.decide button { text-align: left; display: grid; gap: 2px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); color: var(--fg); font: inherit; padding: 12px 14px; cursor: pointer; }
+.decide button:hover { border-color: var(--brand); background: var(--brand-soft); }
+.decide button b { display: flex; align-items: center; gap: 8px; }
+.decide button small { color: var(--muted); }
+.decide button.neg:hover { border-color: var(--bad); background: var(--st-rej-bg); }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.checklist li { display: flex; align-items: center; gap: 10px; font-size: .9rem; }
+.checklist li i { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line-2); flex: none; display: grid; place-items: center; font-style: normal; font-size: .7rem; color: #fff; }
+.checklist li.done i { background: var(--ok); border-color: var(--ok); }
+.progress { height: 6px; background: var(--surface-3); border-radius: 3px; overflow: hidden; }
+.progress i { display: block; height: 100%; background: var(--ok); border-radius: 3px; }
+.astep { border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 12px; padding: 14px 16px; }
+.astep h3 { display: flex; align-items: center; gap: 10px; }
+.astep h3 .n { width: 24px; height: 24px; border-radius: 50%; background: var(--surface-3); display: grid; place-items: center; font-size: .78rem; }
+.astep.done h3 .n { background: var(--ok); color: #fff; }
+.acc { display: grid; gap: 8px; grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) 150px auto auto; align-items: center; }
+@media (max-width: 700px) { .acc { grid-template-columns: 1fr 1fr; } .acc > :first-child { grid-column: 1 / -1; } }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.tl li { display: grid; grid-template-columns: 14px 1fr; gap: 12px; padding-bottom: 14px; position: relative; }
+.tl li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--brand); margin-top: 6px; z-index: 1; }
+.tl li::after { content: ""; position: absolute; left: 4px; top: 16px; bottom: 0; width: 2px; background: var(--line); }
+.tl li:last-child::after { display: none; }
+.tl b { font-size: .9rem; font-weight: 600; }
+.tl small { color: var(--muted); display: block; font-size: .78rem; }
+.note { background: var(--surface-2); border-radius: 9px; padding: 10px 12px; font-size: .88rem; margin-top: 6px; }
+.motivo { display: grid; gap: 4px; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); }
+.motivo .a { font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+
+/* ---------- catálogos, reportes, cambios ---------- */
+.seg { display: inline-flex; flex-wrap: wrap; background: var(--surface-2); border-radius: 10px; padding: 4px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: .88rem; padding: 7px 14px; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; }
+.seg button.on { background: var(--surface); color: var(--fg); font-weight: 600; box-shadow: var(--shadow); }
+.two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+@media (max-width: 420px) { .two { grid-template-columns: 1fr; } }
+.bars { display: grid; gap: 10px; }
+.bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; font-size: .88rem; }
+.bar .v { color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar .tr { grid-column: 1 / -1; height: 10px; background: var(--surface-2); border-radius: 0 4px 4px 0; }
+.bar .fill { height: 100%; background: var(--brand); border-radius: 0 4px 4px 0; min-width: 3px; }
+.bar:hover .fill { background: var(--brand-deep); }
+.chg { display: grid; gap: 4px 14px; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.chg:last-child { border-bottom: 0; }
+.chg p { color: var(--muted); font-size: .9rem; margin-top: 2px; }
+.chg .code { font-family: var(--f-mono); font-size: .78rem; font-weight: 600; background: var(--new-bg); color: var(--new-fg); border-radius: 6px; padding: 3px 0; text-align: center; }
+@media (max-width: 600px) { .chg { grid-template-columns: 52px minmax(0, 1fr); } .chg .btn { grid-column: 2; justify-self: start; } }
+.prio { font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 9px; white-space: nowrap; margin-left: 6px; }
+.prio.Alta { background: var(--st-rej-bg); color: var(--st-rej-fg); } .prio.Media { background: var(--st-dev-bg); color: var(--st-dev-fg); } .prio.Baja { background: var(--surface-3); color: var(--muted); }
+.doc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 32px; display: grid; gap: 14px; max-width: 840px; box-shadow: var(--shadow); }
+.doc h2 { color: var(--brand); font-size: .95rem; text-transform: uppercase; letter-spacing: .05em; margin-top: 6px; }
+.doc .hd { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 3px solid var(--brand); padding-bottom: 12px; }
+
+/* ---------- notificaciones, modal, aviso ---------- */
+.bell { position: relative; }
+.iconbtn { position: relative; border: 1px solid var(--line-2); background: var(--surface); color: var(--fg); border-radius: 9px; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer; }
+.iconbtn .badge { position: absolute; top: -5px; right: -5px; background: var(--bad); color: #fff; font-size: .68rem; font-weight: 700; border-radius: 9px; min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 4px; }
+.notifs { position: absolute; right: 0; top: calc(100% + 8px); width: min(360px, 88vw); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.18); padding: 8px; display: grid; gap: 2px; z-index: 30; }
+.notifs h3 { padding: 6px 8px; }
+.notifs button { text-align: left; border: 0; background: none; font: inherit; font-size: .88rem; color: var(--fg); padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; gap: 10px; }
+.notifs button:hover { background: var(--surface-2); }
+.notifs button .u { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); flex: none; margin-top: 7px; }
+.notifs button.read { color: var(--muted); } .notifs button.read .u { background: transparent; }
+.modal-bg { position: fixed; inset: 0; background: rgba(8, 18, 33, .5); display: grid; place-items: center; z-index: 50; padding: 16px; }
+.modal { background: var(--surface); border-radius: 16px; padding: 24px; width: min(460px, 100%); display: grid; gap: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+.modal .row { justify-content: flex-end; }
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 11px 18px; border-radius: 10px; font-size: .9rem; z-index: 60; max-width: 90vw; display: flex; gap: 10px; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.protobar { background: var(--new-bg); color: var(--new-fg); font-size: .82rem; padding: 7px 28px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 900px) { .protobar { padding-inline: 16px; } }
+@media (prefers-reduced-motion: no-preference) { .toast { animation: up .2s ease-out; } @keyframes up { from { opacity: 0; transform: translate(-50%, 8px); } } .modal { animation: pop .15s ease-out; } @keyframes pop { from { opacity: 0; transform: scale(.97); } } }
+
+.toast[hidden] { display: none; }
+td.mono { white-space: nowrap; }
+.facts .days span { text-transform: none; letter-spacing: 0; font-size: .95rem; color: var(--fg); font-weight: 600; }
 
 </style>
 <div id="app"></div>
-<div id="toast" class="toast" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
 <script>
 const AREAS = ['Producción', 'Preprensa y diseño', 'Despachos y logística', 'Ventas y servicio', 'Soporte técnico', 'Otros'];
 const ESTADOS = ['Recibido', 'Devuelto', 'En análisis', 'Cerrado', 'Rechazado'];
@@ -337,391 +540,486 @@ function seed() {
   };
 }
 
-let db = seed();
-let ui = { role: 'calidad', view: 'cambios', filtro: 'Todos', busca: '', farea: '', ticket: null, bell: false, rev: null, cat: 'rech', per: 'Todos', marks: true };
-let draft = null;
-const newDraft = () => ({ q: '', src: null, sel: {}, motivos: [{ area: '', def: '', det: '' }], files: [], errors: [], cli: { fechaCli: today(), canal: '', contacto: '', medio: '' }, sit: { material: '', muestra: '', pret: '' }, editing: null });
 
+let db = seed();
+let ui = { role: 'calidad', view: 'inicio', filtro: 'Todos', kpi: null, busca: '', farea: '', ticket: null, bell: false, rev: null, cat: 'rech', per: 'Todos', marks: false, modal: null, histAll: false, cprio: 'Todas', narea: AREAS[0] };
+let draft = null;
+const STEPS = ['Factura', 'Cliente', 'Ítems', 'Motivo', 'Material y evidencias', 'Revisar y enviar'];
+const newDraft = () => ({ step: 0, maxStep: 0, q: '', src: null, sel: {}, motivos: [{ area: '', def: '', det: '' }], files: [], errors: [], cli: { fechaCli: today(), canal: '', contacto: '', medio: '' }, sit: { material: '', muestra: '', pret: '' }, editing: null });
+
+/* ---------- utilidades ---------- */
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const n = v => Number(v).toLocaleString('es-EC');
+const pct = (a, b) => (a / b * 100).toLocaleString('es-EC', { maximumFractionDigits: 2 }) + ' %';
 const usd = v => Number(v).toLocaleString('es-EC', { style: 'currency', currency: 'USD' });
 const pill = e => `<span class="pill st-${e.replace(' ', '-')}">${e}</span>`;
-const nw = id => `<button type="button" class="nw" data-act="chg" data-v="${id}" title="Cambio propuesto por Calidad ${id}">${id}</button>`;
+const nw = id => `<span role="button" tabindex="0" class="nw" data-act="chg" data-v="${id}" title="Cambio propuesto por Calidad ${id}">${id}</span>`;
 const pad = x => String(x).padStart(2, '0');
 function now() { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
 const today = () => now().slice(0, 10);
 const days = (a, b) => Math.round((new Date(b) - new Date(a)) / 864e5);
 const addDays = (a, k) => { const d = new Date(a); d.setDate(d.getDate() + k); return d.toISOString().slice(0, 10); };
+const fmtD = s => { if (!s) return '—'; const [y, m, d] = s.slice(0, 10).split('-'); return `${+d} ${['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'][m - 1]} ${y}`; };
 const T = id => db.tickets.find(t => t.id === id);
 const factFecha = t => FACTURAS[t.items[0].factura]?.fecha;
 const fueraPlazo = t => { const f = factFecha(t); return f && days(f, t.cli.fechaCli) > db.params.plazo; };
 const abiertoDias = t => days(t.fecha, t.fechaCierre || today());
-function sem(t) {
-  const d = abiertoDias(t);
-  if (!ABIERTOS.includes(t.estado)) return `<span class="sem">${d} d</span>`;
-  const k = d > db.params.sla ? 'bad' : d > db.params.sla * 0.7 ? 'warn' : 'ok';
-  return `<span class="sem ${k}">${d} d</span>`;
+const vencido = t => ABIERTOS.includes(t.estado) && abiertoDias(t) > db.params.sla;
+const initials = r => ({ asesor: 'AM', calidad: 'PV', area: 'JP' }[r]);
+const ROLES = { asesor: ['Asesor comercial', 'Andrea Molina'], calidad: ['Calidad', 'Patricio Vega'], area: ['Área responsable', 'Jefe de Producción'] };
+function ftype(f) { const e = f.split('.').pop().toLowerCase(); return ['jpg', 'jpeg', 'png', 'heic'].includes(e) ? ['img', 'IMG'] : ['mp4', 'mov', 'avi'].includes(e) ? ['vid', 'VID'] : e === 'pdf' ? ['pdf', 'PDF'] : ['doc', e.toUpperCase().slice(0, 4)]; }
+const fileChip = (f, rm) => { const [c, l] = ftype(f); return `<div class="file"><span class="ft ${c}">${l}</span><span title="${esc(f)}">${esc(f)}</span>${rm != null ? `<button class="x" data-act="rmfile" data-i="${rm}" aria-label="Quitar ${esc(f)}">×</button>` : ''}</div>`; };
+function daysCell(t) {
+  const d = abiertoDias(t), open = ABIERTOS.includes(t.estado);
+  const k = !open ? 'done' : d > db.params.sla ? 'bad' : d > db.params.sla * 0.7 ? 'warn' : 'ok';
+  const w = Math.min(100, d / db.params.sla * 100);
+  return `<div class="days ${k}" title="${open ? `Plazo de respuesta: ${db.params.sla} días` : 'Finalizado'}"><span>${d} ${d === 1 ? 'día' : 'días'}${k === 'bad' ? ' · vencido' : ''}</span><div class="bar"><i style="width:${w}%"></i></div></div>`;
 }
-function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 3400); }
+const needs = t => (ui.role === 'asesor' && t.estado === 'Devuelto') || (ui.role === 'calidad' && (t.estado === 'Recibido' || t.estado === 'En análisis')) || (ui.role === 'area' && t.estado === 'En análisis' && t.asig?.area === 'Producción');
+function toast(msg) { const el = document.getElementById('toast'); el.innerHTML = `${I.check}<span>${esc(msg)}</span>`; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 3600); }
 function notify(to, ticket, txt) { db.notifs.unshift({ to, ticket, txt, read: false }); }
 
+const ic = d => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+const I = {
+  home: ic('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>'),
+  inbox: ic('<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13L22 12v7H2v-7z"/>'),
+  plus: ic('<path d="M12 5v14M5 12h14"/>'),
+  chart: ic('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),
+  list: ic('<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>'),
+  gear: ic('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
+  bell: ic('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>'),
+  search: ic('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'),
+  check: ic('<path d="M20 6L9 17l-5-5"/>'),
+  alert: ic('<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'),
+  info: ic('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>'),
+  x: ic('<path d="M18 6L6 18M6 6l12 12"/>'),
+  back: ic('<path d="M19 12H5M12 19l-7-7 7-7"/>'),
+  next: ic('<path d="M5 12h14M12 5l7 7-7 7"/>'),
+  upload: ic('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/>'),
+  file: ic('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'),
+  reset: ic('<path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/>'),
+  dl: ic('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/>'),
+  user: ic('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  clock: ic('<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>')
+};
+
+/* ---------- marco ---------- */
+function navItems() {
+  const mine = db.tickets.filter(t => ui.role !== 'area' || t.asig?.area === 'Producción');
+  const pend = mine.filter(needs).length;
+  if (ui.role === 'asesor') return [['inicio', 'Inicio', I.home], ['bandeja', 'Mis reclamos', I.inbox, pend], ['nuevo', 'Ingresar reclamo', I.plus], ['reportes', 'Reportes', I.chart], ['cambios', 'Cambios propuestos', I.list, CAMBIOS.length]];
+  if (ui.role === 'area') return [['inicio', 'Inicio', I.home], ['bandeja', 'Asignados a mi área', I.inbox, pend], ['cambios', 'Cambios propuestos', I.list, CAMBIOS.length]];
+  return [['inicio', 'Inicio', I.home], ['bandeja', 'Bandeja de Calidad', I.inbox, pend], ['reportes', 'Reportes', I.chart], ['catalogo', 'Catálogos y parámetros', I.gear], ['cambios', 'Cambios propuestos', I.list, CAMBIOS.length]];
+}
+const curNav = () => ['detalle', 'informe'].includes(ui.view) ? 'bandeja' : ui.view;
+function crumbs() {
+  const items = navItems(), cur = items.find(x => x[0] === curNav());
+  const c = [`<button data-act="go" data-v="inicio">Quejas y Reclamos</button>`];
+  if (cur && cur[0] !== 'inicio') c.push(ui.view === 'detalle' || ui.view === 'informe' ? `<button data-act="go" data-v="bandeja">${cur[1]}</button>` : `<b>${cur[1]}</b>`);
+  if (ui.view === 'detalle') c.push(`<b class="mono">${ui.ticket}</b>`);
+  if (ui.view === 'informe') c.push(`<button data-act="open" data-id="${ui.ticket}" class="mono">${ui.ticket}</button>`, '<b>Informe al cliente</b>');
+  return c.join('<span>›</span>');
+}
 function render() {
   document.body.classList.toggle('no-marks', !ui.marks);
-  const mine = db.notifs.filter(x => x.to === ui.role);
-  const unread = mine.filter(x => !x.read).length;
-  const tabs = ui.role === 'asesor' ? [['bandeja', 'Mis reclamos'], ['nuevo', 'Ingresar reclamo'], ['reportes', 'Reportes']]
-    : ui.role === 'area' ? [['bandeja', 'Asignados a mi área']]
-    : [['bandeja', 'Bandeja de Calidad'], ['catalogo', 'Catálogos y parámetros'], ['reportes', 'Reportes']];
-  tabs.push(['cambios', `Cambios propuestos (${CAMBIOS.length})`]);
-  const cur = ui.view === 'detalle' || ui.view === 'informe' ? 'bandeja' : ui.view;
-  document.getElementById('app').innerHTML = `
-  <header class="top"><div class="wrap">
-    <div class="top-row">
-      <div class="brand"><b>Quejas y Reclamos</b><span>Módulo de Calidad · propuesta de Calidad</span></div>
-      <div class="seg" role="group" aria-label="Probar como">
-        <button data-act="role" data-v="asesor" aria-pressed="${ui.role === 'asesor'}">Asesor comercial</button>
-        <button data-act="role" data-v="calidad" aria-pressed="${ui.role === 'calidad'}">Calidad</button>
-        <button data-act="role" data-v="area" aria-pressed="${ui.role === 'area'}">Área responsable</button>
-      </div>
-      <div class="bell"><button class="btn sm" data-act="bell">Notificaciones${unread ? `<span class="badge">${unread}</span>` : ''}</button>${ui.role !== 'asesor' ? nw('C19') : ''}
-        ${ui.bell ? `<div class="notifs">${mine.length ? mine.map(x => `<button data-act="notif" data-i="${db.notifs.indexOf(x)}">${x.read ? '' : '● '}${esc(x.txt)}</button>`).join('') : '<div class="empty">Sin notificaciones</div>'}</div>` : ''}</div>
+  const items = navItems();
+  const mine = db.notifs.filter(x => x.to === ui.role), unread = mine.filter(x => !x.read).length;
+  const views = { inicio: vInicio, bandeja: vBandeja, nuevo: vNuevo, detalle: vDetalle, catalogo: vCatalogo, reportes: vReportes, cambios: vCambios, informe: vInforme };
+  document.getElementById('app').innerHTML = `<div class="app">
+  <aside class="side" aria-label="Menú">
+    <div class="logo"><div class="mark">QR</div><div><b>Quejas y Reclamos</b><span>ETIMET · Calidad</span></div></div>
+    <nav class="nav">${items.map(([v, l, i, c]) => `<button data-act="go" data-v="${v}" class="${curNav() === v ? 'on' : ''}">${i}<span>${l}</span>${c ? `<span class="count ${v === 'bandeja' ? 'hot' : ''}">${c}</span>` : ''}</button>`).join('')}</nav>
+    <div><h4>Probar como</h4><div class="roles">${Object.entries(ROLES).map(([k, [r, nm]]) => `<button data-act="role" data-v="${k}" aria-pressed="${ui.role === k}"><span class="av ${k}">${initials(k)}</span><span>${r}<small>${nm}</small></span></button>`).join('')}</div></div>
+    <div class="side-foot">
+      <label class="switch"><input type="checkbox" id="marks" data-act="marks" ${ui.marks ? 'checked' : ''}><span class="tg"></span><span>Marcar cambios de Calidad</span></label>
+      <button class="linkbtn" data-act="reset">${I.reset} Reiniciar datos de prueba</button>
     </div>
-    <nav class="tabs">${tabs.map(([v, l]) => `<button data-act="go" data-v="${v}" class="${cur === v ? 'on' : ''}">${l}</button>`).join('')}</nav>
-  </div></header>
-  <div class="proto"><div class="wrap row" style="justify-content:space-between">
-    <span>Prototipo de Sistemas con los cambios que propone Calidad. Datos de ejemplo. Sesión: <b>${esc(USERS[ui.role])}</b>.</span>
-    <span class="row"><label class="proto-switch"><input type="checkbox" id="marks" data-act="marks" ${ui.marks ? 'checked' : ''}> Marcar cambios <span class="nw" style="cursor:default">C00</span></label>
-    <button class="btn sm" data-act="reset">Reiniciar datos</button></span></div></div>
-  <main class="wrap">${({ bandeja: vBandeja, nuevo: vNuevo, detalle: vDetalle, catalogo: vCatalogo, reportes: vReportes, cambios: vCambios, informe: vInforme })[ui.view]()}</main>`;
+  </aside>
+  <div class="main">
+    <div class="mobile-nav">
+      <div class="row1"><b style="font-family:var(--f-display)">Quejas y Reclamos</b><select id="mrole" data-in="mrole" style="margin-left:auto;width:auto;min-height:34px;padding:4px 8px">${Object.entries(ROLES).map(([k, [r]]) => `<option value="${k}" ${ui.role === k ? 'selected' : ''}>${r}</option>`).join('')}</select></div>
+      <div class="tabs">${items.map(([v, l]) => `<button data-act="go" data-v="${v}" class="${curNav() === v ? 'on' : ''}">${l}</button>`).join('')}</div>
+    </div>
+    ${ui.marks ? `<div class="protobar">${I.info}<span>Modo revisión: las etiquetas amarillas marcan lo que Calidad agrega al prototipo de Sistemas. Haga clic en una para ver su explicación.</span></div>` : ''}
+    <header class="topbar"><div class="in">
+      <div class="crumbs">${crumbs()}</div>
+      <div class="who">
+        <div class="bell"><button class="iconbtn" data-act="bell" aria-label="Notificaciones">${I.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
+          ${ui.bell ? `<div class="notifs"><h3>Notificaciones ${nw('C19')}</h3>${mine.length ? mine.map(x => `<button data-act="notif" data-i="${db.notifs.indexOf(x)}" class="${x.read ? 'read' : ''}"><span class="u"></span><span>${esc(x.txt)}</span></button>`).join('') : '<div class="empty">Sin notificaciones</div>'}</div>` : ''}</div>
+        <div class="name"><b>${ROLES[ui.role][1]}</b><small>${ROLES[ui.role][0]}</small></div><span class="av ${ui.role}">${initials(ui.role)}</span>
+      </div></div></header>
+    <main class="page">${views[ui.view]()}</main>
+  </div></div>
+  ${ui.modal ? `<div class="modal-bg" data-act="mclose"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">${esc(ui.modal.title)}</h2><p class="muted">${esc(ui.modal.text)}</p><div class="row"><button class="btn" data-act="mcancel">Cancelar</button><button class="btn ${ui.modal.danger ? 'dan' : 'pri'}" data-act="mok">${esc(ui.modal.ok)}</button></div></div></div>` : ''}`;
 }
 
-function vCambios() {
-  const groups = [...new Set(CAMBIOS.map(c => c[2]))];
-  const cnt = p => CAMBIOS.filter(c => c[1] === p).length;
-  return `<div class="head"><div><h1>Cambios propuestos por Calidad</h1>
-    <p class="muted" style="margin:4px 0 0;max-width:70ch">Respuesta al prototipo enviado por Sistemas. Se mantiene el flujo validado (Recibido → En análisis → Cerrado, con Devuelto y Rechazado) y se agregan los campos y funciones que faltan. Cada cambio tiene una etiqueta amarilla en el prototipo; use "Ver en el prototipo" para ir a la pantalla.</p></div></div>
-  <div class="tiles"><div class="tile"><span class="muted">Total</span><b>${CAMBIOS.length}</b></div><div class="tile"><span><span class="prio Alta">Alta</span></span><b>${cnt('Alta')}</b></div><div class="tile"><span><span class="prio Media">Media</span></span><b>${cnt('Media')}</b></div><div class="tile"><span><span class="prio Baja">Baja</span></span><b>${cnt('Baja')}</b></div></div>
-  <section class="panel"><h2>Valores que Calidad debe confirmar antes del desarrollo</h2>
-    <p class="muted" style="margin:0">En el prototipo se usan valores de ejemplo: plazo de la política ${db.params.plazo} días, plazo de respuesta ${db.params.sla} días, definiciones de queja/reclamo y severidad, catálogos de defectos y de devolución, y responsables por área. Todos quedan editables en "Catálogos y parámetros".</p></section>
-  ${groups.map(g => `<section class="panel" style="gap:0"><h2 style="margin-bottom:4px">${g}</h2>${CAMBIOS.filter(c => c[2] === g).map(([id, p, , t, d]) => `<div class="chg" id="chg-${id}"><span class="nw" style="cursor:default;justify-self:start;margin:3px 0 0">${id}</span><div><b>${esc(t)}</b> <span class="prio ${p}">${p}</span><p>${esc(d)}</p></div><button class="btn sm" data-act="chg" data-v="${id}">Ver en el prototipo</button></div>`).join('')}</section>`).join('')}`;
+/* ---------- inicio ---------- */
+function vInicio() {
+  const tours = [
+    ['asesor', 'Ingresar un reclamo', 'Como asesora comercial', ['Busque una factura', 'Complete los datos en 6 pasos', 'Revise el resumen y envíe'], 'nuevo'],
+    ['calidad', 'Revisar y decidir', 'Como Jefe de Calidad', ['Abra QR-2026-0012', 'Decida si la información está completa', 'Acepte, devuelva o rechace'], 'detalle:QR-2026-0012'],
+    ['area', 'Analizar la causa', 'Como jefe del área responsable', ['Abra QR-2026-0010', 'Registre contención y causa raíz', 'Agregue acciones y envíe a Calidad'], 'detalle:QR-2026-0010'],
+    ['asesor', 'Corregir una devolución', 'Como asesora comercial', ['Abra QR-2026-0011', 'Lea lo que pide Calidad', 'Corrija el ingreso y reenvíe'], 'detalle:QR-2026-0011']
+  ];
+  const node = (e, txt) => `<span class="node st-${e.replace(' ', '-')}">${txt || e}</span>`;
+  return `<section class="hero"><h1>Módulo de Quejas y Reclamos</h1>
+    <p>Prototipo de Sistemas con los cambios que propone Calidad. Los datos son de ejemplo y no están conectados al sistema. Elija un recorrido o cambie de rol en el menú lateral para probar cada parte del flujo.</p>
+    <div class="row" style="margin-top:6px"><button class="btn" data-act="go" data-v="cambios">Ver los ${CAMBIOS.length} cambios propuestos</button><button class="btn ghost" data-act="marks2">${ui.marks ? 'Ocultar' : 'Mostrar'} marcas de cambios</button></div></section>
+  <section><div class="head" style="margin-bottom:12px"><h2>Recorridos guiados</h2></div>
+  <div class="tours">${tours.map(([r, t, s, steps, go], i) => `<div class="tour"><div class="row"><span class="av ${r}">${initials(r)}</span><div><h3>${t}</h3><span class="muted small">${s}</span></div></div><ol>${steps.map(x => `<li>${x}</li>`).join('')}</ol><button class="btn pri sm" data-act="tour" data-i="${i}" data-r="${r}" data-g="${go}">Empezar ${I.next}</button></div>`).join('')}</div></section>
+  <section class="card"><h2>Cómo avanza una solicitud</h2>
+    <div class="flowmap">${node('Recibido')}<span class="arr">→</span>${node('En análisis')}<span class="arr">→</span>${node('Cerrado')}</div>
+    <div class="flowmap small muted">Desde Recibido también puede ir a ${node('Devuelto', 'Devuelto al asesor')} (vuelve a Recibido al corregir) o a ${node('Rechazado')} (termina).</div>
+    <p class="muted small">Se mantienen los tres estados acordados en la reunión. Calidad no agrega estados nuevos.</p></section>`;
 }
 
-function visibles() {
-  let ts = db.tickets;
-  if (ui.role === 'area') ts = ts.filter(t => t.asig?.area === 'Producción');
-  const q = ui.busca.trim().toLowerCase();
-  if (q) ts = ts.filter(t => [t.id, t.cliente, ...t.items.flatMap(i => [i.factura, i.op, i.lote, i.codigo])].some(x => String(x).toLowerCase().includes(q)));
-  if (ui.farea) ts = ts.filter(t => t.motivos.some(m => m.area === ui.farea) || t.asig?.area === ui.farea);
-  return ts;
-}
+/* ---------- bandeja ---------- */
+function baseTickets() { let ts = db.tickets; if (ui.role === 'area') ts = ts.filter(t => t.asig?.area === 'Producción'); return ts; }
 function vBandeja() {
-  const base = visibles();
-  const counts = Object.fromEntries(ESTADOS.map(e => [e, base.filter(t => t.estado === e).length]));
-  const list = base.filter(t => ui.filtro === 'Todos' || t.estado === ui.filtro);
-  const needs = t => (ui.role === 'asesor' && t.estado === 'Devuelto') || (ui.role === 'calidad' && (t.estado === 'Recibido' || t.estado === 'En análisis')) || (ui.role === 'area' && t.estado === 'En análisis');
-  const pend = base.filter(needs).length;
-  const venc = base.filter(t => ABIERTOS.includes(t.estado) && abiertoDias(t) > db.params.sla).length;
+  const base = baseTickets();
+  let list = base;
+  const q = ui.busca.trim().toLowerCase();
+  if (q) list = list.filter(t => [t.id, t.cliente, ...t.items.flatMap(i => [i.factura, i.op, i.lote, i.codigo, i.desc])].some(x => String(x).toLowerCase().includes(q)));
+  if (ui.farea) list = list.filter(t => t.motivos.some(m => m.area === ui.farea) || t.asig?.area === ui.farea);
+  if (ui.kpi === 'accion') list = list.filter(needs); else if (ui.kpi === 'venc') list = list.filter(vencido); else if (ui.kpi === 'abiertos') list = list.filter(t => ABIERTOS.includes(t.estado));
+  const counts = Object.fromEntries(ESTADOS.map(e => [e, list.filter(t => t.estado === e).length]));
+  if (ui.filtro !== 'Todos') list = list.filter(t => t.estado === ui.filtro);
+  const k = (id, l, v, ico, cls = '', tag = '') => `<button class="kpi ${cls} ${ui.kpi === id ? 'on' : ''}" data-act="kpi" data-v="${id}"><span>${ico}${l}${tag}</span><b>${v}</b></button>`;
   const title = { asesor: 'Mis reclamos', calidad: 'Bandeja de Calidad', area: 'Asignados a Producción' }[ui.role];
-  return `<div class="head"><div><h1>${title}${ui.role === 'area' ? nw('C12') : ''}</h1>
-    <p class="muted" style="margin:4px 0 0">${pend} ${pend === 1 ? 'solicitud requiere' : 'solicitudes requieren'} tu acción (marcadas con borde)${venc ? ` · <span class="sem bad">${venc} fuera del plazo de respuesta</span>` : ''}.</p></div>
-    <div class="row">${ui.role === 'asesor' ? '<button class="btn pri" data-act="go" data-v="nuevo">Ingresar reclamo</button>' : ''}<button class="btn" data-act="excel">Exportar a Excel</button>${nw('C20')}</div></div>
-  <div class="row"><label class="f" style="flex:2;min-width:220px">Buscar ${nw('C20')}<input type="text" id="busca" value="${esc(ui.busca)}" placeholder="N° de solicitud, cliente, factura, OP o lote"></label>
-    <label class="f" style="flex:1;min-width:180px">Área<select id="farea" data-in="farea"><option value="">Todas</option>${AREAS.map(a => `<option ${ui.farea === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label></div>
-  <div class="chips">${['Todos', ...ESTADOS].map(e => `<button class="chip ${ui.filtro === e ? 'on' : ''}" data-act="filtro" data-v="${e}">${e} <span class="muted">${e === 'Todos' ? base.length : counts[e]}</span></button>`).join('')}</div>
-  <div class="panel" style="padding:6px 0"><div class="tbl-wrap">${list.length ? `<table><thead><tr><th>N° solicitud</th><th>Cliente</th><th>Tipo de defecto ${nw('C04')}</th><th>Categoría</th><th>Responsable ${nw('C11')}</th><th>Registro</th><th>Días ${nw('C18')}</th><th>Estado</th></tr></thead><tbody>
-    ${list.map(t => `<tr class="click ${needs(t) ? 'need' : ''}" data-act="open" data-id="${t.id}"><td class="mono">${t.id}${fueraPlazo(t) ? '<br><span class="sem warn" title="Reportado fuera del plazo de la política">fuera de plazo</span>' : ''}</td><td>${esc(t.cliente)}<br><span class="muted" style="font-size:.82rem">${esc(t.items[0].desc)}</span></td>
-      <td>${t.motivos.map(m => esc(m.def)).join('<br>')}</td>
-      <td>${t.categoria ? `${t.categoria}${t.sev ? `<br><span class="muted" style="font-size:.82rem">${t.sev}</span>` : ''}` : '<span class="muted">Sin categorizar</span>'}</td>
-      <td>${t.asig ? esc(t.asig.area) : '<span class="muted">—</span>'}</td><td class="mono">${t.fecha}</td><td>${sem(t)}</td><td>${pill(t.estado)}</td></tr>`).join('')}
-  </tbody></table>` : '<div class="empty">No hay solicitudes con estos filtros.</div>'}</div></div>
-  <p class="muted" style="margin:0;font-size:.85rem">Semáforo: verde hasta el 70 % del plazo de respuesta (${db.params.sla} días), amarillo hasta el plazo, rojo vencido. El asesor ve solo sus solicitudes; Calidad ve todas.</p>`;
+  const venc = base.filter(vencido).length;
+  return `<div class="head"><div><h1>${title}${ui.role === 'area' ? nw('C12') : ''}</h1><p>${ui.role === 'asesor' ? 'Solo ve las solicitudes que usted registró.' : ui.role === 'area' ? 'Solicitudes que Calidad asignó a su área para análisis.' : 'Todas las solicitudes del módulo.'}</p></div>
+    <div class="row">${ui.role === 'asesor' ? `<button class="btn pri" data-act="go" data-v="nuevo">${I.plus} Ingresar reclamo</button>` : ''}<button class="btn" data-act="excel">${I.dl} Exportar a Excel</button>${nw('C20')}</div></div>
+  <div class="kpis">${k('accion', 'Requieren su acción', base.filter(needs).length, I.user)}${k('venc', 'Fuera de plazo', venc, I.clock, venc ? 'alert' : '', nw('C18'))}${k('abiertos', 'Abiertas', base.filter(t => ABIERTOS.includes(t.estado)).length, I.inbox)}${k('', 'Total', base.length, I.list)}</div>
+  <section class="card" style="padding:16px 18px">
+    <div class="filters"><div class="search">${I.search}<input type="search" id="busca" value="${esc(ui.busca)}" placeholder="Buscar por N°, cliente, factura, OP o lote" aria-label="Buscar"></div>
+      <select id="farea" data-in="farea" style="flex:0 1 220px" aria-label="Filtrar por área"><option value="">Todas las áreas</option>${AREAS.map(a => `<option ${ui.farea === a ? 'selected' : ''}>${a}</option>`).join('')}</select>${nw('C20')}</div>
+    <div class="chips">${['Todos', ...ESTADOS].map(e => `<button class="chip ${ui.filtro === e ? 'on' : ''}" data-act="filtro" data-v="${e}">${e} <span class="n">${e === 'Todos' ? Object.values(counts).reduce((a, b) => a + b, 0) : counts[e]}</span></button>`).join('')}</div>
+  </section>
+  <section class="card" style="padding:4px 6px">${list.length ? `<div class="tbl-wrap"><table class="list"><thead><tr><th>Solicitud</th><th>Problema ${nw('C04')}</th><th>Categoría</th><th>Responsable ${nw('C11')}</th><th>Días ${nw('C18')}</th><th>Estado</th></tr></thead><tbody>
+    ${list.map(t => `<tr class="click ${needs(t) ? 'need' : ''}" data-act="open" data-id="${t.id}" tabindex="0">
+      <td><span class="mono muted">${t.id}</span> · <span class="muted small">${fmtD(t.fecha)}</span><br><b>${esc(t.cliente)}</b>${needs(t) ? '<br><span class="turn">Su turno</span>' : ''}${fueraPlazo(t) ? ' <span class="turn" style="color:var(--warn);background:var(--st-dev-bg)">Fuera de plazo</span>' : ''}</td>
+      <td data-l="Problema">${t.motivos.map(m => esc(m.def)).join('<br>')}<br><span class="muted small">${esc(t.items[0].desc)}</span></td>
+      <td data-l="Categoría" class="hide-m">${t.categoria ? `${t.categoria}${t.sev ? `<br><span class="muted small">${t.sev}</span>` : ''}` : '<span class="muted">Sin categorizar</span>'}</td>
+      <td data-l="Responsable">${t.asig ? esc(t.asig.area) : '<span class="muted">—</span>'}</td>
+      <td data-l="Días">${daysCell(t)}</td><td>${pill(t.estado)}</td></tr>`).join('')}
+  </tbody></table></div>` : `<div class="empty">${I.search}<b>No hay solicitudes con estos filtros</b><button class="btn sm" data-act="clearf">Quitar filtros</button></div>`}</section>`;
 }
+
+/* ---------- ingreso por pasos ---------- */
+function stepErrors(k) {
+  const d = draft, e = [];
+  if (k === 0 && !d.src) e.push('Busque una factura u OP válida para continuar.');
+  if (k === 1) {
+    if (!d.cli.fechaCli) e.push('Indique la fecha en que el cliente reportó.'); else if (d.cli.fechaCli > today()) e.push('La fecha de reporte no puede ser posterior a hoy.');
+    if (!d.cli.canal) e.push('Elija el canal por el que llegó el reclamo.');
+    if (!d.cli.contacto.trim()) e.push('Escriba quién reporta en el cliente.');
+    if (!d.cli.medio.trim()) e.push('Escriba un correo o teléfono de contacto.');
+  }
+  if (k === 2) {
+    const idx = Object.keys(d.sel).filter(i => d.sel[i].on);
+    if (!idx.length) e.push('Marque al menos un ítem afectado.');
+    idx.forEach(i => { const it = d.src.items[i], s = d.sel[i], af = Number(s.af);
+      if (!(it.op || s.op)) e.push(`${it.codigo}: elija la OP.`);
+      if (!af || af < 1) e.push(`${it.codigo}: indique cuántas ${it.unidad} están fuera de especificación.`);
+      else if (af > it.cant) e.push(`${it.codigo}: no puede superar lo facturado (${n(it.cant)}).`); });
+  }
+  if (k === 3) d.motivos.forEach((m, i) => { const s = d.motivos.length > 1 ? ` del problema ${i + 1}` : '';
+    if (!m.area) e.push(`Elija el área${s}.`); else if (!m.def) e.push(`Elija el tipo de defecto${s}.`);
+    if (!m.det.trim()) e.push(`Describa el detalle${s}.`); });
+  if (k === 4) {
+    if (!d.sit.material) e.push('Indique en qué estado está el material.');
+    if (!d.sit.muestra) e.push('Indique si hay muestra física.');
+    if (!d.sit.pret) e.push('Indique qué solicita el cliente.');
+    if (!d.files.length) e.push('Adjunte al menos una evidencia.');
+  }
+  return e;
+}
+const rcards = (name, opts, val, key, desc) => `<div class="opts">${opts.map(o => { const [v, l] = Array.isArray(o) ? o : [o, o]; return `<label class="rcard ${val === v ? 'on' : ''}"><input type="radio" name="${name}" data-act="pick" data-k="${key}" data-v="${esc(v)}" ${val === v ? 'checked' : ''}><b>${esc(l)}</b>${desc && desc[v] ? `<small>${esc(desc[v])}</small>` : ''}</label>`; }).join('')}</div>`;
 
 function vNuevo() {
-  if (ui.role !== 'asesor') return '<div class="empty">El ingreso de reclamos lo realiza el asesor comercial o asistente. Cambie al rol "Asesor comercial".</div>';
-  const d = draft;
-  const ejemplos = [...Object.keys(FACTURAS), 'OP-2026-0848'];
-  let h = `<div class="head"><div><h1>${d.editing ? `Corregir ${d.editing} ${nw('C08')}` : 'Ingresar reclamo'}</h1><p class="muted" style="margin:4px 0 0">Todos los campos son obligatorios. La fecha de registro, el lote y los datos de producción los completa el sistema.</p></div></div>`;
-  if (d.editing) { const t = T(d.editing); h += `<div class="note"><b>Calidad solicita (${esc(t.devolucion?.motivo)}):</b><br>${esc(t.devolucion?.obs)}</div>`; }
-  h += `<section class="panel"><h2>1. Factura u orden de producción</h2>
-    <div class="row"><label class="f" style="flex:1;min-width:220px">N° de factura u OP<input type="text" id="q" value="${esc(d.q)}" placeholder="001-002-000045871 u OP-2026-0841" ${d.editing ? 'readonly' : ''}></label>
-      ${d.editing ? '' : '<button class="btn pri" data-act="buscar" style="align-self:end">Buscar</button>'}</div>
-    ${d.editing ? '' : `<div class="row"><span class="muted" style="font-size:.85rem">Datos de prueba:</span>${ejemplos.map(x => `<button class="chip" data-act="ej" data-v="${x}"><span class="mono">${x}</span></button>`).join('')}</div>`}
-    ${d.src === false ? '<p class="err">No se encontró esa factura u OP en el sistema. Revise el número.</p>' : ''}
-  </section>`;
-  if (!d.src) return h;
-  const s = d.src;
-  const prev = db.tickets.filter(t => t.id !== d.editing && (t.cliente === s.cliente) && days(t.fecha, today()) <= 365);
-  const fdias = s.fecha && d.cli.fechaCli ? days(s.fecha, d.cli.fechaCli) : null;
-  h += `${prev.length ? `<div class="note"><b>Antecedentes ${nw('C06')}</b> · ${prev.length} solicitud(es) de ${esc(s.cliente)} en los últimos 12 meses: ${prev.slice(0, 4).map(t => `<span class="mono">${t.id}</span> (${esc(t.motivos[0].def)}, ${t.estado.toLowerCase()})`).join('; ')}.</div>` : ''}
-  <section class="panel"><h2>2. Cliente y recepción del reclamo</h2>
-    <div class="kv"><div><span>Cliente</span>${esc(s.cliente)}</div><div><span>Factura</span><b class="mono">${s.factura}</b></div><div><span>Fecha de factura</span><span class="mono">${s.fecha}</span></div><div><span>Fecha de registro <em class="auto">auto</em></span><span class="mono">${today()}</span></div></div>
-    <div class="inline-f">
-      <label class="f">Fecha en que el cliente reportó ${nw('C01')}<input type="text" id="fcli" data-in="c-fechaCli" value="${esc(d.cli.fechaCli)}" placeholder="AAAA-MM-DD"></label>
-      <label class="f">Canal de recepción ${nw('C01')}<select id="canal" data-in="c-canal"><option value="">Seleccione…</option>${CANALES.map(c => `<option ${d.cli.canal === c ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
+  if (ui.role !== 'asesor') return `<div class="card"><div class="empty">${I.user}<b>El ingreso lo hace el asesor comercial o asistente</b><button class="btn pri sm" data-act="role" data-v="asesor">Cambiar a Asesor comercial</button></div></div>`;
+  const d = draft, s = d.src, k = d.step;
+  const steps = `<nav class="stepper" aria-label="Pasos">${STEPS.map((l, i) => `<button data-act="wstep" data-i="${i}" class="${i === k ? 'cur' : i < d.maxStep || (i < k) ? 'done' : ''}" ${i > d.maxStep ? 'disabled' : ''}><span class="dot">${i < k || (i < d.maxStep && i !== k) ? '✓' : i + 1}</span>${l}</button>`).join('')}</nav>`;
+  let body = '';
+  if (k === 0) body = `<h2>¿Qué factura u orden de producción tiene el problema?</h2>
+    <p class="muted">El sistema trae el cliente, los ítems, la OP y el lote. Si la factura no tiene OP, la elige en el paso 3.</p>
+    <div class="lookup"><input type="search" id="q" value="${esc(d.q)}" placeholder="Ej.: 001-002-000045871 u OP-2026-0841" ${d.editing ? 'readonly' : ''} aria-label="Número de factura u OP">${d.editing ? '' : `<button class="btn pri lg" data-act="buscar">${I.search} Buscar</button>`}</div>
+    ${d.editing ? '' : `<div class="row"><span class="muted small">Pruebe con:</span>${[...Object.keys(FACTURAS), 'OP-2026-0848'].map(x => `<button class="chip" data-act="ej" data-v="${x}"><span class="mono">${x}</span></button>`).join('')}</div>`}
+    ${s === false ? `<div class="msg err">${I.alert}<span>No encontramos esa factura u OP. Revise el número e intente de nuevo.</span></div>` : ''}
+    ${s ? `<div class="found">${I.check}<div><b>${esc(s.cliente)}</b><br><span class="small">Factura ${s.factura} · ${fmtD(s.fecha)} · ${s.items.length} ${s.items.length === 1 ? 'ítem' : 'ítems'}</span></div></div>` : ''}
+    ${s ? antecedentes(s) : ''}`;
+  if (k === 1) { const fd = s.fecha && d.cli.fechaCli ? days(s.fecha, d.cli.fechaCli) : null;
+    body = `<h2>¿Cuándo y cómo llegó el reclamo?</h2>
+    <div class="kv"><div><span>Cliente</span><b>${esc(s.cliente)}</b></div><div><span>Fecha de factura</span>${fmtD(s.fecha)}</div><div><span>Fecha de registro <em class="auto">auto</em></span>${fmtD(today())}</div></div>
+    <div class="fields"><label class="f">Fecha en que el cliente reportó ${nw('C01')}<input type="date" id="fcli" data-in="c-fechaCli" value="${esc(d.cli.fechaCli)}" max="${today()}"><span class="hint">Si la registra después, use la fecha real del aviso.</span></label>
       <label class="f">Persona que reporta ${nw('C02')}<input type="text" id="contacto" data-in="c-contacto" value="${esc(d.cli.contacto)}" placeholder="Nombre y cargo"></label>
-      <label class="f">Correo o teléfono ${nw('C02')}<input type="text" id="medio" data-in="c-medio" value="${esc(d.cli.medio)}"></label>
-    </div>
-    ${fdias !== null && fdias > db.params.plazo ? `<div class="warnbox">Reportado ${fdias} días después de la factura. La política de reclamos permite ${db.params.plazo} días. Puede enviarlo, pero Calidad lo verá marcado como fuera de plazo. ${nw('C03')}</div>` : fdias !== null && fdias >= 0 ? `<p class="muted" style="margin:0;font-size:.85rem">Reportado ${fdias} días después de la factura, dentro del plazo de ${db.params.plazo} días de la política. ${nw('C03')}</p>` : ''}
-  </section>
-  <section class="panel"><h2>3. Ítems afectados</h2>
-    <div class="tbl-wrap"><table><thead><tr><th></th><th>Ítem</th><th>OP</th><th>Lote <em class="auto">auto</em></th><th>F. fabricación</th><th>Máquina ${nw('C07')}</th><th class="num">Fabricada</th><th class="num">Facturada</th><th class="num">Fuera de especificación</th></tr></thead><tbody>
-    ${s.items.map((it, i) => { const sel = d.sel[i] || {}; const op = it.op || sel.op; const o = OPS[op];
+      <label class="f">Correo o teléfono ${nw('C02')}<input type="text" id="medio" data-in="c-medio" value="${esc(d.cli.medio)}" placeholder="correo@cliente.com"></label></div>
+    <div class="f" style="display:grid;gap:6px"><b class="small">Canal de recepción ${nw('C01')}</b>${rcards('canal', CANALES, d.cli.canal, 'c-canal')}</div>
+    ${fd !== null && fd > db.params.plazo ? `<div class="msg warn">${I.alert}<span>Reportado <b>${fd} días</b> después de la factura. La política permite ${db.params.plazo} días. Puede enviarlo, pero Calidad lo verá marcado como fuera de plazo. ${nw('C03')}</span></div>` : fd !== null && fd >= 0 ? `<div class="msg ok">${I.check}<span>Reportado ${fd} días después de la factura, dentro del plazo de ${db.params.plazo} días. ${nw('C03')}</span></div>` : ''}`; }
+  if (k === 2) body = `<h2>¿Qué ítems tienen el problema?</h2><p class="muted">Marque los ítems e indique la cantidad fuera de especificación.</p>
+    <div class="items">${s.items.map((it, i) => { const sel = d.sel[i] || {}, op = it.op || sel.op, o = OPS[op];
       const cands = Object.entries(OPS).filter(([, v]) => v.codigo === it.codigo);
-      return `<tr><td><input type="checkbox" id="ck${i}" data-act="ck" data-i="${i}" ${sel.on ? 'checked' : ''} aria-label="Seleccionar ítem"></td>
-      <td><span class="mono">${it.codigo}</span><br>${esc(it.desc)}</td>
-      <td>${it.op ? `<span class="mono">${it.op}</span><br><span class="auto">desde factura</span>` : `<select id="op${i}" data-in="op" data-i="${i}"><option value="">Buscar OP…</option>${cands.map(([k, v]) => `<option value="${k}" ${sel.op === k ? 'selected' : ''}>${k} · ${v.fechaFab}</option>`).join('')}</select>`}</td>
-      <td class="mono">${o ? o.lote : '—'}</td><td class="mono">${o ? o.fechaFab : '—'}</td><td>${o ? esc(o.maquina) : '—'}</td><td class="num">${o ? n(o.cantFab) : '—'}</td><td class="num">${n(it.cant)}</td>
-      <td class="num"><input type="number" min="1" id="af${i}" data-in="af" data-i="${i}" value="${sel.af ?? ''}" style="width:110px" ${sel.on ? '' : 'disabled'} placeholder="${it.unidad}"></td></tr>`; }).join('')}
-    </tbody></table></div></section>
-  <section class="panel"><h2>4. Motivo del reclamo</h2><p class="muted" style="margin:0">Por cada problema, elija el área, el tipo de defecto del catálogo ${nw('C04')} y describa el detalle.</p>
-    <div style="display:grid;gap:10px">${d.motivos.map((m, i) => `<div class="mrow">
-      <label class="f">Área<select id="ma${i}" data-in="m-area" data-i="${i}"><option value="">Seleccione…</option>${AREAS.map(a => `<option ${m.area === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label>
-      <label class="f">Tipo de defecto<select id="md${i}" data-in="m-def" data-i="${i}" ${m.area ? '' : 'disabled'}><option value="">${m.area ? 'Seleccione…' : 'Elija primero el área'}</option>${db.defectos.filter(x => x.on && x.area === m.area).map(x => `<option ${m.def === x.t ? 'selected' : ''}>${esc(x.t)}</option>`).join('')}</select></label>
-      <button class="btn sm dan" data-act="rmmot" data-i="${i}" style="align-self:end" ${d.motivos.length < 2 ? 'disabled' : ''}>Quitar</button>
-      <textarea id="mt${i}" data-in="m-det" data-i="${i}" placeholder="Detalle: qué pasó, cuántos rollos o cajas, dónde lo detectó el cliente">${esc(m.det)}</textarea></div>`).join('')}</div>
-    <div><button class="btn sm" data-act="addmot2">Agregar otro motivo</button></div></section>
-  <section class="panel"><h2>5. Situación del material y solicitud del cliente ${nw('C05')}</h2>
-    <div class="inline-f">
-      <label class="f">Estado del material<select id="smat" data-in="s-material"><option value="">Seleccione…</option>${MATERIAL.map(c => `<option ${d.sit.material === c ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
-      <label class="f">¿Hay muestra física?<select id="smue" data-in="s-muestra"><option value="">Seleccione…</option><option value="si" ${d.sit.muestra === 'si' ? 'selected' : ''}>Sí, se puede retirar</option><option value="no" ${d.sit.muestra === 'no' ? 'selected' : ''}>No</option></select></label>
-      <label class="f">Qué solicita el cliente<select id="spret" data-in="s-pret"><option value="">Seleccione…</option>${PRETENSION.map(c => `<option ${d.sit.pret === c ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
-    </div></section>
-  <section class="panel"><h2>6. Evidencias</h2><p class="muted" style="margin:0">Fotos, videos, PDF o JPG. Se recomienda incluir una foto donde se vea el lote del rollo o de la caja.</p>
-    <div class="row"><label class="btn" for="fin">Adjuntar archivos</label><input type="file" id="fin" multiple accept="image/*,video/*,application/pdf" hidden>
-      <button class="btn" data-act="fakefile">Usar archivo de ejemplo</button></div>
-    ${d.files.length ? `<div class="files">${d.files.map((f, i) => `<div class="file"><span>${esc(f)}</span><button class="btn sm dan" data-act="rmfile" data-i="${i}" style="margin-left:auto">Quitar</button></div>`).join('')}</div>` : ''}
-  </section>
-  ${d.errors.length ? `<div class="errbox">No se puede enviar todavía:<ul>${d.errors.map(e => `<li>${esc(e)}</li>`).join('')}</ul></div>` : ''}
-  <div class="row" style="justify-content:flex-end"><button class="btn" data-act="cancelar">Cancelar</button><button class="btn pri" data-act="enviar">${d.editing ? 'Reenviar a Calidad' : 'Enviar reclamo'}</button></div>`;
-  return h;
+      return `<div class="itm ${sel.on ? 'on' : ''}"><input type="checkbox" id="ck${i}" data-act="ck" data-i="${i}" ${sel.on ? 'checked' : ''} aria-label="Seleccionar ${esc(it.codigo)}">
+        <div data-act="ckrow" data-i="${i}"><b>${esc(it.desc)}</b><div class="meta"><span class="mono">${it.codigo}</span><span>Facturado: ${n(it.cant)} ${it.unidad}</span>${o ? `<span>OP <span class="mono">${op}</span></span><span>Lote <span class="mono">${o.lote}</span> <em class="auto">auto</em></span><span>Fabricado ${fmtD(o.fechaFab)} · ${esc(o.maquina)} ${nw('C07')}</span>` : ''}</div>
+        ${!it.op && sel.on ? `<label class="f" style="margin-top:10px;max-width:320px">OP (no viene en la factura)<select id="op${i}" data-in="op" data-i="${i}"><option value="">Elija la OP…</option>${cands.map(([k2, v]) => `<option value="${k2}" ${sel.op === k2 ? 'selected' : ''}>${k2} · fabricada ${fmtD(v.fechaFab)}</option>`).join('')}</select></label>` : ''}</div>
+        <div class="qty">${sel.on ? `<label>Fuera de especificación<input type="number" min="1" id="af${i}" data-in="af" data-i="${i}" value="${sel.af ?? ''}" placeholder="${it.unidad}"></label>${sel.af > 0 ? `<span class="muted small">${pct(sel.af, it.cant)} de lo facturado</span>` : ''}` : ''}</div></div>`; }).join('')}</div>`;
+  if (k === 3) body = `<h2>¿Cuál es el problema?</h2><p class="muted">Elija el área y el tipo de defecto del catálogo ${nw('C04')}, y cuente qué pasó. Si hay más de un problema, agréguelo.</p>
+    ${d.motivos.map((m, i) => `<div class="mot"><div class="row"><b>Problema ${i + 1}</b>${d.motivos.length > 1 ? `<button class="btn ghost sm" data-act="rmmot" data-i="${i}" style="margin-left:auto">${I.x} Quitar</button>` : ''}</div>
+      <div class="fields"><label class="f">Área<select id="ma${i}" data-in="m-area" data-i="${i}"><option value="">Elija el área…</option>${AREAS.map(a => `<option ${m.area === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label>
+      <label class="f">Tipo de defecto<select id="md${i}" data-in="m-def" data-i="${i}" ${m.area ? '' : 'disabled'}><option value="">${m.area ? 'Elija el defecto…' : 'Primero elija el área'}</option>${db.defectos.filter(x => x.on && x.area === m.area).map(x => `<option ${m.def === x.t ? 'selected' : ''}>${esc(x.t)}</option>`).join('')}</select></label></div>
+      <label class="f">Detalle<textarea id="mt${i}" data-in="m-det" data-i="${i}" placeholder="Qué pasó, cuántos rollos o cajas, dónde lo detectó el cliente">${esc(m.det)}</textarea></label></div>`).join('')}
+    <div><button class="btn sm" data-act="addmot2">${I.plus} Agregar otro problema</button></div>`;
+  if (k === 4) body = `<h2>Situación del material y evidencias</h2>
+    <div class="f" style="display:grid;gap:6px"><b class="small">¿Dónde está el material? ${nw('C05')}</b>${rcards('mat', MATERIAL, d.sit.material, 's-material')}</div>
+    <div class="f" style="display:grid;gap:6px"><b class="small">¿Hay muestra física?</b>${rcards('mue', [['si', 'Sí, se puede retirar'], ['no', 'No hay muestra']], d.sit.muestra, 's-muestra')}</div>
+    <div class="f" style="display:grid;gap:6px"><b class="small">¿Qué solicita el cliente? ${nw('C05')}</b>${rcards('pret', PRETENSION, d.sit.pret, 's-pret')}</div>
+    <div class="f" style="display:grid;gap:6px"><b class="small">Evidencias</b>
+      <div class="drop" id="drop">${I.upload}<span>Arrastre fotos, videos o PDF aquí</span><div class="row"><label class="btn sm" for="fin">Elegir archivos</label><input type="file" id="fin" multiple accept="image/*,video/*,application/pdf" hidden><button class="btn ghost sm" data-act="fakefile">Usar archivo de ejemplo</button></div><span class="small">Incluya una foto donde se vea el lote del rollo o de la caja.</span></div>
+      ${d.files.length ? `<div class="files">${d.files.map((f, i) => fileChip(f, i)).join('')}</div>` : ''}</div>`;
+  if (k === 5) { const its = Object.keys(d.sel).filter(i => d.sel[i].on).map(i => [s.items[i], d.sel[i]]);
+    const rowS = (l, v, st) => `<div><dt>${l}</dt><dd style="margin:0">${v}</dd><button class="btn ghost sm" data-act="wstep" data-i="${st}">Editar</button></div>`;
+    body = `<h2>Revise antes de enviar</h2><p class="muted">Si algo está mal, use "Editar" para volver a ese paso.</p>
+    <dl class="sum" style="margin:0">
+      ${rowS('Cliente', `<b>${esc(s.cliente)}</b><br><span class="muted small">Factura ${s.factura}</span>`, 0)}
+      ${rowS('Recepción', `Reportado el ${fmtD(d.cli.fechaCli)} por ${esc(d.cli.canal.toLowerCase())}<br><span class="muted small">${esc(d.cli.contacto)} · ${esc(d.cli.medio)}</span>`, 1)}
+      ${rowS('Ítems afectados', its.map(([it, se]) => `${esc(it.desc)}<br><span class="muted small">${n(se.af)} ${it.unidad} (${pct(se.af, it.cant)}) · OP ${it.op || se.op}</span>`).join('<br>'), 2)}
+      ${rowS('Problema', d.motivos.map(m => `<b>${esc(m.def)}</b> <span class="muted small">(${esc(m.area)})</span><br>${esc(m.det)}`).join('<br>'), 3)}
+      ${rowS('Material', `${esc(d.sit.material)} · Muestra: ${d.sit.muestra === 'si' ? 'sí' : 'no'}<br>Solicita: ${esc(d.sit.pret)}`, 4)}
+      ${rowS('Evidencias', d.files.map(esc).join('<br>'), 4)}
+    </dl>`; }
+  const errs = d.errors.length ? `<div class="msg err">${I.alert}<div>Antes de seguir:<ul>${d.errors.map(e => `<li>${esc(e)}</li>`).join('')}</ul></div></div>` : '';
+  const foot = `<div class="wiz-foot"><div class="row">${k > 0 ? `<button class="btn" data-act="wprev">${I.back} Atrás</button>` : ''}<button class="btn ghost" data-act="cancelar">Cancelar</button></div>
+    ${k < 5 ? `<button class="btn pri" data-act="wnext" ${k === 0 && !s ? 'disabled' : ''}>Continuar ${I.next}</button>` : `<button class="btn pri lg" data-act="enviar">${I.check} ${d.editing ? 'Reenviar a Calidad' : 'Enviar reclamo'}</button>`}</div>`;
+  const editNote = d.editing ? (t => `<div class="msg warn">${I.info}<div><b>Corrigiendo ${d.editing} ${nw('C08')}</b><br>Calidad solicita (${esc(t.devolucion?.motivo)}): ${esc(t.devolucion?.obs)}</div></div>`)(T(d.editing)) : '';
+  return `<div class="head"><div><h1>${d.editing ? 'Corregir el ingreso' : 'Ingresar reclamo'}</h1><p>Paso ${k + 1} de ${STEPS.length}. Todos los campos son obligatorios.</p></div></div>
+  ${editNote}${steps}<section class="card">${body}${errs}${foot}</section>`;
+}
+function antecedentes(s) {
+  const prev = db.tickets.filter(t => t.id !== draft.editing && t.cliente === s.cliente && days(t.fecha, today()) <= 365);
+  if (!prev.length) return '';
+  return `<div class="msg info">${I.info}<div><b>Antecedentes de este cliente ${nw('C06')}</b><br>${prev.length} ${prev.length === 1 ? 'solicitud' : 'solicitudes'} en los últimos 12 meses: ${prev.slice(0, 4).map(t => `${esc(t.motivos[0].def).toLowerCase()} (${t.estado.toLowerCase()})`).join(', ')}.</div></div>`;
 }
 
-function flow(t) {
-  const main = ['Recibido', 'En análisis', 'Cerrado'];
-  if (t.estado === 'Rechazado') return `<div class="flow"><span class="s done">Recibido</span><span class="arr">→</span><span class="s cur">Rechazado</span></div>`;
-  if (t.estado === 'Devuelto') return `<div class="flow"><span class="s done">Recibido</span><span class="arr">→</span><span class="s cur">Devuelto al asesor</span><span class="arr">→</span><span class="s">Recibido</span></div>`;
-  const k = main.indexOf(t.estado);
-  return `<div class="flow">${main.map((s, i) => `<span class="s ${i < k ? 'done' : i === k ? 'cur' : ''}">${s}</span>`).join('<span class="arr">→</span>')}</div>`;
+/* ---------- detalle ---------- */
+function track(t) {
+  const st = (cls, i, l) => `<div class="st ${cls}"><i>${i}</i>${l}</div>`;
+  if (t.estado === 'Rechazado') return `<div class="track">${st('done', '✓', 'Recibido')}<div class="ln done"></div>${st('stop', '✕', 'Rechazado')}</div>`;
+  if (t.estado === 'Devuelto') return `<div class="track">${st('done', '✓', 'Recibido')}<div class="ln done"></div>${st('back', '↺', 'Devuelto al asesor')}<div class="ln"></div>${st('', '2', 'En análisis')}<div class="ln"></div>${st('', '3', 'Cerrado')}</div>`;
+  const S = ['Recibido', 'En análisis', 'Cerrado'], k = S.indexOf(t.estado), dn = i => i < k || k === 2;
+  return `<div class="track">${S.map((x, i) => (i ? `<div class="ln ${i <= k ? 'done' : ''}"></div>` : '') + st(dn(i) ? 'done' : i === k ? 'cur' : '', dn(i) ? '✓' : i + 1, x)).join('')}</div>`;
 }
-
 function vDetalle() {
-  const t = T(ui.ticket);
-  const an = t.an;
-  return `<div><button class="btn sm" data-act="go" data-v="bandeja">← Volver</button></div>
-  <div class="head"><div><p class="mono muted" style="margin:0">${t.id}</p><h1>${esc(t.cliente)}</h1></div><div class="row">${t.sev ? `<span class="pill" style="background:var(--surface-2)">${t.sev}</span>` : ''}${t.categoria ? `<span class="pill" style="background:var(--surface-2)">${t.categoria}</span>` : ''}${pill(t.estado)}</div></div>
-  ${flow(t)}
-  ${fueraPlazo(t) ? `<div class="warnbox">Reportado ${days(factFecha(t), t.cli.fechaCli)} días después de la factura; la política permite ${db.params.plazo}. ${nw('C03')}</div>` : ''}
-  <div class="detail">
-    <div style="display:grid;gap:20px;min-width:0">
-      <section class="panel"><h2>Cliente y recepción</h2>
-        <div class="kv"><div><span>Reportado por el cliente ${nw('C01')}</span><span class="mono">${t.cli.fechaCli}</span></div><div><span>Fecha de registro</span><span class="mono">${t.fecha}</span></div><div><span>Canal</span>${esc(t.cli.canal)}</div><div><span>Días abiertos ${nw('C18')}</span>${sem(t)}</div>
-          <div><span>Contacto ${nw('C02')}</span>${esc(t.cli.contacto)}<br><span class="muted">${esc(t.cli.medio)}</span></div><div><span>Registrado por</span>${esc(t.asesor)}</div>
-          <div><span>Estado del material ${nw('C05')}</span>${esc(t.sit.material)}</div><div><span>Muestra física</span>${t.sit.muestra ? 'Sí' : 'No'}</div><div><span>El cliente solicita</span>${esc(t.sit.pret)}</div>
-          ${t.devs ? `<div><span>Devoluciones ${nw('C09')}</span>${t.devs}</div>` : ''}</div></section>
-      <section class="panel"><h2>Ítems afectados y trazabilidad ${nw('C07')}</h2><div class="tbl-wrap"><table><thead><tr><th>Ítem</th><th>OP / Lote</th><th>Fabricación</th><th>Máquina</th><th class="num">Metros</th><th>Operador · turno</th><th>Lote materia prima</th><th class="num">Facturada</th><th class="num">Fuera de esp.</th></tr></thead><tbody>
-        ${t.items.map(i => `<tr><td><span class="mono">${i.codigo}</span><br>${esc(i.desc)}<br><span class="muted mono">${i.factura}</span></td><td class="mono">${i.op}<br>${i.lote}</td><td class="mono">${i.fechaFab}</td><td>${esc(i.maquina)}</td><td class="num">${n(i.metros)}</td><td>${esc(i.operador)} · ${esc(i.turno)}</td><td class="mono">${esc(i.loteMP)}</td><td class="num">${n(i.cantFact)}</td><td class="num"><b>${n(i.afectada)}</b><br><span class="muted">${(i.afectada / i.cantFact * 100).toLocaleString('es-EC', { maximumFractionDigits: 2 })} %</span></td></tr>`).join('')}
-      </tbody></table></div></section>
-      <section class="panel"><h2>Motivos</h2>${t.motivos.map(m => `<div><b>${esc(m.area)} · ${esc(m.def)}</b> ${nw('C04')}<br>${esc(m.det)}</div>`).join('')}</section>
-      <section class="panel"><h2>Evidencias</h2><div class="files">${t.evidencias.map(f => `<div class="file">${esc(f)}</div>`).join('')}</div></section>
-      ${t.rechazo ? `<section class="panel"><h2>Rechazo</h2><div><b>${esc(t.rechazo.motivo)}</b><br>${esc(t.rechazo.obs)}</div></section>` : ''}
-      ${t.asig ? `<section class="panel"><h2>Asignación ${nw('C11')}</h2><div class="kv"><div><span>Área responsable</span>${esc(t.asig.area)}</div><div><span>Responsable</span>${esc(t.asig.resp)}</div><div><span>Fecha compromiso</span><span class="mono">${t.asig.limite}</span></div></div></section>` : ''}
-      ${an && t.estado !== 'En análisis' ? `<section class="panel"><h2>Análisis</h2>
-        <div><b>Contención</b><br>${esc(an.cont)}</div><div><b>Causa raíz</b> <span class="muted">(${esc(an.metodo)} · ${esc(an.m6)})</span> ${nw('C13')}<br>${esc(an.causa)}</div>
-        <div><b>Acciones correctivas</b> ${nw('C14')}<div class="tbl-wrap"><table><thead><tr><th>Acción</th><th>Responsable</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>${an.acciones.map(a => `<tr><td>${esc(a.d)}</td><td>${esc(a.resp)}</td><td class="mono">${a.f}</td><td>${a.ok ? 'Cumplida' : 'Pendiente'}</td></tr>`).join('')}</tbody></table></div></div></section>` : ''}
-      ${t.cierre ? `<section class="panel"><h2>Cierre</h2>
-        <div class="kv"><div><span>Solución al cliente ${nw('C15')}</span>${esc(t.sol.tipo)}${t.sol.cant ? ` · ${n(t.sol.cant)}` : ''}</div><div><span>Costo del reclamo</span>${usd(t.sol.costo)}</div><div><span>Fecha de cierre</span><span class="mono">${t.fechaCierre}</span></div><div><span>Verificación de eficacia ${nw('C16')}</span>${t.verif ? `${t.verif.eficaz ? 'Eficaz' : 'No eficaz'} · ${t.verif.f}` : `Programada <span class="mono">${t.cierre.verif}</span>`}</div></div>
-        <div><b>Informe de cierre</b><br>${esc(t.cierre.informe)}</div>${t.verif?.obs ? `<div><b>Resultado de la verificación</b><br>${esc(t.verif.obs)}</div>` : ''}
-        <div><button class="btn sm" data-act="informe">Ver informe para el cliente</button>${nw('C17')}</div></section>` : ''}
+  const t = T(ui.ticket), an = t.an, af = t.items.reduce((a, i) => a + i.afectada, 0), fc = t.items.reduce((a, i) => a + i.cantFact, 0);
+  const editable = t.estado === 'En análisis' && (ui.role === 'calidad' || (ui.role === 'area' && t.asig?.area === 'Producción'));
+  const hist = t.hist.slice().reverse(), hshow = ui.histAll ? hist : hist.slice(0, 4);
+  return `<section class="tk-head">
+    <div class="tk-title"><div><p class="mono muted small">${t.id} · registrado el ${fmtD(t.fecha)}</p><h1>${esc(t.cliente)}</h1></div>
+      <div class="r">${t.sev ? `<span class="pill plain">${t.sev}</span>` : ''}${t.categoria ? `<span class="pill plain">${t.categoria}</span>` : ''}${pill(t.estado)}</div></div>
+    ${track(t)}
+    <div class="facts">
+      <div><span>Problema</span><b>${esc(t.motivos[0].def)}${t.motivos.length > 1 ? ` <span class="muted">+${t.motivos.length - 1}</span>` : ''}</b></div>
+      <div><span>Fuera de especificación</span><b>${n(af)} ${t.items[0].unidad}</b><span style="text-transform:none;letter-spacing:0">${pct(af, fc)} de lo facturado</span></div>
+      <div><span>Días abiertos ${nw('C18')}</span>${daysCell(t)}</div>
+      <div><span>Responsable ${nw('C11')}</span><b>${t.asig ? esc(t.asig.resp) : '—'}</b>${t.asig ? `<span style="text-transform:none;letter-spacing:0">Compromiso: ${fmtD(t.asig.limite)}</span>` : ''}</div>
+      <div><span>El cliente solicita ${nw('C05')}</span><b>${esc(t.sit.pret)}</b></div>
     </div>
-    <div style="display:grid;gap:20px;min-width:0">
-      <section class="panel">${acciones(t)}</section>
-      <section class="panel"><h2>Historial</h2><ul class="tl">${t.hist.slice().reverse().map(h => `<li><div><b>${esc(h.a)}</b><small>${h.f} · ${esc(h.q)}</small>${h.n ? `<div class="note" style="margin-top:6px">${esc(h.n)}</div>` : ''}</div></li>`).join('')}</ul></section>
+    ${fueraPlazo(t) ? `<div class="msg warn">${I.alert}<span>Reportado ${days(factFecha(t), t.cli.fechaCli)} días después de la factura; la política permite ${db.params.plazo}. ${nw('C03')}</span></div>` : ''}
+  </section>
+  <div class="detail">
+    <div class="col">
+      ${editable ? analisisForm(t) : ''}
+      <details class="card" open><summary><h2>Problema reportado</h2></summary><div class="body">
+        ${t.motivos.map(m => `<div class="motivo"><span class="a">${esc(m.area)}</span><b>${esc(m.def)} ${nw('C04')}</b><span>${esc(m.det)}</span></div>`).join('')}
+        <div class="kv"><div><span>Reportado por el cliente ${nw('C01')}</span>${fmtD(t.cli.fechaCli)} · ${esc(t.cli.canal)}</div><div><span>Contacto ${nw('C02')}</span>${esc(t.cli.contacto)}<br><span class="muted small">${esc(t.cli.medio)}</span></div>
+          <div><span>Material ${nw('C05')}</span>${esc(t.sit.material)}</div><div><span>Muestra física</span>${t.sit.muestra ? 'Sí' : 'No'}</div><div><span>Registrado por</span>${esc(t.asesor.split(' · ')[0])}</div>${t.devs ? `<div><span>Devoluciones ${nw('C09')}</span>${t.devs}</div>` : ''}</div>
+      </div></details>
+      <details class="card" ${ui.role !== 'asesor' ? 'open' : ''}><summary><h2>Ítems y trazabilidad ${nw('C07')}</h2></summary><div class="body"><div class="tbl-wrap"><table><thead><tr><th>Ítem</th><th>OP · Lote</th><th>Producción</th><th class="num">Metros</th><th>Lote MP</th><th class="num">Fuera de esp.</th></tr></thead><tbody>
+        ${t.items.map(i => `<tr><td style="min-width:200px"><b>${esc(i.desc)}</b><br><span class="mono muted">${i.codigo} · ${i.factura}</span></td><td class="mono">${i.op}<br>${i.lote}</td><td style="min-width:150px">${esc(i.maquina)}<br><span class="muted small">${fmtD(i.fechaFab)} · ${esc(i.operador)}, turno ${esc(i.turno.toLowerCase())}</span></td><td class="num">${n(i.metros)}</td><td class="mono">${esc(i.loteMP)}</td><td class="num"><b>${n(i.afectada)}</b><br><span class="muted small">de ${n(i.cantFact)}</span></td></tr>`).join('')}
+      </tbody></table></div></div></details>
+      <details class="card" open><summary><h2>Evidencias <span class="muted small">(${t.evidencias.length})</span></h2></summary><div class="body"><div class="files">${t.evidencias.map(f => fileChip(f)).join('')}</div></div></details>
+      ${t.rechazo ? `<section class="card"><h2>Motivo del rechazo</h2><div class="motivo"><b>${esc(t.rechazo.motivo)}</b><span>${esc(t.rechazo.obs)}</span></div></section>` : ''}
+      ${an && !editable && an.causa ? `<section class="card"><h2>Análisis</h2>
+        <div class="kv"><div><span>Contención</span>${esc(an.cont)}</div><div><span>Causa raíz ${nw('C13')}</span>${esc(an.causa)}<br><span class="muted small">${esc(an.metodo)} · ${esc(an.m6)}</span></div></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Acción correctiva ${nw('C14')}</th><th>Responsable</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>${an.acciones.map(a => `<tr><td>${esc(a.d)}</td><td>${esc(a.resp)}</td><td>${fmtD(a.f)}</td><td>${a.ok ? '<span class="pill st-Cerrado">Cumplida</span>' : '<span class="pill st-Devuelto">Pendiente</span>'}</td></tr>`).join('')}</tbody></table></div></section>` : ''}
+      ${t.cierre ? `<section class="card"><div class="card-h"><h2>Cierre</h2><button class="btn sm r" data-act="informe">${I.file} Informe para el cliente</button>${nw('C17')}</div>
+        <div class="kv"><div><span>Solución ${nw('C15')}</span>${esc(t.sol.tipo)}${t.sol.cant ? ` · ${n(t.sol.cant)}` : ''}</div><div><span>Costo</span><b>${usd(t.sol.costo)}</b></div><div><span>Cerrado el</span>${fmtD(t.fechaCierre)}</div><div><span>Eficacia ${nw('C16')}</span>${t.verif ? (t.verif.eficaz ? '<span class="pill st-Cerrado">Eficaz</span>' : '<span class="pill st-Rechazado">No eficaz</span>') : `Verificar el ${fmtD(t.cierre.verif)}`}</div></div>
+        <div><span class="muted small">Informe de cierre</span><p>${esc(t.cierre.informe)}</p></div>${t.verif?.obs ? `<div><span class="muted small">Resultado de la verificación</span><p>${esc(t.verif.obs)}</p></div>` : ''}</section>` : ''}
+    </div>
+    <div class="col side-col">
+      ${nextStep(t)}
+      <section class="card"><h2>Historial</h2><ul class="tl">${hshow.map(h => `<li><div><b>${esc(h.a)}</b><small>${h.f.replace(' ', ' · ')} · ${esc(h.q.split(' · ')[0])}</small>${h.n ? `<div class="note">${esc(h.n)}</div>` : ''}</div></li>`).join('')}</ul>
+        ${hist.length > 4 ? `<button class="btn ghost sm" data-act="histall">${ui.histAll ? 'Ver menos' : `Ver todo (${hist.length})`}</button>` : ''}</section>
     </div>
   </div>`;
 }
-
-function analisisForm(t, puedeCerrar) {
+function anState(t) {
+  const an = t.an || {}, s = t.sol || {};
+  return { cont: !!an.cont?.trim(), causa: !!(an.metodo && an.m6 && an.causa?.trim()), acc: !!an.acciones?.length && an.acciones.every(a => a.d.trim() && a.resp.trim() && a.f), sol: !!s.tipo && s.costo !== '' && s.costo != null };
+}
+function analisisForm(t) {
   const an = t.an || (t.an = { cont: '', metodo: '', m6: '', causa: '', acciones: [] });
   const s = t.sol || (t.sol = { tipo: '', cant: '', costo: '' });
-  const r = ui.rev || {};
-  const ok = { cont: !!an.cont.trim(), causa: !!(an.metodo && an.m6 && an.causa.trim()), acc: an.acciones.length > 0 && an.acciones.every(a => a.d.trim() && a.resp.trim() && a.f), sol: !!s.tipo && s.costo !== '' };
-  return `<h2>Análisis del reclamo</h2>
-    <ul class="steps"><li class="${ok.cont ? 'done' : ''}">Contención</li><li class="${ok.causa ? 'done' : ''}">Causa raíz ${nw('C13')}</li><li class="${ok.acc ? 'done' : ''}">Acciones correctivas ${nw('C14')}</li><li class="${ok.sol ? 'done' : ''}">Solución al cliente y costo ${nw('C15')}</li><li>Cierre (solo Calidad)</li></ul>
-    <label class="f">Contención inmediata<textarea id="an-cont" data-in="an-cont" placeholder="Qué se hizo con el material en bodega y en el cliente">${esc(an.cont)}</textarea></label>
-    <div class="inline-f"><label class="f">Método<select id="an-metodo" data-in="an-metodo"><option value="">Seleccione…</option>${METODOS.map(x => `<option ${an.metodo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
-      <label class="f">Categoría 6M<select id="an-m6" data-in="an-m6"><option value="">Seleccione…</option>${M6.map(x => `<option ${an.m6 === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label></div>
-    <label class="f">Causa raíz<textarea id="an-causa" data-in="an-causa">${esc(an.causa)}</textarea></label>
-    <div style="display:grid;gap:8px"><b style="font-size:.85rem">Acciones correctivas</b>
-      ${an.acciones.map((a, i) => `<div class="acc"><input type="text" id="ad${i}" data-in="ac-d" data-i="${i}" value="${esc(a.d)}" placeholder="Acción"><input type="text" id="ar${i}" data-in="ac-resp" data-i="${i}" value="${esc(a.resp)}" placeholder="Responsable"><input type="text" id="acf${i}" data-in="ac-f" data-i="${i}" value="${esc(a.f)}" placeholder="AAAA-MM-DD"><label class="row" style="font-size:.82rem"><input type="checkbox" id="ao${i}" data-act="acok" data-i="${i}" ${a.ok ? 'checked' : ''}> Cumplida</label></div>`).join('')}
-      <div><button class="btn sm" data-act="addacc">Agregar acción</button></div></div>
-    <div class="inline-f"><label class="f">Solución al cliente<select id="so-tipo" data-in="so-tipo"><option value="">Seleccione…</option>${SOLUCION.map(x => `<option ${s.tipo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
+  const ok = anState(t);
+  const step = (k, num, title, inner, tag) => `<div class="astep ${ok[k] ? 'done' : ''}"><h3><span class="n">${ok[k] ? '✓' : num}</span>${title} ${tag || ''}</h3>${inner}</div>`;
+  return `<section class="card" style="border-color:var(--brand)"><div class="card-h"><h2>Análisis del reclamo</h2><span class="muted small r">${ui.role === 'area' ? 'Lo completa su área; Calidad cierra.' : 'Lo completa el área responsable; usted también puede editarlo.'} ${nw('C12')}</span></div>
+    ${step('cont', 1, 'Contención inmediata', `<textarea id="an-cont" data-in="an-cont" placeholder="Qué se hizo con el material en bodega y en el cliente">${esc(an.cont)}</textarea>`)}
+    ${step('causa', 2, 'Causa raíz', `<div class="fields"><label class="f">Método<select id="an-metodo" data-in="an-metodo"><option value="">Elija…</option>${METODOS.map(x => `<option ${an.metodo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
+      <label class="f">Categoría 6M<select id="an-m6" data-in="an-m6"><option value="">Elija…</option>${M6.map(x => `<option ${an.m6 === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label></div>
+      <label class="f">Descripción de la causa<textarea id="an-causa" data-in="an-causa" placeholder="Por qué ocurrió">${esc(an.causa)}</textarea></label>`, nw('C13'))}
+    ${step('acc', 3, 'Acciones correctivas', `${an.acciones.length ? an.acciones.map((a, i) => `<div class="acc"><input type="text" id="ad${i}" data-in="ac-d" data-i="${i}" value="${esc(a.d)}" placeholder="Acción" aria-label="Acción"><input type="text" id="ar${i}" data-in="ac-resp" data-i="${i}" value="${esc(a.resp)}" placeholder="Responsable" aria-label="Responsable"><input type="date" id="acf${i}" data-in="ac-f" data-i="${i}" value="${esc(a.f)}" aria-label="Fecha compromiso"><label class="row small" style="font-weight:600"><input type="checkbox" id="ao${i}" data-act="acok" data-i="${i}" ${a.ok ? 'checked' : ''}> Cumplida</label><button class="btn ghost sm" data-act="rmacc" data-i="${i}" aria-label="Quitar acción">${I.x}</button></div>`).join('') : '<p class="muted small">Aún no hay acciones.</p>'}
+      <div><button class="btn sm" data-act="addacc">${I.plus} Agregar acción</button></div>`, nw('C14'))}
+    ${step('sol', 4, 'Solución al cliente y costo', `<div class="fields"><label class="f">Solución<select id="so-tipo" data-in="so-tipo"><option value="">Elija…</option>${SOLUCION.map(x => `<option ${s.tipo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
       <label class="f">Cantidad<input type="number" id="so-cant" data-in="so-cant" value="${esc(s.cant)}" min="0"></label>
-      <label class="f">Costo (USD)<input type="number" id="so-costo" data-in="so-costo" value="${esc(s.costo)}" min="0" step="0.01"></label></div>
-    ${puedeCerrar ? `<hr style="border:0;border-top:1px solid var(--line);width:100%">
-      <label class="f">Informe de cierre<textarea id="inf" data-in="inf">${esc(r.inf || '')}</textarea></label>
-      <label class="f">Verificar eficacia el ${nw('C16')}<input type="text" id="verif" data-in="verif" value="${esc(r.verif ?? addDays(today(), 30))}" placeholder="AAAA-MM-DD"></label>
-      ${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="guardar">Guardar avance</button><button class="btn pri" data-act="cerrar">Cerrar solicitud</button></div>`
-    : `${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="guardar">Guardar avance</button><button class="btn pri" data-act="listo">Enviar a Calidad para cierre</button></div>`}`;
+      <label class="f">Costo (USD)<input type="number" id="so-costo" data-in="so-costo" value="${esc(s.costo)}" min="0" step="0.01"><span class="hint">0 si no hubo costo.</span></label></div>`, nw('C15'))}
+  </section>`;
 }
-
-function acciones(t) {
+function nextStep(t) {
   const r = ui.rev || {};
+  const wrap = (title, inner) => `<section class="card next"><span class="tag">Su siguiente paso</span><h2>${title}</h2>${inner}</section>`;
+  const info = (title, txt, extra = '') => `<section class="card"><h2>${title}</h2><p class="muted">${txt}</p>${extra}</section>`;
+  const err = r.err ? `<div class="msg err">${I.alert}<span>${esc(r.err)}</span></div>` : '';
   if (ui.role === 'area') {
-    if (t.estado === 'En análisis') return analisisForm(t, false);
-    return `<h2>Sin acciones</h2><p class="muted" style="margin:0">Esta solicitud no está en análisis.</p>`;
+    if (t.estado !== 'En análisis' || t.asig?.area !== 'Producción') return info('Sin acciones', 'Esta solicitud no está en análisis en su área.');
+    const ok = anState(t), done = Object.values(ok).filter(Boolean).length;
+    return wrap('Complete el análisis', `<div class="progress"><i style="width:${done / 4 * 100}%"></i></div><ul class="checklist">${[['cont', 'Contención'], ['causa', 'Causa raíz'], ['acc', 'Acciones correctivas'], ['sol', 'Solución y costo']].map(([k, l]) => `<li class="${ok[k] ? 'done' : ''}"><i>${ok[k] ? '✓' : ''}</i>${l}</li>`).join('')}</ul>
+      <p class="muted small">Fecha compromiso: <b>${fmtD(t.asig.limite)}</b></p>${err}<button class="btn pri block" data-act="listo">Enviar a Calidad para cierre</button><button class="btn block" data-act="guardar">Guardar avance</button>`);
   }
   if (ui.role === 'calidad') {
     if (t.estado === 'Recibido') {
-      if (!r.step) return `<h2>Revisar ingreso</h2><p class="q">¿Está completa la información?</p>
-        <div class="row"><button class="btn pri" data-act="rv" data-v="procede">Sí, está completa</button><button class="btn" data-act="rv" data-v="devolver">No, devolver</button></div>`;
-      if (r.step === 'devolver') return `<h2>Devolver al asesor</h2>
-        <label class="f">Motivo de devolución ${nw('C09')}<select id="dmot" data-in="dmot"><option value="">Seleccione…</option>${db.devolucion.filter(c => c.on).map(c => `<option ${r.dmot === c.t ? 'selected' : ''}>${esc(c.t)}</option>`).join('')}</select></label>
-        <label class="f">Qué información falta<textarea id="obs" data-in="obs">${esc(r.obs || '')}</textarea></label>
-        ${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="rv" data-v="">Atrás</button><button class="btn pri" data-act="devolver">Devolver y notificar</button></div>`;
-      if (r.step === 'procede') return `<h2>Revisar ingreso</h2><p class="muted" style="margin:0">Información completa ✓</p><p class="q">¿Procede el requerimiento?</p>
-        <div class="row"><button class="btn pri" data-act="rv" data-v="aceptar">Sí, procede</button><button class="btn dan" data-act="rv" data-v="rechazar">No procede</button><button class="btn" data-act="rv" data-v="">Atrás</button></div>`;
-      if (r.step === 'aceptar') return `<h2>Categorizar y asignar</h2><div style="display:grid;gap:8px">${Object.entries(CATEG).map(([c, def]) => `<label class="radio ${r.cat === c ? 'on' : ''}" style="display:block"><input type="radio" name="cat" id="cat-${c}" data-act="cat" data-v="${c}" ${r.cat === c ? 'checked' : ''}> ${c}<div class="def">${def}</div></label>`).join('')}</div>
-        <label class="f">Severidad ${nw('C10')}<select id="sev" data-in="sev"><option value="">Seleccione…</option>${Object.keys(SEVERIDAD).map(s => `<option ${r.sev === s ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
-        ${r.sev ? `<p class="muted" style="margin:-6px 0 0;font-size:.82rem">${SEVERIDAD[r.sev]}</p>` : ''}
-        <label class="f">Área responsable del análisis ${nw('C11')}<select id="aarea" data-in="aarea"><option value="">Seleccione…</option>${AREAS.map(a => `<option ${r.aarea === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label>
-        ${r.aarea ? `<p class="muted" style="margin:-6px 0 0;font-size:.82rem">Responsable: ${RESP[r.aarea]}. Recibirá una notificación.</p>` : ''}
-        <label class="f">Fecha compromiso<input type="text" id="alim" data-in="alim" value="${esc(r.alim ?? addDays(today(), db.params.sla))}"></label>
-        ${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="rv" data-v="procede">Atrás</button><button class="btn pri" data-act="aceptar">Aceptar y pasar a análisis</button></div>`;
-      if (r.step === 'rechazar') return `<h2>Rechazar solicitud</h2>
-        <label class="f">Motivo de rechazo (catálogo)<select id="mot" data-in="mot"><option value="">Seleccione…</option>${db.rechazo.filter(c => c.on).map(c => `<option ${r.mot === c.t ? 'selected' : ''}>${esc(c.t)}</option>`).join('')}</select></label>
-        <label class="f">Observación<textarea id="obs" data-in="obs">${esc(r.obs || '')}</textarea></label>
-        ${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="rv" data-v="procede">Atrás</button><button class="btn pri" data-act="rechazar">Rechazar y cerrar</button></div>`;
+      if (!r.step) return wrap('Revisar el ingreso', `<p class="muted">¿La información está completa para analizar?</p><div class="decide">
+        <button data-act="rv" data-v="procede"><b>${I.check} Sí, está completa</b><small>Luego decide si procede o no.</small></button>
+        <button data-act="rv" data-v="devolver" class="neg"><b>${I.back} No, falta información</b><small>Vuelve al asesor para que corrija.</small></button></div>`);
+      if (r.step === 'devolver') return wrap('Devolver al asesor', `<label class="f">Motivo ${nw('C09')}<select id="dmot" data-in="dmot"><option value="">Elija el motivo…</option>${db.devolucion.filter(c => c.on).map(c => `<option ${r.dmot === c.t ? 'selected' : ''}>${esc(c.t)}</option>`).join('')}</select></label>
+        <label class="f">Qué debe corregir<textarea id="obs" data-in="obs" placeholder="Sea específico para evitar otra devolución">${esc(r.obs || '')}</textarea></label>${err}
+        <button class="btn pri block" data-act="devolver">Devolver y notificar</button><button class="btn ghost block" data-act="rv" data-v="">${I.back} Atrás</button>`);
+      if (r.step === 'procede') return wrap('¿Procede el requerimiento?', `<div class="msg ok">${I.check}<span>Información completa</span></div><div class="decide">
+        <button data-act="rv" data-v="aceptar"><b>${I.check} Sí, procede</b><small>Categoriza y asigna al área responsable.</small></button>
+        <button data-act="rv" data-v="rechazar" class="neg"><b>${I.x} No procede</b><small>Se rechaza con motivo del catálogo.</small></button></div><button class="btn ghost block" data-act="rv" data-v="">${I.back} Atrás</button>`);
+      if (r.step === 'aceptar') return wrap('Categorizar y asignar', `<div style="display:grid;gap:6px"><b class="small">Categoría ${nw('C10')}</b>${rcards('cat', Object.keys(CATEG), r.cat, 'r-cat', CATEG)}</div>
+        <div style="display:grid;gap:6px"><b class="small">Severidad ${nw('C10')}</b>${rcards('sev', Object.keys(SEVERIDAD), r.sev, 'r-sev', SEVERIDAD)}</div>
+        <label class="f">Área responsable ${nw('C11')}<select id="aarea" data-in="aarea"><option value="">Elija el área…</option>${AREAS.map(a => `<option ${r.aarea === a ? 'selected' : ''}>${a}</option>`).join('')}</select>${r.aarea ? `<span class="hint">Se notificará a: ${RESP[r.aarea]}</span>` : ''}</label>
+        <label class="f">Fecha compromiso<input type="date" id="alim" data-in="alim" value="${esc(r.alim ?? addDays(today(), db.params.sla))}" min="${today()}"></label>${err}
+        <button class="btn pri block" data-act="aceptar">Aceptar y pasar a análisis</button><button class="btn ghost block" data-act="rv" data-v="procede">${I.back} Atrás</button>`);
+      if (r.step === 'rechazar') return wrap('Rechazar la solicitud', `<label class="f">Motivo del catálogo<select id="mot" data-in="mot"><option value="">Elija el motivo…</option>${db.rechazo.filter(c => c.on).map(c => `<option ${r.mot === c.t ? 'selected' : ''}>${esc(c.t)}</option>`).join('')}</select></label>
+        <label class="f">Observación<textarea id="obs" data-in="obs" placeholder="Explique la decisión al asesor">${esc(r.obs || '')}</textarea></label>${err}
+        <button class="btn dan block" data-act="rechazar">Rechazar solicitud</button><button class="btn ghost block" data-act="rv" data-v="procede">${I.back} Atrás</button>`);
     }
-    if (t.estado === 'En análisis') return analisisForm(t, true);
-    if (t.estado === 'Devuelto') return `<h2>Esperando al asesor</h2><p class="muted" style="margin:0">La solicitud fue devuelta. Volverá a tu bandeja cuando el asesor corrija el ingreso.</p>`;
+    if (t.estado === 'En análisis') {
+      const ok = anState(t), done = Object.values(ok).filter(Boolean).length;
+      return wrap('Cerrar cuando el análisis esté completo', `<div class="progress"><i style="width:${done / 4 * 100}%"></i></div><ul class="checklist">${[['cont', 'Contención'], ['causa', 'Causa raíz'], ['acc', 'Acciones correctivas'], ['sol', 'Solución y costo']].map(([k, l]) => `<li class="${ok[k] ? 'done' : ''}"><i>${ok[k] ? '✓' : ''}</i>${l}</li>`).join('')}</ul>
+        <label class="f">Informe de cierre<textarea id="inf" data-in="inf" placeholder="Resumen para el cliente">${esc(r.inf || '')}</textarea></label>
+        <label class="f">Verificar eficacia el ${nw('C16')}<input type="date" id="verif" data-in="verif" value="${esc(r.verif ?? addDays(today(), 30))}" min="${today()}"></label>${err}
+        <button class="btn pri block" data-act="cerrar" ${done < 4 ? 'disabled title="Complete los 4 pasos del análisis"' : ''}>Cerrar solicitud</button><button class="btn block" data-act="guardar">Guardar avance</button>`);
+    }
+    if (t.estado === 'Devuelto') return info('Esperando al asesor', 'La solicitud fue devuelta. Volverá a su bandeja cuando el asesor corrija el ingreso.');
     if (t.estado === 'Cerrado' && !t.verif) {
-      if (r.step === 'verif') return `<h2>Verificación de eficacia ${nw('C16')}</h2>
-        <div style="display:grid;gap:8px">${[['si', 'Eficaz: el problema no se repitió'], ['no', 'No eficaz: se repitió']].map(([v, l]) => `<label class="radio ${r.ef === v ? 'on' : ''}"><input type="radio" name="ef" id="ef-${v}" data-act="ef" data-v="${v}" ${r.ef === v ? 'checked' : ''}> ${l}</label>`).join('')}</div>
-        <label class="f">Evidencia de la verificación<textarea id="vobs" data-in="vobs">${esc(r.vobs || '')}</textarea></label>
-        ${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="rv" data-v="">Atrás</button><button class="btn pri" data-act="verificar">Registrar verificación</button></div>`;
-      return `<h2>Solicitud cerrada</h2><p class="muted" style="margin:0">Verificación de eficacia programada para el <span class="mono">${t.cierre.verif}</span>.</p>
-        <div class="row"><button class="btn pri" data-act="rv" data-v="verif">Registrar verificación</button>${nw('C16')}</div>
-        <div class="row"><button class="btn sm" data-act="reabrir">Reabrir (solo Jefe de Calidad)</button>${nw('C23')}</div>`;
+      if (r.step === 'verif') return wrap('Verificar eficacia', `<p class="muted">¿La acción correctiva evitó que el problema se repita? ${nw('C16')}</p>${rcards('ef', [['si', 'Eficaz: no se repitió'], ['no', 'No eficaz: se repitió']], r.ef, 'r-ef')}
+        <label class="f">Evidencia<textarea id="vobs" data-in="vobs" placeholder="Qué se revisó">${esc(r.vobs || '')}</textarea></label>${err}
+        <button class="btn pri block" data-act="verificar">Registrar verificación</button><button class="btn ghost block" data-act="rv" data-v="">${I.back} Atrás</button>`);
+      return wrap('Verificar eficacia', `<p class="muted">Programada para el <b>${fmtD(t.cierre.verif)}</b>.</p><button class="btn pri block" data-act="rv" data-v="verif">Registrar verificación</button><button class="btn ghost block" data-act="reabrir">Reabrir solicitud ${nw('C23')}</button>`);
     }
-    return `<h2>Solicitud finalizada</h2><p class="muted" style="margin:0">No hay acciones pendientes.</p><div class="row"><button class="btn sm" data-act="reabrir">Reabrir (solo Jefe de Calidad)</button>${nw('C23')}</div>`;
+    return info('Solicitud finalizada', 'No hay acciones pendientes.', `<button class="btn ghost sm" data-act="reabrir">Reabrir solicitud ${nw('C23')}</button>`);
   }
-  if (t.estado === 'Devuelto') return `<h2>Corregir el ingreso ${nw('C08')}</h2>
-      <div class="note"><b>Calidad solicita (${esc(t.devolucion?.motivo)}):</b><br>${esc(t.devolucion?.obs)}</div>
-      <p class="muted" style="margin:0">Puede cambiar ítems, cantidades, motivos y evidencias. El ticket conserva su número e historial.</p>
-      <button class="btn pri" data-act="corregir">Corregir y reenviar</button>`;
-  if (t.estado === 'Recibido') return `<h2>Estado</h2><p class="muted" style="margin:0">Calidad está revisando el ingreso.</p>
-    ${r.step === 'anular' ? `<label class="f">Motivo de anulación<textarea id="anobs" data-in="anobs">${esc(r.anobs || '')}</textarea></label>${r.err ? `<p class="err">${r.err}</p>` : ''}<div class="row"><button class="btn" data-act="rv" data-v="">Atrás</button><button class="btn dan" data-act="anular">Anular solicitud</button></div>`
-    : `<div class="row"><button class="btn sm dan" data-act="rv" data-v="anular">Anular (ingresado por error)</button>${nw('C23')}</div>`}`;
-  const msg = { 'En análisis': `Asignado a ${t.asig?.area}. Fecha compromiso: ${t.asig?.limite}.`, 'Cerrado': 'La solicitud fue cerrada.', 'Rechazado': 'La solicitud fue rechazada.' }[t.estado];
-  return `<h2>Estado</h2><p class="muted" style="margin:0">${esc(msg)}</p>${t.cierre ? `<button class="btn sm" data-act="informe">Ver informe para el cliente</button>` : ''}`;
+  if (t.estado === 'Devuelto') return wrap('Corregir y reenviar', `<div class="msg warn">${I.info}<div><b>${esc(t.devolucion?.motivo)}</b><br>${esc(t.devolucion?.obs)}</div></div>
+    <p class="muted small">Puede cambiar ítems, cantidades, problema y evidencias. El ticket conserva su número e historial. ${nw('C08')}</p><button class="btn pri block" data-act="corregir">Corregir el ingreso</button>`);
+  if (t.estado === 'Recibido') return info('En revisión de Calidad', 'Le avisaremos cuando Calidad tome una decisión.',
+    r.step === 'anular' ? `<label class="f">Motivo de anulación<textarea id="anobs" data-in="anobs">${esc(r.anobs || '')}</textarea></label>${err}<button class="btn dan block" data-act="anular">Anular solicitud</button><button class="btn ghost block" data-act="rv" data-v="">Atrás</button>` : `<button class="btn ghost sm" data-act="rv" data-v="anular">Anular (ingresado por error) ${nw('C23')}</button>`);
+  const msg = { 'En análisis': `Asignado a ${t.asig?.area}. Fecha compromiso: ${fmtD(t.asig?.limite)}.`, 'Cerrado': 'La solicitud fue cerrada. Puede enviar el informe al cliente.', 'Rechazado': 'La solicitud fue rechazada. Revise el motivo.' }[t.estado];
+  return info('Estado', msg, t.cierre ? `<button class="btn pri block" data-act="informe">${I.file} Ver informe para el cliente</button>` : '');
 }
 
 function vInforme() {
   const t = T(ui.ticket), an = t.an || {};
-  return `<div class="row"><button class="btn sm" data-act="open" data-id="${t.id}">← Volver al ticket</button><span class="muted" style="font-size:.85rem">En el sistema real este informe se descarga en PDF con el formato ETIMET. ${nw('C17')}</span></div>
+  return `<div class="msg info">${I.info}<span>En el sistema real este informe se descarga en PDF con el formato ETIMET. ${nw('C17')}</span></div>
   <article class="doc">
-    <div class="hd"><div><b style="font-family:var(--f-display);font-size:1.2rem">ETIMET CIA. LTDA.</b><br><span class="muted">Respuesta a ${t.categoria ? t.categoria.toLowerCase() : 'solicitud'} de cliente</span></div><div class="mono" style="text-align:right">${t.id}<br>${t.fechaCierre || today()}</div></div>
-    <h2>1. Datos del cliente</h2><div class="kv"><div><span>Cliente</span>${esc(t.cliente)}</div><div><span>Atención</span>${esc(t.cli.contacto)}</div><div><span>Fecha de reporte</span>${t.cli.fechaCli}</div></div>
+    <div class="hd"><div><b style="font-family:var(--f-display);font-size:1.25rem">ETIMET CIA. LTDA.</b><br><span class="muted">Respuesta a ${t.categoria ? t.categoria.toLowerCase() : 'solicitud'} de cliente</span></div><div class="mono" style="text-align:right">${t.id}<br>${fmtD(t.fechaCierre || today())}</div></div>
+    <h2>1. Datos del cliente</h2><div class="kv"><div><span>Cliente</span>${esc(t.cliente)}</div><div><span>Atención</span>${esc(t.cli.contacto)}</div><div><span>Fecha de reporte</span>${fmtD(t.cli.fechaCli)}</div></div>
     <h2>2. Producto</h2><div class="tbl-wrap"><table><thead><tr><th>Producto</th><th>Factura</th><th>Lote</th><th class="num">Cantidad reportada</th></tr></thead><tbody>${t.items.map(i => `<tr><td>${esc(i.desc)}</td><td class="mono">${i.factura}</td><td class="mono">${i.lote}</td><td class="num">${n(i.afectada)} ${i.unidad}</td></tr>`).join('')}</tbody></table></div>
-    <h2>3. Descripción del problema</h2>${t.motivos.map(m => `<p style="margin:0"><b>${esc(m.def)}.</b> ${esc(m.det)}</p>`).join('')}
-    <h2>4. Análisis y causa</h2><p style="margin:0">${esc(an.causa || '—')}</p>
+    <h2>3. Descripción del problema</h2>${t.motivos.map(m => `<p><b>${esc(m.def)}.</b> ${esc(m.det)}</p>`).join('')}
+    <h2>4. Análisis y causa</h2><p>${esc(an.causa || '—')}</p>
     <h2>5. Acciones tomadas</h2><ul style="margin:0">${(an.acciones || []).map(a => `<li>${esc(a.d)}</li>`).join('')}</ul>
-    <h2>6. Solución</h2><p style="margin:0">${esc(t.sol?.tipo || '—')}${t.sol?.cant ? `: ${n(t.sol.cant)} ${t.items[0].unidad}` : ''}.</p>
-    <p class="muted" style="margin:0;font-size:.85rem">Elaborado por: Departamento de Calidad · ETIMET CIA. LTDA.</p>
+    <h2>6. Solución</h2><p>${esc(t.sol?.tipo || '—')}${t.sol?.cant ? `: ${n(t.sol.cant)} ${t.items[0].unidad}` : ''}.</p>
+    <p class="muted small">Elaborado por: Departamento de Calidad · ETIMET CIA. LTDA.</p>
   </article>`;
 }
 
+/* ---------- catálogos ---------- */
 function vCatalogo() {
-  const sub = [['rech', 'Motivos de rechazo'], ['dev', 'Motivos de devolución'], ['def', 'Tipos de defecto'], ['par', 'Parámetros']];
-  const tag = { dev: nw('C09'), def: nw('C04'), par: nw('C22') };
-  let body = '';
-  if (ui.cat === 'par') body = `<section class="panel"><h2>Parámetros ${nw('C22')}</h2><p class="muted" style="margin:0">Valores de ejemplo. Calidad debe definir los reales antes del desarrollo.</p>
-    <div class="inline-f"><label class="f">Plazo de la política de reclamos (días desde la factura)<input type="number" id="p-plazo" data-in="p-plazo" value="${db.params.plazo}" min="1"></label>
-    <label class="f">Plazo de respuesta / análisis (días)<input type="number" id="p-sla" data-in="p-sla" value="${db.params.sla}" min="1"></label></div>
-    <h3>Responsables por área</h3><div class="tbl-wrap"><table><thead><tr><th>Área</th><th>Responsable del análisis</th></tr></thead><tbody>${AREAS.map(a => `<tr><td>${a}</td><td>${RESP[a]}</td></tr>`).join('')}</tbody></table></div></section>`;
+  const sub = [['rech', 'Motivos de rechazo', ''], ['dev', 'Motivos de devolución', 'C09'], ['def', 'Tipos de defecto', 'C04'], ['par', 'Parámetros', 'C22']];
+  let body;
+  if (ui.cat === 'par') body = `<section class="card"><h2>Parámetros ${nw('C22')}</h2><div class="msg warn">${I.info}<span>Valores de ejemplo. Calidad debe confirmar los reales antes del desarrollo.</span></div>
+    <div class="fields"><label class="f">Plazo de la política de reclamos<input type="number" id="p-plazo" data-in="p-plazo" value="${db.params.plazo}" min="1"><span class="hint">Días desde la fecha de factura.</span></label>
+    <label class="f">Plazo de respuesta<input type="number" id="p-sla" data-in="p-sla" value="${db.params.sla}" min="1"><span class="hint">Días para analizar y cerrar.</span></label></div></section>
+    <section class="card"><h2>Responsables por área</h2><div class="tbl-wrap"><table><thead><tr><th>Área</th><th>Responsable del análisis</th></tr></thead><tbody>${AREAS.map(a => `<tr><td>${a}</td><td>${RESP[a]}</td></tr>`).join('')}</tbody></table></div></section>`;
   else {
-    const key = { rech: 'rechazo', dev: 'devolucion', def: 'defectos' }[ui.cat];
-    const list = db[key];
-    const uso = c => key === 'rechazo' ? db.tickets.filter(t => t.rechazo?.motivo === c.t).length : key === 'devolucion' ? db.tickets.filter(t => t.devolucion?.motivo === c.t || t.hist.some(h => h.a.includes(c.t))).length : db.tickets.filter(t => t.motivos.some(m => m.def === c.t)).length;
-    body = `<section class="panel"><div class="row">${key === 'defectos' ? `<label class="f" style="min-width:180px">Área<select id="narea" data-in="narea">${AREAS.map(a => `<option ${ui.narea === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label>` : ''}
-      <label class="f" style="flex:1;min-width:220px">Nueva opción<input type="text" id="nm" placeholder="Escriba la nueva opción"></label><button class="btn pri" data-act="addcat" style="align-self:end">Agregar</button></div>
-    ${ui.catErr ? `<p class="err">${ui.catErr}</p>` : ''}
-    <div class="tbl-wrap"><table><thead><tr>${key === 'defectos' ? '<th>Área</th>' : ''}<th>Opción</th><th class="num">Solicitudes</th><th>Estado</th><th></th></tr></thead><tbody>
-    ${list.map((c, i) => `<tr>${key === 'defectos' ? `<td>${c.area}</td>` : ''}<td>${esc(c.t)}</td><td class="num">${uso(c)}</td><td>${c.on ? 'Activo' : '<span class="muted">Inactivo</span>'}</td><td><button class="btn sm" data-act="togcat" data-i="${i}">${c.on ? 'Desactivar' : 'Activar'}</button></td></tr>`).join('')}
-    </tbody></table></div></section>`;
+    const key = { rech: 'rechazo', dev: 'devolucion', def: 'defectos' }[ui.cat], list = db[key];
+    const uso = c => key === 'rechazo' ? db.tickets.filter(t => t.rechazo?.motivo === c.t).length : key === 'devolucion' ? db.tickets.filter(t => t.hist.some(h => h.a.includes(c.t))).length : db.tickets.filter(t => t.motivos.some(m => m.def === c.t)).length;
+    body = `<section class="card"><div class="filters">${key === 'defectos' ? `<select id="narea" data-in="narea" style="flex:0 1 220px" aria-label="Área">${AREAS.map(a => `<option ${ui.narea === a ? 'selected' : ''}>${a}</option>`).join('')}</select>` : ''}
+      <input type="text" id="nm" placeholder="Escriba la nueva opción" style="flex:1 1 240px" aria-label="Nueva opción"><button class="btn pri" data-act="addcat">${I.plus} Agregar</button></div>
+      ${ui.catErr ? `<div class="msg err">${I.alert}<span>${ui.catErr}</span></div>` : ''}
+      <div class="tbl-wrap"><table><thead><tr>${key === 'defectos' ? '<th>Área</th>' : ''}<th>Opción</th><th class="num">En uso</th><th>Estado</th><th></th></tr></thead><tbody>
+      ${list.map((c, i) => `<tr>${key === 'defectos' ? `<td class="muted">${c.area}</td>` : ''}<td>${esc(c.t)}</td><td class="num">${uso(c)}</td><td>${c.on ? '<span class="pill st-Cerrado">Activa</span>' : '<span class="pill plain">Inactiva</span>'}</td><td class="num"><button class="btn ghost sm" data-act="togcat" data-i="${i}">${c.on ? 'Desactivar' : 'Activar'}</button></td></tr>`).join('')}
+      </tbody></table></div></section>`;
   }
-  return `<div class="head"><div><h1>Catálogos y parámetros</h1><p class="muted" style="margin:4px 0 0">Opciones fijas para reportería. Solo el Jefe de Calidad agrega o desactiva opciones; las opciones usadas no se borran, se desactivan.</p></div></div>
-  <div class="subtabs">${sub.map(([k, l]) => `<button class="chip ${ui.cat === k ? 'on' : ''}" data-act="cat2" data-v="${k}">${l}</button>${tag[k] || ''}`).join('')}</div>${body}`;
+  return `<div class="head"><div><h1>Catálogos y parámetros</h1><p>Opciones fijas para que los reportes se puedan agrupar. Solo el Jefe de Calidad las administra. Las opciones usadas no se borran, se desactivan.</p></div></div>
+  <div class="seg">${sub.map(([k, l, c]) => `<button class="${ui.cat === k ? 'on' : ''}" data-act="cat2" data-v="${k}">${l}${c ? nw(c) : ''}</button>`).join('')}</div>${body}`;
 }
 
-function bars(rows) {
+/* ---------- reportes ---------- */
+function bars(rows, lab) {
+  if (!rows.length) return '<p class="muted small">Sin datos en este período.</p>';
   const tot = rows.reduce((a, r) => a + r[1], 0) || 1, max = Math.max(...rows.map(r => r[1]), 1);
-  return `<div class="bars">${rows.map(([l, v, lbl]) => `<div class="bar"><span>${esc(l)}</span><span class="v">${lbl ?? `${v} · ${Math.round(v / tot * 100)}%`}</span><div class="track"><div class="fill" style="width:${v / max * 100}%"></div></div></div>`).join('')}</div>`;
+  return `<div class="bars">${rows.map(([l, v, extra]) => `<div class="bar" title="${esc(l)}: ${v}"><span>${esc(l)}</span><span class="v">${extra ?? `${v} · ${Math.round(v / tot * 100)} %`}</span><div class="tr"><div class="fill" style="width:${v / max * 100}%"></div></div></div>`).join('')}</div>`;
 }
 const count = (arr, f) => { const m = new Map(); arr.forEach(x => [].concat(f(x)).filter(Boolean).forEach(k => m.set(k, (m.get(k) || 0) + 1))); return [...m].sort((a, b) => b[1] - a[1]); };
 function vReportes() {
   let ts = db.tickets;
-  if (ui.role === 'asesor') ts = ts.filter(t => t.asesor === USERS.asesor);
   const meses = [...new Set(db.tickets.map(t => t.fecha.slice(0, 7)))].sort().reverse();
   if (ui.per !== 'Todos') ts = ts.filter(t => t.fecha.startsWith(ui.per));
-  const cerr = ts.filter(t => t.estado === 'Cerrado' || t.estado === 'Rechazado');
+  const cerr = ts.filter(t => !ABIERTOS.includes(t.estado));
   const prom = cerr.length ? (cerr.reduce((a, t) => a + abiertoDias(t), 0) / cerr.length).toLocaleString('es-EC', { maximumFractionDigits: 1 }) : '—';
   const costo = ts.reduce((a, t) => a + (Number(t.sol?.costo) || 0), 0);
-  const venc = ts.filter(t => ABIERTOS.includes(t.estado) && abiertoDias(t) > db.params.sla).length;
-  const afect = ts.reduce((a, t) => a + t.items.reduce((b, i) => b + i.afectada, 0), 0), fact = ts.reduce((a, t) => a + t.items.reduce((b, i) => b + i.cantFact, 0), 0);
-  let pareto = count(ts, t => t.motivos.map(m => m.def)); let acum = 0; const totp = pareto.reduce((a, r) => a + r[1], 0) || 1;
-  pareto = pareto.map(([l, v]) => { acum += v; return [l, v, `${v} · ${Math.round(acum / totp * 100)}% acum.`]; });
-  return `<div class="head"><div><h1>Reportes</h1><p class="muted" style="margin:4px 0 0">${ts.length} solicitudes en el período. Se actualizan con lo que hagas en el prototipo.</p></div>
-    <div class="row"><label class="f">Período ${nw('C21')}<select id="per" data-in="per"><option>Todos</option>${meses.map(m => `<option ${ui.per === m ? 'selected' : ''}>${m}</option>`).join('')}</select></label><button class="btn" data-act="excel" style="align-self:end">Exportar a Excel</button></div></div>
-  <div class="tiles">${ESTADOS.map(e => `<div class="tile"><span>${pill(e)}</span><b>${ts.filter(t => t.estado === e).length}</b></div>`).join('')}</div>
-  <div class="tiles">
-    <div class="tile"><span class="muted">Días promedio hasta el cierre ${nw('C21')}</span><b>${prom}</b></div>
-    <div class="tile"><span class="muted">Abiertos fuera de plazo ${nw('C18')}</span><b>${venc}</b></div>
-    <div class="tile"><span class="muted">Costo de reclamos ${nw('C15')}</span><b>${usd(costo)}</b></div>
-    <div class="tile"><span class="muted">% reportado fuera de esp.</span><b>${fact ? (afect / fact * 100).toLocaleString('es-EC', { maximumFractionDigits: 2 }) : 0} %</b></div></div>
+  let pareto = count(ts, t => t.motivos.map(m => m.def)), acum = 0; const totp = pareto.reduce((a, r) => a + r[1], 0) || 1;
+  pareto = pareto.map(([l, v]) => { acum += v; return [l, v, `${v} · ${Math.round(acum / totp * 100)} % acumulado`]; });
+  const mname = m => { const [y, mm] = m.split('-'); return ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][mm - 1] + ' ' + y; };
+  const k = (l, v, sub, tag = '') => `<div class="kpi" style="cursor:default"><span>${l}${tag}</span><b>${v}</b>${sub ? `<span>${sub}</span>` : ''}</div>`;
+  return `<div class="head"><div><h1>Reportes</h1><p>${ts.length} solicitudes en el período. Cambian con lo que haga en el prototipo.</p></div>
+    <div class="row"><select id="per" data-in="per" style="width:auto" aria-label="Período"><option value="Todos">Todo el período</option>${meses.map(m => `<option value="${m}" ${ui.per === m ? 'selected' : ''}>${mname(m)}</option>`).join('')}</select>${nw('C21')}<button class="btn" data-act="excel">${I.dl} Exportar</button></div></div>
+  <div class="kpis">${k('Abiertas', ts.filter(t => ABIERTOS.includes(t.estado)).length, `${ts.filter(vencido).length} fuera de plazo`, nw('C18'))}${k('Días promedio al cierre', prom, `Meta: ${db.params.sla} días`, nw('C21'))}${k('Costo de reclamos', usd(costo), 'Reposiciones y notas de crédito', nw('C15'))}${k('Rechazadas', ts.filter(t => t.estado === 'Rechazado').length, `de ${ts.length} solicitudes`)}</div>
   <div class="two">
-    <section class="panel"><h2>Pareto de tipos de defecto ${nw('C04')}</h2>${pareto.length ? bars(pareto) : '<p class="muted">Sin datos.</p>'}</section>
-    <section class="panel"><h2>Por área responsable ${nw('C11')}</h2>${bars(count(ts.filter(t => t.asig), t => t.asig.area))}</section>
-    <section class="panel"><h2>Por máquina ${nw('C07')}</h2>${bars(count(ts.filter(t => t.categoria), t => t.items.map(i => i.maquina)))}</section>
-    <section class="panel"><h2>Causa raíz (6M) ${nw('C13')}</h2>${bars(count(ts.filter(t => t.an?.m6 && t.an.causa), t => t.an.m6))}</section>
-    <section class="panel"><h2>Motivos de rechazo</h2>${bars(count(ts, t => t.rechazo?.motivo))}</section>
-    <section class="panel"><h2>Devoluciones por asesor ${nw('C09')}</h2>${bars(count(ts.filter(t => t.devs), t => Array(t.devs).fill(t.asesor)))}</section>
-    <section class="panel"><h2>Queja vs. reclamo</h2>${bars(['Queja', 'Reclamo'].map(c => [c, ts.filter(t => t.categoria === c).length]))}</section>
-    <section class="panel"><h2>Solicitudes por cliente</h2>${bars(count(ts, t => t.cliente))}</section>
+    <section class="card"><h2>Pareto de defectos ${nw('C04')}</h2>${bars(pareto)}</section>
+    <section class="card"><h2>Por área responsable ${nw('C11')}</h2>${bars(count(ts.filter(t => t.asig), t => t.asig.area))}</section>
+    <section class="card"><h2>Por máquina ${nw('C07')}</h2><p class="muted small">Solo solicitudes aceptadas.</p>${bars(count(ts.filter(t => t.categoria), t => t.items.map(i => i.maquina)))}</section>
+    <section class="card"><h2>Causa raíz (6M) ${nw('C13')}</h2>${bars(count(ts.filter(t => t.an?.m6 && t.an.causa), t => t.an.m6))}</section>
+    <section class="card"><h2>Motivos de rechazo</h2>${bars(count(ts, t => t.rechazo?.motivo))}</section>
+    <section class="card"><h2>Devoluciones por asesor ${nw('C09')}</h2>${bars(count(ts.filter(t => t.devs), t => Array(t.devs).fill(t.asesor.split(' · ')[0])))}</section>
+    <section class="card"><h2>Queja o reclamo</h2>${bars(['Queja', 'Reclamo'].map(c => [c, ts.filter(t => t.categoria === c).length]).filter(r => r[1]))}</section>
+    <section class="card"><h2>Por cliente</h2>${bars(count(ts, t => t.cliente))}</section>
   </div>`;
 }
 
+/* ---------- cambios ---------- */
+function vCambios() {
+  const list = CAMBIOS.filter(c => ui.cprio === 'Todas' || c[1] === ui.cprio);
+  const groups = [...new Set(list.map(c => c[2]))];
+  return `<div class="head"><div><h1>Cambios propuestos por Calidad</h1><p>Respuesta al prototipo de Sistemas. Se mantiene el flujo validado y se agregan los campos y funciones que faltan. Use "Ver" para ir a la pantalla donde aplica cada cambio.</p></div></div>
+  <div class="seg">${['Todas', 'Alta', 'Media', 'Baja'].map(p => `<button class="${ui.cprio === p ? 'on' : ''}" data-act="cprio" data-v="${p}">${p === 'Todas' ? 'Todas' : 'Prioridad ' + p.toLowerCase()} <span class="muted" style="margin-left:6px">${p === 'Todas' ? CAMBIOS.length : CAMBIOS.filter(c => c[1] === p).length}</span></button>`).join('')}</div>
+  <section class="card"><h2>Valores que Calidad debe confirmar</h2><p class="muted">El prototipo usa valores de ejemplo: plazo de la política ${db.params.plazo} días, plazo de respuesta ${db.params.sla} días, definiciones de queja, reclamo y severidad, catálogos y responsables por área. Todos se editan en "Catálogos y parámetros".</p></section>
+  ${groups.map(g => `<section class="card" style="gap:0"><h2 style="margin-bottom:4px">${g}</h2>${list.filter(c => c[2] === g).map(([id, p, , t, d]) => `<div class="chg" id="chg-${id}"><span class="code">${id}</span><div><b>${esc(t)}</b><span class="prio ${p}">${p}</span><p>${esc(d)}</p></div><button class="btn sm" data-act="chg" data-v="${id}">Ver ${I.next}</button></div>`).join('')}</section>`).join('')}`;
+}
+
+/* ---------- acciones ---------- */
 function buscar(q) {
   q = q.trim().toUpperCase();
-  draft.q = q; draft.sel = {}; draft.errors = [];
+  draft.q = q; draft.sel = {}; draft.errors = []; draft.maxStep = 0;
   if (FACTURAS[q]) { const f = FACTURAS[q]; draft.src = { factura: q, cliente: f.cliente, fecha: f.fecha, items: f.items }; }
   else if (OPS[q]) { const o = OPS[q], b = descOf(o.codigo); draft.src = { factura: 'Sin factura', cliente: o.cliente, fecha: o.fechaFab, items: [{ ...b, op: q, cant: o.cantFab }] }; draft.sel[0] = { on: true }; }
   else draft.src = false;
   render();
 }
-function validar() {
-  const d = draft, e = [];
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(d.cli.fechaCli) || isNaN(new Date(d.cli.fechaCli))) e.push('Ingrese la fecha en que el cliente reportó (AAAA-MM-DD).');
-  else if (d.cli.fechaCli > today()) e.push('La fecha de reporte no puede ser posterior a hoy.');
-  if (!d.cli.canal) e.push('Seleccione el canal de recepción.');
-  if (!d.cli.contacto.trim() || !d.cli.medio.trim()) e.push('Ingrese la persona que reporta y su correo o teléfono.');
-  const idx = Object.keys(d.sel).filter(i => d.sel[i].on);
-  if (!idx.length) e.push('Seleccione al menos un ítem afectado.');
-  idx.forEach(i => { const it = d.src.items[i], s = d.sel[i];
-    if (!(it.op || s.op)) e.push(`${it.codigo}: busque y seleccione la OP.`);
-    const af = Number(s.af);
-    if (!af || af < 1) e.push(`${it.codigo}: ingrese la cantidad fuera de especificación.`);
-    else if (af > it.cant) e.push(`${it.codigo}: la cantidad no puede superar la facturada (${n(it.cant)}).`); });
-  d.motivos.forEach((m, i) => { const k = d.motivos.length > 1 ? ` (motivo ${i + 1})` : '';
-    if (!m.area || !m.def) e.push(`Seleccione el área y el tipo de defecto${k}.`); if (!m.det.trim()) e.push(`Escriba el detalle${k}.`); });
-  if (!d.sit.material || !d.sit.muestra || !d.sit.pret) e.push('Complete la situación del material y lo que solicita el cliente.');
-  if (!d.files.length) e.push('Adjunte al menos una evidencia.');
-  return e;
-}
+function goStep(k) { draft.step = k; draft.maxStep = Math.max(draft.maxStep, k); draft.errors = []; render(); window.scrollTo(0, 0); }
 function enviar() {
-  draft.errors = validar();
-  if (draft.errors.length) return render();
+  for (let k = 0; k < 5; k++) { const e = stepErrors(k); if (e.length) { draft.step = k; draft.errors = e; return render(); } }
   const d = draft, f = now();
   const items = Object.keys(d.sel).filter(i => d.sel[i].on).map(i => { const it = d.src.items[i], op = it.op || d.sel[i].op;
     return { factura: d.src.factura, codigo: it.codigo, desc: it.desc, unidad: it.unidad, cantFact: it.cant, op, ...pickOp(OPS[op]), afectada: Number(d.sel[i].af) }; });
@@ -729,16 +1027,15 @@ function enviar() {
   let id;
   if (d.editing) {
     const t = T(d.editing); id = t.id; Object.assign(t, data); t.estado = 'Recibido';
-    t.hist.push({ f, q: USERS.asesor, a: 'Corrigió el ingreso y reenvió a Calidad', n: '' });
-    notify('calidad', id, `${id} fue corregido y reenviado por el asesor.`);
+    t.hist.push({ f, q: USERS.asesor, a: 'Corrigió el ingreso y reenvió a Calidad', n: '' }); notify('calidad', id, `${id} fue corregido y reenviado por el asesor.`);
   } else {
     id = `QR-2026-${String(db.seq++).padStart(4, '0')}`;
     db.tickets.unshift({ id, fecha: today(), asesor: USERS.asesor, estado: 'Recibido', categoria: null, devs: 0, ...data,
       hist: [{ f, q: USERS.asesor, a: 'Registró el reclamo', n: '' }, { f, q: 'Sistema', a: 'Generó el reclamo con estado RECIBIDO y notificó a Calidad', n: '' }] });
     notify('calidad', id, `Nuevo reclamo ${id} de ${d.src.cliente}.`);
   }
-  const msg = d.editing ? `${id} reenviado a Calidad.` : `Reclamo ${id} registrado. Calidad recibió la notificación.`;
-  draft = newDraft(); ui.view = 'detalle'; ui.ticket = id; ui.rev = null; render(); toast(msg);
+  const msg = d.editing ? `${id} reenviado a Calidad.` : `Reclamo ${id} registrado. Calidad ya fue notificada.`;
+  draft = newDraft(); ui.view = 'detalle'; ui.ticket = id; ui.rev = null; render(); window.scrollTo(0, 0); toast(msg);
 }
 function editarDesde(t) {
   draft = newDraft();
@@ -746,136 +1043,179 @@ function editarDesde(t) {
   draft.editing = t.id; draft.q = t.items[0].factura;
   draft.src = { factura: t.items[0].factura, cliente: t.cliente, fecha: f.fecha, items: f.items };
   f.items.forEach((it, i) => { const x = t.items.find(y => y.codigo === it.codigo); if (x) draft.sel[i] = { on: true, op: x.op, af: x.afectada }; });
-  draft.motivos = t.motivos.map(m => ({ ...m }));
-  draft.files = t.evidencias.slice();
+  draft.motivos = t.motivos.map(m => ({ ...m })); draft.files = t.evidencias.slice();
   draft.cli = { ...t.cli }; draft.sit = { material: t.sit.material, muestra: t.sit.muestra ? 'si' : 'no', pret: t.sit.pret };
+  draft.step = 5; draft.maxStep = 5;
 }
 function goChange(id) {
   const c = CAMBIOS.find(x => x[0] === id); if (!c) return;
   const g = c[5];
-  if (ui.view === 'cambios' || ui.role !== g.role || ui.view !== g.view || (g.ticket && ui.ticket !== g.ticket)) {
-    ui.role = g.role; ui.view = g.view; ui.rev = null; ui.bell = false;
+  if (ui.view === 'cambios' || ui.view === 'inicio' || ui.role !== g.role || ui.view !== g.view || (g.ticket && ui.ticket !== g.ticket)) {
+    ui.role = g.role; ui.view = g.view; ui.rev = null; ui.bell = false; ui.marks = true;
     if (g.ticket) ui.ticket = g.ticket; if (g.cat) ui.cat = g.cat;
-    if (g.view === 'nuevo') { draft = newDraft(); buscar('001-002-000043987'); }
+    if (g.view === 'nuevo') { draft = newDraft(); buscar('001-002-000043987'); draft.step = ['C01', 'C02', 'C03'].includes(id) ? 1 : id === 'C05' ? 4 : id === 'C04' ? 3 : 0; draft.maxStep = draft.step; }
     if (id === 'C10' || id === 'C11') ui.rev = { step: 'aceptar' };
     render(); window.scrollTo(0, 0);
   }
   toast(`${id}: ${c[3]}`);
 }
+function ask(title, text, ok, run, danger) { ui.modal = { title, text, ok, run, danger }; render(); }
+const anIncompleto = t => { const o = anState(t); return !(o.cont && o.causa && o.acc); };
 
 function act(t, a, el) {
   const r = ui.rev || (ui.rev = {});
   switch (a) {
     case 'chg': return goChange(el.dataset.v);
     case 'marks': ui.marks = el.checked; break;
-    case 'role': ui.role = el.dataset.v; ui.bell = false; ui.rev = null; if (!['detalle', 'reportes', 'cambios'].includes(ui.view) || (ui.role === 'area' && ui.view === 'reportes')) ui.view = 'bandeja'; break;
-    case 'go': ui.view = el.dataset.v; ui.bell = false; ui.rev = null; if (ui.view === 'nuevo' && (!draft || draft.editing)) draft = newDraft(); break;
+    case 'marks2': ui.marks = !ui.marks; break;
+    case 'role': ui.role = el.dataset.v; ui.bell = false; ui.rev = null; ui.kpi = null; if (!['detalle', 'cambios', 'inicio'].includes(ui.view) || (ui.role === 'area' && ui.view === 'reportes')) ui.view = 'bandeja'; break;
+    case 'tour': { ui.role = el.dataset.r; ui.rev = null; const g = el.dataset.g; if (g === 'nuevo') { ui.view = 'nuevo'; draft = newDraft(); } else { ui.view = 'detalle'; ui.ticket = g.split(':')[1]; } window.scrollTo(0, 0); break; }
+    case 'go': ui.view = el.dataset.v; ui.bell = false; ui.rev = null; if (ui.view === 'nuevo' && (!draft || draft.editing)) draft = newDraft(); window.scrollTo(0, 0); break;
     case 'cancelar': draft = newDraft(); ui.view = 'bandeja'; break;
     case 'filtro': ui.filtro = el.dataset.v; break;
-    case 'open': ui.view = 'detalle'; ui.ticket = el.dataset.id; ui.rev = null; break;
-    case 'informe': ui.view = 'informe'; break;
+    case 'kpi': ui.kpi = ui.kpi === el.dataset.v || !el.dataset.v ? null : el.dataset.v; ui.filtro = 'Todos'; break;
+    case 'clearf': ui.kpi = null; ui.filtro = 'Todos'; ui.busca = ''; ui.farea = ''; break;
+    case 'open': ui.view = 'detalle'; ui.ticket = el.dataset.id; ui.rev = null; ui.histAll = false; window.scrollTo(0, 0); break;
+    case 'informe': ui.view = 'informe'; window.scrollTo(0, 0); break;
+    case 'histall': ui.histAll = !ui.histAll; break;
     case 'bell': ui.bell = !ui.bell; break;
     case 'notif': { const x = db.notifs[+el.dataset.i]; x.read = true; ui.bell = false; ui.view = 'detalle'; ui.ticket = x.ticket; ui.rev = null; break; }
-    case 'reset': db = seed(); draft = newDraft(); ui = { ...ui, view: 'bandeja', filtro: 'Todos', busca: '', farea: '', ticket: null, rev: null, bell: false }; toast('Datos de prueba reiniciados.'); break;
-    case 'excel': return toast('En el sistema real descarga un .xlsx con las solicitudes filtradas.');
+    case 'reset': db = seed(); draft = newDraft(); ui = { ...ui, view: 'inicio', filtro: 'Todos', kpi: null, busca: '', farea: '', ticket: null, rev: null, bell: false, modal: null }; render(); return toast('Datos de prueba reiniciados.');
+    case 'excel': return toast('En el sistema real descarga un archivo de Excel con lo filtrado.');
+    case 'cprio': ui.cprio = el.dataset.v; break;
+    case 'mok': { const run = ui.modal.run; ui.modal = null; return run(); }
+    case 'mcancel': ui.modal = null; break;
+    case 'mclose': if (el === lastEv.target) ui.modal = null; else return; break;
+    /* asistente */
     case 'ej': return buscar(el.dataset.v);
     case 'buscar': return buscar(document.getElementById('q').value);
-    case 'ck': { const i = el.dataset.i; draft.sel[i] = { ...(draft.sel[i] || {}), on: el.checked }; break; }
+    case 'wnext': { const e = stepErrors(draft.step); if (e.length) { draft.errors = e; break; } return goStep(draft.step + 1); }
+    case 'wprev': return goStep(draft.step - 1);
+    case 'wstep': { const k = +el.dataset.i; if (k > draft.maxStep) return; return goStep(k); }
+    case 'ck': { const i = el.dataset.i; draft.sel[i] = { ...(draft.sel[i] || {}), on: el.checked }; draft.errors = []; break; }
+    case 'ckrow': { if (lastEv.target.closest('select,input,label')) return; const i = el.dataset.i; draft.sel[i] = { ...(draft.sel[i] || {}), on: !draft.sel[i]?.on }; break; }
+    case 'pick': { const k = el.dataset.k, v = el.dataset.v; if (k.startsWith('c-')) draft.cli[k.slice(2)] = v; else if (k.startsWith('s-')) draft.sit[k.slice(2)] = v; else { r[k.slice(2)] = v; r.err = ''; } if (draft) draft.errors = []; break; }
     case 'addmot2': draft.motivos.push({ area: '', def: '', det: '' }); break;
     case 'rmmot': if (draft.motivos.length > 1) draft.motivos.splice(+el.dataset.i, 1); break;
-    case 'fakefile': draft.files.push(['foto_lote_rollo.jpg', 'informe_cliente.pdf', 'video_aplicacion.mp4'][draft.files.length % 3]); break;
+    case 'fakefile': draft.files.push(['foto_lote_rollo.jpg', 'informe_cliente.pdf', 'video_aplicacion.mp4'][draft.files.length % 3]); draft.errors = []; break;
     case 'rmfile': draft.files.splice(+el.dataset.i, 1); break;
     case 'enviar': return enviar();
-    case 'corregir': editarDesde(t); ui.view = 'nuevo'; break;
+    case 'corregir': editarDesde(t); ui.view = 'nuevo'; window.scrollTo(0, 0); break;
+    /* decisiones de Calidad */
     case 'rv': ui.rev = { step: el.dataset.v || null }; break;
-    case 'cat': r.cat = el.dataset.v; r.err = ''; break;
-    case 'ef': r.ef = el.dataset.v; r.err = ''; break;
     case 'devolver':
-      if (!r.dmot || !r.obs?.trim()) { r.err = 'Seleccione el motivo de devolución e indique qué información falta.'; break; }
+      if (!r.dmot || !r.obs?.trim()) { r.err = 'Elija el motivo e indique qué debe corregir el asesor.'; break; }
       t.estado = 'Devuelto'; t.devs = (t.devs || 0) + 1; t.devolucion = { motivo: r.dmot, obs: r.obs };
       t.hist.push({ f: now(), q: USERS.calidad, a: `Devolvió al asesor: ${r.dmot}`, n: r.obs }, { f: now(), q: 'Sistema', a: 'Notificó al asesor por el sistema y por correo', n: '' });
       notify('asesor', t.id, `Calidad devolvió ${t.id}: ${r.dmot.toLowerCase()}.`); ui.rev = null; render(); return toast(`${t.id} devuelto. Se notificó al asesor.`);
     case 'aceptar':
-      if (!r.cat || !r.sev || !r.aarea) { r.err = 'Seleccione categoría, severidad y área responsable.'; break; }
+      if (!r.cat || !r.sev || !r.aarea) { r.err = 'Elija categoría, severidad y área responsable.'; break; }
       { const lim = r.alim ?? addDays(today(), db.params.sla);
         t.estado = 'En análisis'; t.categoria = r.cat; t.sev = r.sev; t.asig = { area: r.aarea, resp: RESP[r.aarea], limite: lim };
         t.hist.push({ f: now(), q: USERS.calidad, a: `Aceptó como ${r.cat} (severidad ${r.sev}) y asignó a ${r.aarea}`, n: `Fecha compromiso: ${lim}` }, { f: now(), q: 'Sistema', a: `Notificó a ${RESP[r.aarea]} y al asesor`, n: '' });
         notify('asesor', t.id, `${t.id} fue aceptado por Calidad y está en análisis.`);
         if (r.aarea === 'Producción') notify('area', t.id, `Se asignó ${t.id} a Producción. Fecha compromiso: ${lim}.`); }
-      ui.rev = null; render(); return toast(`${t.id} aceptado como ${r.cat} y asignado a ${t.asig.area}.`);
+      ui.rev = null; render(); return toast(`${t.id} aceptado y asignado a ${t.asig.area}.`);
     case 'rechazar':
-      if (!r.mot || !r.obs?.trim()) { r.err = 'Seleccione el motivo del catálogo y escriba una observación.'; break; }
-      t.estado = 'Rechazado'; t.fechaCierre = today(); t.rechazo = { motivo: r.mot, obs: r.obs }; t.hist.push({ f: now(), q: USERS.calidad, a: 'Rechazó la solicitud', n: `${r.mot}. ${r.obs}` });
-      notify('asesor', t.id, `${t.id} fue rechazado: ${r.mot}.`); ui.rev = null; render(); return toast(`${t.id} rechazado.`);
+      if (!r.mot || !r.obs?.trim()) { r.err = 'Elija el motivo y escriba una observación.'; break; }
+      return ask(`¿Rechazar ${t.id}?`, `Motivo: ${r.mot}. La solicitud termina aquí y se notificará al asesor.`, 'Sí, rechazar', () => {
+        t.estado = 'Rechazado'; t.fechaCierre = today(); t.rechazo = { motivo: r.mot, obs: r.obs }; t.hist.push({ f: now(), q: USERS.calidad, a: 'Rechazó la solicitud', n: `${r.mot}. ${r.obs}` });
+        notify('asesor', t.id, `${t.id} fue rechazado: ${r.mot}.`); ui.rev = null; render(); toast(`${t.id} rechazado.`); }, true);
+    /* análisis */
     case 'addacc': t.an.acciones.push({ d: '', resp: '', f: '', ok: false }); break;
+    case 'rmacc': t.an.acciones.splice(+el.dataset.i, 1); break;
     case 'acok': t.an.acciones[+el.dataset.i].ok = el.checked; break;
     case 'guardar': t.hist.push({ f: now(), q: USERS[ui.role], a: 'Guardó avance del análisis', n: '' }); render(); return toast('Avance guardado.');
-    case 'listo': {
-      const an = t.an, s = t.sol;
-      if (!an.cont.trim() || !an.metodo || !an.m6 || !an.causa.trim() || !an.acciones.length || an.acciones.some(x => !x.d.trim() || !x.resp.trim() || !x.f)) { r.err = 'Complete contención, causa raíz y al menos una acción con responsable y fecha.'; break; }
+    case 'listo':
+      if (anIncompleto(t)) { r.err = 'Complete contención, causa raíz y al menos una acción con responsable y fecha.'; break; }
       t.hist.push({ f: now(), q: USERS.area, a: 'Completó el análisis y lo envió a Calidad para cierre', n: '' }); notify('calidad', t.id, `Producción completó el análisis de ${t.id}.`);
-      ui.rev = null; render(); return toast('Análisis enviado a Calidad.'); }
+      ui.rev = null; render(); return toast('Análisis enviado a Calidad.');
     case 'cerrar': {
-      const an = t.an, s = t.sol, v = r.verif ?? addDays(today(), 30);
-      if (!an.cont.trim() || !an.metodo || !an.m6 || !an.causa.trim() || !an.acciones.length || an.acciones.some(x => !x.d.trim() || !x.resp.trim() || !x.f)) { r.err = 'Falta completar contención, causa raíz o acciones (con responsable y fecha).'; break; }
-      if (!s.tipo || s.costo === '') { r.err = 'Indique la solución al cliente y el costo (0 si no hubo).'; break; }
+      const s = t.sol, v = r.verif ?? addDays(today(), 30);
+      if (anIncompleto(t) || !anState(t).sol) { r.err = 'Complete los 4 pasos del análisis.'; break; }
       if (!r.inf?.trim()) { r.err = 'Escriba el informe de cierre.'; break; }
-      t.estado = 'Cerrado'; t.fechaCierre = today(); t.sol = { tipo: s.tipo, cant: Number(s.cant) || 0, costo: Number(s.costo) || 0 }; t.cierre = { informe: r.inf, verif: v };
-      t.hist.push({ f: now(), q: USERS.calidad, a: 'Registró la documentación de cierre y cerró la solicitud', n: `Verificación de eficacia programada: ${v}` });
-      notify('asesor', t.id, `${t.id} fue cerrado. El informe para el cliente está disponible.`); ui.rev = null; render(); return toast(`${t.id} cerrado.`); }
+      return ask(`¿Cerrar ${t.id}?`, `Se notificará al asesor y quedará programada la verificación de eficacia para el ${fmtD(v)}.`, 'Sí, cerrar', () => {
+        t.estado = 'Cerrado'; t.fechaCierre = today(); t.sol = { tipo: s.tipo, cant: Number(s.cant) || 0, costo: Number(s.costo) || 0 }; t.cierre = { informe: r.inf, verif: v };
+        t.hist.push({ f: now(), q: USERS.calidad, a: 'Registró la documentación de cierre y cerró la solicitud', n: `Verificación de eficacia programada: ${v}` });
+        notify('asesor', t.id, `${t.id} fue cerrado. El informe para el cliente está disponible.`); ui.rev = null; render(); window.scrollTo(0, 0); toast(`${t.id} cerrado.`); }); }
     case 'verificar':
-      if (!r.ef || !r.vobs?.trim()) { r.err = 'Indique el resultado y la evidencia de la verificación.'; break; }
+      if (!r.ef || !r.vobs?.trim()) { r.err = 'Indique el resultado y la evidencia.'; break; }
       t.verif = { eficaz: r.ef === 'si', obs: r.vobs, f: today() }; t.hist.push({ f: now(), q: USERS.calidad, a: `Verificó la eficacia: ${r.ef === 'si' ? 'eficaz' : 'no eficaz'}`, n: r.vobs });
       ui.rev = null; render(); return toast('Verificación registrada.');
-    case 'reabrir': return toast('Reabrir pide motivo y queda en el historial. Solo disponible para el Jefe de Calidad.');
+    case 'reabrir': return toast('Reabrir pide un motivo y queda en el historial. Solo lo puede hacer el Jefe de Calidad.');
     case 'anular':
       if (!r.anobs?.trim()) { r.err = 'Escriba el motivo de anulación.'; break; }
-      t.estado = 'Rechazado'; t.fechaCierre = today(); t.rechazo = { motivo: 'Anulado por el asesor', obs: r.anobs }; t.hist.push({ f: now(), q: USERS.asesor, a: 'Anuló la solicitud', n: r.anobs });
-      ui.rev = null; render(); return toast(`${t.id} anulado.`);
+      return ask(`¿Anular ${t.id}?`, 'La solicitud se cerrará y no llegará a análisis.', 'Sí, anular', () => {
+        t.estado = 'Rechazado'; t.fechaCierre = today(); t.rechazo = { motivo: 'Anulado por el asesor', obs: r.anobs }; t.hist.push({ f: now(), q: USERS.asesor, a: 'Anuló la solicitud', n: r.anobs });
+        ui.rev = null; render(); toast(`${t.id} anulado.`); }, true);
+    /* catálogos */
     case 'cat2': ui.cat = el.dataset.v; ui.catErr = ''; break;
-    case 'addcat': { const v = document.getElementById('nm').value.trim(); const key = { rech: 'rechazo', dev: 'devolucion', def: 'defectos' }[ui.cat];
+    case 'addcat': { const v = document.getElementById('nm').value.trim(), key = { rech: 'rechazo', dev: 'devolucion', def: 'defectos' }[ui.cat];
       if (!v) ui.catErr = 'Escriba la nueva opción.'; else if (db[key].some(c => c.t.toLowerCase() === v.toLowerCase())) ui.catErr = 'Esa opción ya existe.';
-      else { db[key].push(key === 'defectos' ? { area: ui.narea || AREAS[0], t: v, on: true } : { t: v, on: true }); ui.catErr = ''; toast('Opción agregada al catálogo.'); } break; }
+      else { db[key].push(key === 'defectos' ? { area: ui.narea, t: v, on: true } : { t: v, on: true }); ui.catErr = ''; render(); return toast('Opción agregada.'); } break; }
     case 'togcat': { const key = { rech: 'rechazo', dev: 'devolucion', def: 'defectos' }[ui.cat]; const c = db[key][+el.dataset.i]; c.on = !c.on; break; }
+    default: return;
   }
   render();
 }
 
+let lastEv = null;
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) { if (ui.bell && !e.target.closest('.bell')) { ui.bell = false; render(); } return; }
   if (el.tagName === 'INPUT' && el.type === 'checkbox' && !['ck', 'marks', 'acok'].includes(el.dataset.act)) return;
-  e.stopPropagation();
+  if (el.tagName === 'INPUT' && el.type === 'radio') return;
+  lastEv = e;
   act(T(ui.ticket), el.dataset.act, el);
 });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.id === 'q') return buscar(e.target.value);
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList?.contains('nw')) { e.preventDefault(); return goChange(e.target.dataset.v); }
+  if (e.key === 'Enter' && e.target.matches('tr[data-act="open"]')) { ui.view = 'detalle'; ui.ticket = e.target.dataset.id; ui.rev = null; render(); }
+  if (e.key === 'Escape' && (ui.modal || ui.bell)) { ui.modal = null; ui.bell = false; render(); }
+});
+function keepFocus(id) { const b = document.getElementById(id); if (!b) return; const p = b.selectionStart; render(); const x = document.getElementById(id); x.focus(); try { x.setSelectionRange(p, p); } catch (_) {} }
 document.addEventListener('input', e => {
   const el = e.target, k = el.dataset.in;
-  if (!k) { if (el.id === 'q') draft.q = el.value; if (el.id === 'busca') { ui.busca = el.value; const p = el.selectionStart; render(); const b = document.getElementById('busca'); b.focus(); b.setSelectionRange(p, p); } return; }
-  const r = ui.rev || (ui.rev = {}); const t = T(ui.ticket); const i = +el.dataset.i; let re = el.tagName === 'SELECT';
-  if (k === 'af') draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), af: el.value };
+  if (!k) { if (el.id === 'q') draft.q = el.value; if (el.id === 'busca') { ui.busca = el.value; keepFocus('busca'); } return; }
+  const r = ui.rev || (ui.rev = {}), t = T(ui.ticket), i = +el.dataset.i;
+  let re = el.tagName === 'SELECT' || el.type === 'date';
+  if (k === 'af') { draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), af: el.value }; return keepFocus(el.id); }
   else if (k === 'op') draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), op: el.value };
-  else if (k.startsWith('c-')) { draft.cli[k.slice(2)] = el.value; if (k === 'c-fechaCli' && /^\d{4}-\d{2}-\d{2}$/.test(el.value)) { const p = el.selectionStart; render(); const f = document.getElementById('fcli'); f.focus(); f.setSelectionRange(p, p); } }
+  else if (k.startsWith('c-')) draft.cli[k.slice(2)] = el.value;
   else if (k.startsWith('s-')) draft.sit[k.slice(2)] = el.value;
   else if (k === 'm-area') { draft.motivos[i].area = el.value; draft.motivos[i].def = ''; }
   else if (k === 'm-def') draft.motivos[i].def = el.value;
   else if (k === 'm-det') draft.motivos[i].det = el.value;
-  else if (k.startsWith('an-')) t.an[k.slice(3)] = el.value;
-  else if (k.startsWith('ac-')) t.an.acciones[i][k.slice(3)] = el.value;
-  else if (k.startsWith('so-')) t.sol[k.slice(3)] = el.value;
+  else if (k.startsWith('an-')) { t.an[k.slice(3)] = el.value; if (!re) return syncChecks(t); }
+  else if (k.startsWith('ac-')) { t.an.acciones[i][k.slice(3)] = el.value; if (!re) return syncChecks(t); }
+  else if (k.startsWith('so-')) { t.sol[k.slice(3)] = el.value; if (!re) return syncChecks(t); }
   else if (k === 'farea') ui.farea = el.value;
   else if (k === 'per') ui.per = el.value;
   else if (k === 'narea') ui.narea = el.value;
+  else if (k === 'mrole') { ui.role = el.value; ui.rev = null; if (!['detalle', 'cambios', 'inicio'].includes(ui.view)) ui.view = 'bandeja'; }
   else if (k === 'p-plazo' || k === 'p-sla') { const v = Number(el.value); if (v > 0) db.params[k.slice(2)] = v; }
   else { r[k] = el.value; if (re) r.err = ''; }
+  if (draft) draft.errors = re ? [] : draft.errors;
   if (re) render();
 });
+/* actualiza las marcas de avance sin redibujar mientras se escribe */
+function syncChecks(t) {
+  const ok = anState(t), done = Object.values(ok).filter(Boolean).length;
+  document.querySelectorAll('.astep').forEach((s, j) => { const k = ['cont', 'causa', 'acc', 'sol'][j]; s.classList.toggle('done', ok[k]); s.querySelector('.n').textContent = ok[k] ? '✓' : j + 1; });
+  document.querySelectorAll('.checklist li').forEach((li, j) => { const k = ['cont', 'causa', 'acc', 'sol'][j]; li.classList.toggle('done', ok[k]); li.querySelector('i').textContent = ok[k] ? '✓' : ''; });
+  document.querySelectorAll('.next .progress i').forEach(p => p.style.width = done / 4 * 100 + '%');
+  const c = document.querySelector('[data-act="cerrar"]'); if (c) c.disabled = done < 4;
+}
 document.addEventListener('change', e => {
-  const el = e.target; if (el.type !== 'file') return;
-  const names = [...el.files].map(f => f.name);
-  if (el.id === 'fin') draft.files.push(...names);
-  render();
+  const el = e.target;
+  if (el.type === 'radio' && el.dataset.act === 'pick') { act(T(ui.ticket), 'pick', el); return; }
+  if (el.type !== 'file') return;
+  draft.files.push(...[...el.files].map(f => f.name)); draft.errors = []; render();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'q') buscar(e.target.value); });
+document.addEventListener('dragover', e => { const d = e.target.closest('#drop'); if (d) { e.preventDefault(); d.classList.add('over'); } });
+document.addEventListener('dragleave', e => { const d = e.target.closest('#drop'); if (d) d.classList.remove('over'); });
+document.addEventListener('drop', e => { const d = e.target.closest('#drop'); if (!d) return; e.preventDefault(); draft.files.push(...[...e.dataTransfer.files].map(f => f.name)); render(); });
 draft = newDraft();
 render();
 
