@@ -366,7 +366,6 @@ td.mono { white-space: nowrap; }
 .facts .days span { text-transform: none; letter-spacing: 0; font-size: .95rem; color: var(--fg); font-weight: 600; }
 
 /* ---------- agregados: pendientes, filtros por columna, etiqueta, flujo, letra grande ---------- */
-html.big { font-size: 18px; } html.big body { font-size: 17px; }
 .pend { display: grid; gap: 8px; }
 .pend-i { display: grid; grid-template-columns: 120px minmax(0, 1.2fr) minmax(0, 1.6fr) 110px 24px; gap: 4px 14px; align-items: center; text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; border-radius: 10px; padding: 12px 14px; cursor: pointer; }
 .pend-i:hover { border-color: var(--brand); background: var(--brand-soft); }
@@ -441,13 +440,13 @@ const CAMBIOS = [
   ['C12', 'Alta', 'Análisis', 'Rol de área responsable', 'El jefe del área asignada ve el ticket en su bandeja y registra la contención, la causa raíz y las acciones. Solo Calidad cierra.', { role: 'area', view: 'bandeja' }],
   ['C13', 'Alta', 'Análisis', 'Causa raíz estructurada', 'Método usado (5 porqués, Ishikawa), categoría 6M y descripción de la causa. Hoy el cierre es un solo texto libre.', { role: 'area', view: 'detalle', ticket: 'QR-2026-0010' }],
   ['C14', 'Alta', 'Análisis', 'Plan de acciones correctivas con responsable y fecha', 'Cada acción con responsable, fecha compromiso y estado, como pide la norma ISO 9001 (10.2). Hoy "acciones a tomar" es un texto libre sin seguimiento.', { role: 'area', view: 'detalle', ticket: 'QR-2026-0010' }],
-  ['C15', 'Alta', 'Cierre', 'Solución al cliente y costo del reclamo', 'Tipo de solución (reposición, nota de crédito, reproceso, descuento), cantidad y costo en USD. Permite reportar el costo de la no calidad.', { role: 'calidad', view: 'detalle', ticket: 'QR-2026-0010' }],
+  ['C15', 'Alta', 'Cierre', 'Solución al cliente', 'Tipo de solución (reposición, nota de crédito, reproceso, descuento o sin compensación) y cantidad. Queda registrada en el ticket y sale en el Informe de No Conformidad.', { role: 'calidad', view: 'detalle', ticket: 'QR-2026-0010' }],
   ['C16', 'Media', 'Cierre', 'Verificación de eficacia', 'Al cerrar se programa una fecha para verificar si la acción funcionó y luego se registra el resultado. No agrega un estado nuevo.', { role: 'calidad', view: 'detalle', ticket: 'QR-2026-0006' }],
   ['C17', 'Alta', 'Cierre', 'Informe de No Conformidad de Calidad', 'Calidad elabora y envía su Informe de No Conformidad desde el módulo. El sistema lo arma con los datos del ticket (cliente, referencia, OP, lote, evidencias, visita, causa, acciones y solución) y registra la fecha de envío al asesor y al cliente. Reemplaza el texto libre de "informe de cierre".', { role: 'calidad', view: 'informe', ticket: 'QR-2026-0006' }],
   ['C18', 'Alta', 'Seguimiento', 'Días abiertos y semáforo de plazo de respuesta', 'Cada ticket muestra cuántos días lleva abierto contra un plazo de respuesta configurable (verde, amarillo, rojo).', { role: 'calidad', view: 'bandeja' }],
   ['C19', 'Alta', 'Notificaciones', 'Notificaciones a todos los actores y por correo', 'En el prototipo de Sistemas solo el asesor recibe avisos. Calidad debe enterarse de ingresos y reenvíos, el área responsable de su asignación, y el asesor también cuando el ticket se acepta.', { role: 'calidad', view: 'bandeja' }],
   ['C20', 'Alta', 'Bandeja', 'Bandeja con más columnas y filtros por columna', 'Columnas de cliente, referencia, OP, cantidad facturada, cantidad afectada, lote, evidencias, etiqueta de trazabilidad y asesor. Cada filtro es una lista desplegable en la que también se puede escribir para buscar. Se puede ordenar por columna, cambiar a vista resumida y exportar a Excel. El asesor ve solo sus tickets.', { role: 'calidad', view: 'bandeja' }],
-  ['C21', 'Alta', 'Reportes', 'Reportes por período, Pareto y costos', 'Filtro por mes; Pareto de tipos de defecto; por área responsable y por máquina; tiempo promedio de cierre; costo total; devoluciones por asesor; exportar.', { role: 'calidad', view: 'reportes' }],
+  ['C21', 'Alta', 'Reportes', 'Reportes por período y Pareto', 'Filtro por mes; Pareto de tipos de defecto; por área responsable y por máquina; tiempo promedio de cierre; visitas técnicas; devoluciones por asesor; exportar.', { role: 'calidad', view: 'reportes' }],
   ['C22', 'Media', 'Configuración', 'Parámetros y catálogos editables por Calidad', 'Plazo de la política, plazo de respuesta y los tres catálogos (rechazo, devolución, tipos de defecto) los administra el Jefe de Calidad sin pedir cambios a Sistemas.', { role: 'calidad', view: 'catalogo', cat: 'par' }],
   ['C23', 'Baja', 'Administración', 'Anular y reabrir con motivo', 'El asesor puede anular un ticket ingresado por error antes de que Calidad lo revise. El Jefe de Calidad puede reabrir uno cerrado o rechazado (por ejemplo, si el cliente apela), siempre con motivo en el historial.', { role: 'asesor', view: 'detalle', ticket: 'QR-2026-0012' }],
   ['C24', 'Alta', 'Análisis', 'Visita técnica', 'Al analizar, Calidad decide si se requiere visita técnica al cliente. Si se requiere: fecha, responsable, aviso al asesor para coordinar con el cliente y registro de hallazgos. Si no, se deja constancia.', { role: 'calidad', view: 'detalle', ticket: 'QR-2026-0010' }],
@@ -554,7 +553,7 @@ function seed() {
         evidencias: ['correo_cliente.pdf'],
         tz: 'etiqueta_caja_L260910-0857.jpg', inc: { num: 'INC-2026-0009', fecha: '2026-09-18', conclusion: 'Retraso por reprogramación de ruta sin aviso al cliente. Se confirmará la fecha de entrega 48 h antes de cada despacho.' },
         an: { visita: { req: 'no' }, cont: 'Se llamó al cliente para confirmar nueva fecha.', metodo: '5 porqués', m6: 'Método', causa: 'Reprogramación de ruta sin aviso al cliente.', acciones: [{ d: 'Confirmar fecha de entrega al cliente 48 h antes del despacho', resp: 'Jefe de Logística', f: '2026-09-30', ok: true }] },
-        sol: { tipo: 'Sin compensación', cant: 0, costo: 0 },
+        sol: { tipo: 'Sin compensación', cant: 0 },
         cierre: { informe: 'Retraso por reprogramación de ruta. Se confirmó con logística.', verif: '2026-10-30' },
         hist: [{ f: '2026-09-15 16:00', q: A, a: 'Registró el reclamo', n: '' }, { f: '2026-09-16 09:30', q: Q, a: 'Aceptó como Queja (severidad Menor) y asignó a Despachos y logística', n: '' },
                { f: '2026-09-18 12:10', q: Q, a: 'Registró la documentación de cierre y cerró la solicitud', n: 'Verificación de eficacia programada: 2026-10-30' }] },
@@ -584,7 +583,7 @@ function seed() {
         tz: 'etiqueta_trazabilidad_L260818-0872.jpg', inc: { num: 'INC-2026-0006', fecha: '2026-09-09', conclusion: 'Se confirmó la no conformidad por desgaste del troquel. Se repusieron 4.000 etiquetas y se implementó control dimensional cada 5.000 metros.' },
         an: { visita: { req: 'si', fecha: '2026-09-04', resp: 'Jefe de Calidad', agendada: true, hecha: true, hallazgos: 'En la bodega del cliente se constató el troquel desplazado en 2 rollos del lote L260818-0872.' }, cont: 'Se inspeccionaron al 100 % los rollos en bodega del mismo lote; se separaron 2 rollos.', metodo: 'Ishikawa (6M)', m6: 'Máquina', causa: 'Desgaste del troquel por exceso de uso sin control dimensional.',
           acciones: [{ d: 'Cambio de troquel', resp: 'Jefe de Producción', f: '2026-09-05', ok: true }, { d: 'Control dimensional cada 5.000 metros en el registro de producción', resp: 'Supervisor de Calidad', f: '2026-09-15', ok: true }] },
-        sol: { tipo: 'Reposición', cant: 4000, costo: 186.5 },
+        sol: { tipo: 'Reposición', cant: 4000 },
         cierre: { informe: 'Desgaste del troquel confirmado. Se repusieron 4.000 etiquetas.', verif: '2026-10-09' },
         hist: [{ f: '2026-09-01 08:30', q: A, a: 'Registró el reclamo', n: '' }, { f: '2026-09-02 10:00', q: Q, a: 'Aceptó como Reclamo (severidad Crítica) y asignó a Producción', n: '' },
                { f: '2026-09-09 17:20', q: Q, a: 'Registró la documentación de cierre y cerró la solicitud', n: 'Verificación de eficacia programada: 2026-10-09' }] }
@@ -594,7 +593,7 @@ function seed() {
 
 
 let db = seed();
-let ui = { bf: { cliente: '', asesor: '', ref: '', op: '', lote: '', area: '', cat: '', tz: '' }, sort: { k: 'id', dir: -1 }, vista: 'completa', fit: true, big: false, role: 'calidad', view: 'inicio', filtro: 'Todos', kpi: null, busca: '', ticket: null, bell: false, rev: null, cat: 'rech', per: 'Todos', marks: false, modal: null, histAll: false, cprio: 'Todas', narea: AREAS[0] };
+let ui = { bf: { cliente: '', asesor: '', ref: '', op: '', lote: '', area: '', cat: '', tz: '' }, sort: { k: 'id', dir: -1 }, vista: 'completa', fit: true, role: 'calidad', view: 'inicio', filtro: 'Todos', kpi: null, busca: '', ticket: null, bell: false, rev: null, cat: 'rech', per: 'Todos', marks: false, modal: null, histAll: false, cprio: 'Todas', narea: AREAS[0] };
 let draft = null;
 const STEPS = ['Factura', 'Cliente', 'Ítems', 'Motivo', 'Material y evidencias', 'Revisar y enviar'];
 const newDraft = () => ({ tz: null, step: 0, maxStep: 0, q: '', src: null, sel: {}, motivos: [{ area: '', def: '', det: '' }], files: [], errors: [], cli: { fechaCli: today(), canal: '', contacto: '', medio: '' }, sit: { material: '', muestra: '', pret: '' }, editing: null });
@@ -675,7 +674,6 @@ function crumbs() {
 }
 function render() {
   document.body.classList.toggle('no-marks', !ui.marks);
-  document.documentElement.classList.toggle('big', ui.big);
   const items = navItems();
   const mine = db.notifs.filter(x => x.to === ui.role), unread = mine.filter(x => !x.read).length;
   const views = { inicio: vInicio, bandeja: vBandeja, nuevo: vNuevo, detalle: vDetalle, catalogo: vCatalogo, reportes: vReportes, cambios: vCambios, informe: vInforme, flujo: vFlujo };
@@ -686,7 +684,6 @@ function render() {
     <div><h4>Probar como</h4><div class="roles">${Object.entries(ROLES).map(([k, [r, nm]]) => `<button data-act="role" data-v="${k}" aria-pressed="${ui.role === k}"><span class="av ${k}">${initials(k)}</span><span>${r}<small>${nm}</small></span></button>`).join('')}</div></div>
     <div class="side-foot">
       <label class="switch"><input type="checkbox" id="marks" data-act="marks" ${ui.marks ? 'checked' : ''}><span class="tg"></span><span>Marcar cambios de Calidad</span></label>
-      <label class="switch"><input type="checkbox" id="big" data-act="bigfont" ${ui.big ? 'checked' : ''}><span class="tg"></span><span>Letra más grande</span></label>
       <button class="linkbtn" data-act="reset">${I.reset} Reiniciar datos de prueba</button>
     </div>
   </aside>
@@ -742,7 +739,7 @@ const BF_DEF = { cliente: '', asesor: '', ref: '', op: '', lote: '', area: '', c
 const bfVals = t => ({ cliente: [t.cliente], asesor: [t.asesor.split(' · ')[0]], ref: t.items.map(i => i.codigo), op: t.items.map(i => i.op), lote: t.items.map(i => i.lote) });
 const SORTS = { id: t => t.id, cliente: t => t.cliente, asesor: t => t.asesor, ref: t => t.items[0].codigo, fact: t => t.items.reduce((a, i) => a + i.cantFact, 0), afect: t => t.items.reduce((a, i) => a + i.afectada, 0), ev: t => t.evidencias.length, dias: t => abiertoDias(t), estado: t => ESTADOS.indexOf(t.estado) };
 
-const AN_KEYS = [['vis', 'Visita técnica'], ['cont', 'Contención'], ['causa', 'Causa raíz'], ['acc', 'Acciones correctivas'], ['sol', 'Solución y costo']];
+const AN_KEYS = [['vis', 'Visita técnica'], ['cont', 'Contención'], ['causa', 'Causa raíz'], ['acc', 'Acciones correctivas'], ['sol', 'Solución al cliente']];
 const allDone = t => Object.values(anState(t)).every(Boolean);
 const checklist = t => { const ok = anState(t), done = Object.values(ok).filter(Boolean).length;
   return `<div class="progress"><i style="width:${done / AN_KEYS.length * 100}%"></i></div><ul class="checklist">${AN_KEYS.map(([k, l]) => `<li class="${ok[k] ? 'done' : ''}"><i>${ok[k] ? '✓' : ''}</i>${l}</li>`).join('')}</ul>`; };
@@ -860,7 +857,7 @@ function vNuevo() {
       return `<div class="itm ${sel.on ? 'on' : ''}"><input type="checkbox" id="ck${i}" data-act="ck" data-i="${i}" ${sel.on ? 'checked' : ''} aria-label="Seleccionar ${esc(it.codigo)}">
         <div data-act="ckrow" data-i="${i}"><b>${esc(it.desc)}</b><div class="meta"><span class="mono">${it.codigo}</span><span>Facturado: ${n(it.cant)} ${it.unidad}</span>${o ? `<span>OP <span class="mono">${op}</span></span><span>Lote <span class="mono">${o.lote}</span> <em class="auto">auto</em></span><span>Fabricado ${fmtD(o.fechaFab)} · ${esc(o.maquina)} ${nw('C07')}</span>` : ''}</div>
         ${!it.op && sel.on ? `<label class="f" style="margin-top:10px;max-width:320px">OP (no viene en la factura)<select id="op${i}" data-in="op" data-i="${i}"><option value="">Elija la OP…</option>${cands.map(([k2, v]) => `<option value="${k2}" ${sel.op === k2 ? 'selected' : ''}>${k2} · fabricada ${fmtD(v.fechaFab)}</option>`).join('')}</select></label>` : ''}</div>
-        <div class="qty">${sel.on ? `<label>Fuera de especificación<input type="number" min="1" id="af${i}" data-in="af" data-i="${i}" value="${sel.af ?? ''}" placeholder="${it.unidad}"></label>${sel.af > 0 ? `<span class="muted small">${pct(sel.af, it.cant)} de lo facturado</span>` : ''}` : ''}</div></div>`; }).join('')}</div>`;
+        <div class="qty">${sel.on ? `<label>Fuera de especificación<input type="number" min="1" id="af${i}" data-in="af" data-i="${i}" value="${sel.af ?? ''}" placeholder="${it.unidad}"></label><span class="muted small" id="afp${i}">${sel.af > 0 ? `${pct(sel.af, it.cant)} de lo facturado` : ''}</span>` : ''}</div></div>`; }).join('')}</div>`;
   if (k === 3) body = `<h2>¿Cuál es el problema?</h2><p class="muted">Elija el área y el tipo de defecto del catálogo ${nw('C04')}, y cuente qué pasó. Si hay más de un problema, agréguelo.</p>
     ${d.motivos.map((m, i) => `<div class="mot"><div class="row"><b>Problema ${i + 1}</b>${d.motivos.length > 1 ? `<button class="btn ghost sm" data-act="rmmot" data-i="${i}" style="margin-left:auto">${I.x} Quitar</button>` : ''}</div>
       <div class="fields"><label class="f">Área<select id="ma${i}" data-in="m-area" data-i="${i}"><option value="">Elija el área…</option>${AREAS.map(a => `<option ${m.area === a ? 'selected' : ''}>${a}</option>`).join('')}</select></label>
@@ -945,7 +942,7 @@ function vDetalle() {
         <div class="kv"><div><span>Visita técnica ${nw('C24')}</span>${an.visita?.req === 'si' ? `${fmtD(an.visita.fecha)} · ${esc(an.visita.resp)}${an.visita.hecha ? '' : ' <span class="pill st-Devuelto">Agendada</span>'}${an.visita.hallazgos ? `<br><span class="muted small">${esc(an.visita.hallazgos)}</span>` : ''}` : an.visita?.req === 'no' ? 'No se requirió' : 'Por definir'}</div><div><span>Contención</span>${esc(an.cont)}</div><div><span>Causa raíz ${nw('C13')}</span>${esc(an.causa)}<br><span class="muted small">${esc(an.metodo)} · ${esc(an.m6)}</span></div></div>
         <div class="tbl-wrap"><table><thead><tr><th>Acción correctiva ${nw('C14')}</th><th>Responsable</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>${an.acciones.map(a => `<tr><td>${esc(a.d)}</td><td>${esc(a.resp)}</td><td>${fmtD(a.f)}</td><td>${a.ok ? '<span class="pill st-Cerrado">Cumplida</span>' : '<span class="pill st-Devuelto">Pendiente</span>'}</td></tr>`).join('')}</tbody></table></div></section>` : ''}
       ${t.cierre ? `<section class="card"><div class="card-h"><h2>Cierre</h2>${t.inc ? `<button class="btn sm r" data-act="informe">${I.file} Informe de No Conformidad ${t.inc.num}</button>${nw('C17')}` : ''}</div>
-        <div class="kv"><div><span>Solución ${nw('C15')}</span>${esc(t.sol.tipo)}${t.sol.cant ? ` · ${n(t.sol.cant)}` : ''}</div><div><span>Costo</span><b>${usd(t.sol.costo)}</b></div><div><span>Cerrado el</span>${fmtD(t.fechaCierre)}</div><div><span>Eficacia ${nw('C16')}</span>${t.verif ? (t.verif.eficaz ? '<span class="pill st-Cerrado">Eficaz</span>' : '<span class="pill st-Rechazado">No eficaz</span>') : `Verificar el ${fmtD(t.cierre.verif)}`}</div></div>
+        <div class="kv"><div><span>Solución ${nw('C15')}</span>${esc(t.sol.tipo)}${t.sol.cant ? ` · ${n(t.sol.cant)}` : ''}</div><div><span>Cerrado el</span>${fmtD(t.fechaCierre)}</div><div><span>Eficacia ${nw('C16')}</span>${t.verif ? (t.verif.eficaz ? '<span class="pill st-Cerrado">Eficaz</span>' : '<span class="pill st-Rechazado">No eficaz</span>') : `Verificar el ${fmtD(t.cierre.verif)}`}</div></div>
         <div><span class="muted small">Conclusión del informe</span><p>${esc(t.inc?.conclusion || t.cierre.informe)}</p></div>${t.verif?.obs ? `<div><span class="muted small">Resultado de la verificación</span><p>${esc(t.verif.obs)}</p></div>` : ''}</section>` : ''}
     </div>
     <div class="col side-col">
@@ -961,13 +958,13 @@ function anState(t) {
     vis: v.req === 'no' || (v.req === 'si' && !!v.fecha && !!v.resp && !!v.hecha && !!v.hallazgos?.trim()),
     cont: !!an.cont?.trim(), causa: !!(an.metodo && an.m6 && an.causa?.trim()),
     acc: !!an.acciones?.length && an.acciones.every(a => a.d.trim() && a.resp.trim() && a.f),
-    sol: !!s.tipo && s.costo !== '' && s.costo != null
+    sol: !!s.tipo
   };
 }
 function analisisForm(t) {
   const an = t.an || (t.an = { cont: '', metodo: '', m6: '', causa: '', acciones: [] });
   const v = an.visita || (an.visita = { req: '', fecha: '', resp: '', agendada: false, hecha: false, hallazgos: '' });
-  const s = t.sol || (t.sol = { tipo: '', cant: '', costo: '' });
+  const s = t.sol || (t.sol = { tipo: '', cant: '' });
   const ok = anState(t);
   const step = (k, num, title, inner, tag) => `<div class="astep ${ok[k] ? 'done' : ''}"><h3><span class="n">${ok[k] ? '✓' : num}</span>${title} ${tag || ''}</h3>${inner}</div>`;
   const visita = `${rcards('vis', [['si', 'Sí, se requiere visita'], ['no', 'No se requiere']], v.req, 'v-req', { si: 'Se agenda con el cliente a través del asesor.', no: 'Se analiza con las evidencias recibidas.' })}
@@ -985,9 +982,9 @@ function analisisForm(t) {
       <label class="f">Descripción de la causa<textarea id="an-causa" data-in="an-causa" placeholder="Por qué ocurrió">${esc(an.causa)}</textarea></label>`, nw('C13'))}
     ${step('acc', 4, 'Acciones correctivas', `${an.acciones.length ? an.acciones.map((a, i) => `<div class="acc"><input type="text" id="ad${i}" data-in="ac-d" data-i="${i}" value="${esc(a.d)}" placeholder="Acción" aria-label="Acción"><input type="text" id="ar${i}" data-in="ac-resp" data-i="${i}" value="${esc(a.resp)}" placeholder="Responsable" aria-label="Responsable"><input type="date" id="acf${i}" data-in="ac-f" data-i="${i}" value="${esc(a.f)}" aria-label="Fecha compromiso"><label class="row small" style="font-weight:600"><input type="checkbox" id="ao${i}" data-act="acok" data-i="${i}" ${a.ok ? 'checked' : ''}> Cumplida</label><button class="btn ghost sm" data-act="rmacc" data-i="${i}" aria-label="Quitar acción">${I.x}</button></div>`).join('') : '<p class="muted small">Aún no hay acciones.</p>'}
       <div><button class="btn sm" data-act="addacc">${I.plus} Agregar acción</button></div>`, nw('C14'))}
-    ${step('sol', 5, 'Solución al cliente y costo', `<div class="fields"><label class="f">Solución<select id="so-tipo" data-in="so-tipo"><option value="">Elija…</option>${SOLUCION.map(x => `<option ${s.tipo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
+    ${step('sol', 5, 'Solución al cliente', `<div class="fields"><label class="f">Solución<select id="so-tipo" data-in="so-tipo"><option value="">Elija…</option>${SOLUCION.map(x => `<option ${s.tipo === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label>
       <label class="f">Cantidad<input type="number" id="so-cant" data-in="so-cant" value="${esc(s.cant)}" min="0"></label>
-      <label class="f">Costo (USD)<input type="number" id="so-costo" data-in="so-costo" value="${esc(s.costo)}" min="0" step="0.01"><span class="hint">Uso interno; no sale en el informe. 0 si no hubo costo.</span></label></div>`, nw('C15'))}
+</div>`, nw('C15'))}
   </section>`;
 }
 function nextStep(t) {
@@ -1104,14 +1101,13 @@ function vReportes() {
   if (ui.per !== 'Todos') ts = ts.filter(t => t.fecha.startsWith(ui.per));
   const cerr = ts.filter(t => !ABIERTOS.includes(t.estado));
   const prom = cerr.length ? (cerr.reduce((a, t) => a + abiertoDias(t), 0) / cerr.length).toLocaleString('es-EC', { maximumFractionDigits: 1 }) : '—';
-  const costo = ts.reduce((a, t) => a + (Number(t.sol?.costo) || 0), 0);
   let pareto = count(ts, t => t.motivos.map(m => m.def)), acum = 0; const totp = pareto.reduce((a, r) => a + r[1], 0) || 1;
   pareto = pareto.map(([l, v]) => { acum += v; return [l, v, `${v} · ${Math.round(acum / totp * 100)} % acumulado`]; });
   const mname = m => { const [y, mm] = m.split('-'); return ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][mm - 1] + ' ' + y; };
   const k = (l, v, sub, tag = '') => `<div class="kpi" style="cursor:default"><span>${l}${tag}</span><b>${v}</b>${sub ? `<span>${sub}</span>` : ''}</div>`;
   return `<div class="head"><div><h1>Reportes</h1><p>${ts.length} solicitudes en el período. Cambian con lo que haga en el prototipo.</p></div>
     <div class="row"><select id="per" data-in="per" style="width:auto" aria-label="Período"><option value="Todos">Todo el período</option>${meses.map(m => `<option value="${m}" ${ui.per === m ? 'selected' : ''}>${mname(m)}</option>`).join('')}</select>${nw('C21')}<button class="btn" data-act="excel">${I.dl} Exportar</button></div></div>
-  <div class="kpis">${k('Abiertas', ts.filter(t => ABIERTOS.includes(t.estado)).length, `${ts.filter(vencido).length} fuera de plazo`, nw('C18'))}${k('Días promedio al cierre', prom, `Meta: ${db.params.sla} días`, nw('C21'))}${k('Costo de reclamos', usd(costo), 'Reposiciones y notas de crédito', nw('C15'))}${k('Rechazadas', ts.filter(t => t.estado === 'Rechazado').length, `de ${ts.length} solicitudes`)}</div>
+  <div class="kpis">${k('Abiertas', ts.filter(t => ABIERTOS.includes(t.estado)).length, `${ts.filter(vencido).length} fuera de plazo`, nw('C18'))}${k('Días promedio al cierre', prom, `Meta: ${db.params.sla} días`, nw('C21'))}${k('Visitas técnicas', ts.filter(t => t.an?.visita?.req === 'si').length, 'Agendadas o realizadas', nw('C24'))}${k('Rechazadas', ts.filter(t => t.estado === 'Rechazado').length, `de ${ts.length} solicitudes`)}</div>
   <div class="two">
     <section class="card"><h2>Pareto de defectos ${nw('C04')}</h2>${bars(pareto)}</section>
     <section class="card"><h2>Por área responsable ${nw('C11')}</h2>${bars(count(ts.filter(t => t.asig), t => t.asig.area))}</section>
@@ -1240,8 +1236,8 @@ const FLOW_SVG = `<svg class="flowsvg" viewBox="0 0 2627 804" width="2627" heigh
 <text class="fl-t" text-anchor="middle" font-size="12.5"><tspan x="1557.0" y="384.9">Agendar y realizar</tspan><tspan x="1557.0" y="399.4">visita técnica;</tspan><tspan x="1557.0" y="413.9">registrar hallazgos</tspan></text>
 <rect class="fl-n ajustado" x="1482" y="627" width="150" height="76" rx="10" stroke-width="2"><title>Sistemas dejó abierto quién analiza ("¿y área responsable?"); ahora lo hace el área asignada, con estructura.</title></rect>
 <text class="fl-t" text-anchor="middle" font-size="12.5"><tspan x="1557.0" y="654.9">Analizar: contención,</tspan><tspan x="1557.0" y="669.4">causa raíz y acciones</tspan><tspan x="1557.0" y="683.9">correctivas</tspan></text>
-<rect class="fl-n nuevo" x="1678" y="357" width="150" height="76" rx="10" stroke-width="2"><title>Nuevo.</title></rect>
-<text class="fl-t" text-anchor="middle" font-size="12.5"><tspan x="1753.0" y="392.1">Registrar solución al</tspan><tspan x="1753.0" y="406.6">cliente y costo</tspan></text>
+<rect class="fl-n nuevo" x="1678" y="357" width="150" height="76" rx="10" stroke-width="2"><title>Nuevo: tipo de solución y cantidad.</title></rect>
+<text class="fl-t" text-anchor="middle" font-size="12.5"><tspan x="1753.0" y="392.1">Registrar solución al</tspan><tspan x="1753.0" y="406.6">cliente</tspan></text>
 <rect class="fl-n ajustado" x="1874" y="357" width="150" height="76" rx="10" stroke-width="2"><title>Reemplaza "Registrar documentación de cierre"; el sistema lo arma con los datos del ticket.</title></rect>
 <text class="fl-t" text-anchor="middle" font-size="12.5"><tspan x="1949.0" y="392.1">Elaborar Informe de</tspan><tspan x="1949.0" y="406.6">No Conformidad</tspan></text>
 <rect class="fl-n nuevo" x="1874" y="207" width="150" height="76" rx="10" stroke-width="2"><title>Nuevo.</title></rect>
@@ -1256,7 +1252,7 @@ const FLOW_SVG = `<svg class="flowsvg" viewBox="0 0 2627 804" width="2627" heigh
 <rect class="fl-n ajustado" x="320" y="770" width="26" height="18" rx="4" stroke-width="2"/><text class="fl-t" x="356" y="784" font-size="13">Ajustado por Calidad</text>
 <rect class="fl-n nuevo" x="570" y="770" width="26" height="18" rx="4" stroke-width="2"/><text class="fl-t" x="606" y="784" font-size="13">Nuevo</text>
 </svg>`;
-const FLOW_STEPS = [{"id": "a1", "lane": "Asesor / asistente", "txt": "Ingresar N° de factura u OP", "st": "igual", "note": "Igual que en el flujo de Sistemas."}, {"id": "s1", "lane": "Sistema", "txt": "Traer ítems, OP, lote, datos de producción y antecedentes", "st": "ajustado", "note": "Además de ítems y OP, trae máquina, operador, metros y reclamos anteriores del cliente."}, {"id": "a2", "lane": "Asesor / asistente", "txt": "Completar ingreso: ítems, cantidad, defecto, evidencias y etiqueta de trazabilidad", "st": "ajustado", "note": "Se agregan fecha y canal del reporte, contacto, tipo de defecto de catálogo, situación del material y foto de la etiqueta de trazabilidad."}, {"id": "s2", "lane": "Sistema", "txt": "Generar reclamo RECIBIDO y notificar a Calidad", "st": "ajustado", "note": "Además avisa si el reporte está fuera del plazo de la política y notifica a Calidad."}, {"id": "q1", "lane": "Calidad", "txt": "Revisar ingreso", "st": "igual", "note": "Igual."}, {"id": "g1", "lane": "Calidad", "txt": "¿Información completa?", "st": "igual", "note": "Igual."}, {"id": "s3", "lane": "Sistema", "txt": "Notificar al asesor con el motivo de devolución", "st": "igual", "note": "Igual; el motivo sale de un catálogo."}, {"id": "a3", "lane": "Asesor / asistente", "txt": "Corregir el ingreso en el mismo ticket", "st": "ajustado", "note": "Sistemas solo permitía cargar documentación adicional; ahora se corrige todo el ingreso."}, {"id": "g2", "lane": "Calidad", "txt": "¿Procede?", "st": "igual", "note": "Igual."}, {"id": "q2", "lane": "Calidad", "txt": "Rechazar con motivo del catálogo y observación", "st": "igual", "note": "Igual (une \"Rechazar\" y \"Registrar motivo\")."}, {"id": "q3", "lane": "Calidad", "txt": "Categorizar, dar severidad y asignar área y fecha", "st": "ajustado", "note": "Además de queja o reclamo: severidad, área responsable y fecha compromiso."}, {"id": "g3", "lane": "Calidad", "txt": "¿Requiere visita técnica?", "st": "nuevo", "note": "Nuevo."}, {"id": "q4", "lane": "Calidad", "txt": "Agendar y realizar visita técnica; registrar hallazgos", "st": "nuevo", "note": "Nuevo. Se notifica al asesor para coordinar con el cliente."}, {"id": "r1", "lane": "Área responsable", "txt": "Analizar: contención, causa raíz y acciones correctivas", "st": "ajustado", "note": "Sistemas dejó abierto quién analiza (\"¿y área responsable?\"); ahora lo hace el área asignada, con estructura."}, {"id": "q5", "lane": "Calidad", "txt": "Registrar solución al cliente y costo", "st": "nuevo", "note": "Nuevo."}, {"id": "q6", "lane": "Calidad", "txt": "Elaborar Informe de No Conformidad", "st": "ajustado", "note": "Reemplaza \"Registrar documentación de cierre\"; el sistema lo arma con los datos del ticket."}, {"id": "s5", "lane": "Sistema", "txt": "Enviar el informe al asesor y al cliente", "st": "nuevo", "note": "Nuevo."}, {"id": "q7", "lane": "Calidad", "txt": "Cerrar solicitud y programar verificación", "st": "igual", "note": "Igual; se agrega la fecha de verificación."}, {"id": "q8", "lane": "Calidad", "txt": "Verificar eficacia", "st": "nuevo", "note": "Nuevo. No agrega un estado."}];
+const FLOW_STEPS = [{"id": "a1", "lane": "Asesor / asistente", "txt": "Ingresar N° de factura u OP", "st": "igual", "note": "Igual que en el flujo de Sistemas."}, {"id": "s1", "lane": "Sistema", "txt": "Traer ítems, OP, lote, datos de producción y antecedentes", "st": "ajustado", "note": "Además de ítems y OP, trae máquina, operador, metros y reclamos anteriores del cliente."}, {"id": "a2", "lane": "Asesor / asistente", "txt": "Completar ingreso: ítems, cantidad, defecto, evidencias y etiqueta de trazabilidad", "st": "ajustado", "note": "Se agregan fecha y canal del reporte, contacto, tipo de defecto de catálogo, situación del material y foto de la etiqueta de trazabilidad."}, {"id": "s2", "lane": "Sistema", "txt": "Generar reclamo RECIBIDO y notificar a Calidad", "st": "ajustado", "note": "Además avisa si el reporte está fuera del plazo de la política y notifica a Calidad."}, {"id": "q1", "lane": "Calidad", "txt": "Revisar ingreso", "st": "igual", "note": "Igual."}, {"id": "g1", "lane": "Calidad", "txt": "¿Información completa?", "st": "igual", "note": "Igual."}, {"id": "s3", "lane": "Sistema", "txt": "Notificar al asesor con el motivo de devolución", "st": "igual", "note": "Igual; el motivo sale de un catálogo."}, {"id": "a3", "lane": "Asesor / asistente", "txt": "Corregir el ingreso en el mismo ticket", "st": "ajustado", "note": "Sistemas solo permitía cargar documentación adicional; ahora se corrige todo el ingreso."}, {"id": "g2", "lane": "Calidad", "txt": "¿Procede?", "st": "igual", "note": "Igual."}, {"id": "q2", "lane": "Calidad", "txt": "Rechazar con motivo del catálogo y observación", "st": "igual", "note": "Igual (une \"Rechazar\" y \"Registrar motivo\")."}, {"id": "q3", "lane": "Calidad", "txt": "Categorizar, dar severidad y asignar área y fecha", "st": "ajustado", "note": "Además de queja o reclamo: severidad, área responsable y fecha compromiso."}, {"id": "g3", "lane": "Calidad", "txt": "¿Requiere visita técnica?", "st": "nuevo", "note": "Nuevo."}, {"id": "q4", "lane": "Calidad", "txt": "Agendar y realizar visita técnica; registrar hallazgos", "st": "nuevo", "note": "Nuevo. Se notifica al asesor para coordinar con el cliente."}, {"id": "r1", "lane": "Área responsable", "txt": "Analizar: contención, causa raíz y acciones correctivas", "st": "ajustado", "note": "Sistemas dejó abierto quién analiza (\"¿y área responsable?\"); ahora lo hace el área asignada, con estructura."}, {"id": "q5", "lane": "Calidad", "txt": "Registrar solución al cliente", "st": "nuevo", "note": "Nuevo: tipo de solución y cantidad."}, {"id": "q6", "lane": "Calidad", "txt": "Elaborar Informe de No Conformidad", "st": "ajustado", "note": "Reemplaza \"Registrar documentación de cierre\"; el sistema lo arma con los datos del ticket."}, {"id": "s5", "lane": "Sistema", "txt": "Enviar el informe al asesor y al cliente", "st": "nuevo", "note": "Nuevo."}, {"id": "q7", "lane": "Calidad", "txt": "Cerrar solicitud y programar verificación", "st": "igual", "note": "Igual; se agrega la fecha de verificación."}, {"id": "q8", "lane": "Calidad", "txt": "Verificar eficacia", "st": "nuevo", "note": "Nuevo. No agrega un estado."}];
 
 /* ---------- acciones ---------- */
 function buscar(q) {
@@ -1329,7 +1325,6 @@ function act(t, a, el) {
     case 'sort': { const k = el.dataset.v; ui.sort = { k, dir: ui.sort.k === k ? -ui.sort.dir : (['fact', 'afect', 'ev', 'dias', 'id'].includes(k) ? -1 : 1) }; break; }
     case 'vista': ui.vista = el.dataset.v; break;
     case 'fit': ui.fit = el.dataset.v === '1'; break;
-    case 'bigfont': ui.big = el.checked; break;
     case 'excel2': return toast('En el sistema real descarga el informe en PDF con el formato ETIMET.');
     case 'faketz': draft.tz = 'etiqueta_trazabilidad_rollo.jpg'; draft.errors = []; break;
     case 'rmtz': draft.tz = null; break;
@@ -1403,7 +1398,7 @@ function act(t, a, el) {
       const s = t.sol, v = r.verif ?? addDays(today(), 30);
       if (!t.inc?.enviado) { r.err = 'Primero envíe el Informe de No Conformidad.'; break; }
       return ask(`¿Cerrar ${t.id}?`, `Se notificará al asesor y quedará programada la verificación de eficacia para el ${fmtD(v)}.`, 'Sí, cerrar', () => {
-        t.estado = 'Cerrado'; t.fechaCierre = today(); t.sol = { tipo: s.tipo, cant: Number(s.cant) || 0, costo: Number(s.costo) || 0 }; t.cierre = { informe: t.inc.conclusion, verif: v };
+        t.estado = 'Cerrado'; t.fechaCierre = today(); t.sol = { tipo: s.tipo, cant: Number(s.cant) || 0 }; t.cierre = { informe: t.inc.conclusion, verif: v };
         t.hist.push({ f: now(), q: USERS.calidad, a: 'Registró la documentación de cierre y cerró la solicitud', n: `Verificación de eficacia programada: ${v}` });
         notify('asesor', t.id, `${t.id} fue cerrado por Calidad.`); ui.rev = null; render(); window.scrollTo(0, 0); toast(`${t.id} cerrado.`); }); }
     case 'verificar':
@@ -1431,7 +1426,7 @@ let lastEv = null;
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) { if (ui.bell && !e.target.closest('.bell')) { ui.bell = false; render(); } return; }
-  if (el.tagName === 'INPUT' && el.type === 'checkbox' && !['ck', 'marks', 'acok', 'vhecha', 'bigfont'].includes(el.dataset.act)) return;
+  if (el.tagName === 'INPUT' && el.type === 'checkbox' && !['ck', 'marks', 'acok', 'vhecha'].includes(el.dataset.act)) return;
   if (el.tagName === 'INPUT' && el.type === 'radio') return;
   lastEv = e;
   act(T(ui.ticket), el.dataset.act, el);
@@ -1448,7 +1443,7 @@ document.addEventListener('input', e => {
   if (!k) { if (el.id === 'q') draft.q = el.value; if (el.id === 'busca') { ui.busca = el.value; keepFocus('busca'); } return; }
   const r = ui.rev || (ui.rev = {}), t = T(ui.ticket), i = +el.dataset.i;
   let re = el.tagName === 'SELECT' || el.type === 'date';
-  if (k === 'af') { draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), af: el.value }; return keepFocus(el.id); }
+  if (k === 'af') { draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), af: el.value }; const it = draft.src.items[el.dataset.i], v = Number(el.value), sp = document.getElementById('afp' + el.dataset.i); if (sp) sp.textContent = v > 0 ? `${pct(v, it.cant)} de lo facturado` : ''; return; }
   else if (k === 'op') draft.sel[el.dataset.i] = { ...(draft.sel[el.dataset.i] || {}), op: el.value };
   else if (k.startsWith('c-')) draft.cli[k.slice(2)] = el.value;
   else if (k.startsWith('s-')) draft.sit[k.slice(2)] = el.value;
